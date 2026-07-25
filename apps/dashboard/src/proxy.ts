@@ -10,8 +10,15 @@ import { verifySession } from "@/lib/session";
 // requireSession() (see src/lib/auth.ts), so protection doesn't depend on
 // this matcher config being correct forever.
 export async function proxy(request: NextRequest) {
-	const session = await verifySession();
 	const { pathname } = request.nextUrl;
+
+	// Public API, called cross-origin from the marketing site — no session
+	// cookie to check. See src/app/api/contact/route.ts.
+	if (pathname.startsWith("/api/contact")) {
+		return NextResponse.next();
+	}
+
+	const session = await verifySession();
 	const isPublicRoute = pathname === "/login";
 
 	if (!session && !isPublicRoute) {

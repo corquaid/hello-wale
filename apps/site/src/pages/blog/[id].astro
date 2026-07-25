@@ -3,32 +3,35 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog");
-	return posts.map((post) => ({
-		params: { id: post.id },
-		props: { post },
-	}));
+  const posts = await getCollection("blog");
+  return posts.map(post => ({
+    params: { id: post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-	<article class="mx-auto max-w-3xl px-6 py-16">
-		<a href={`${import.meta.env.BASE_URL}blog`} class="text-sm text-indigo-600 hover:underline">&larr; Back to blog</a>
-		<h1 class="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">{post.data.title}</h1>
-		<p class="mt-2 text-sm text-slate-500">
-			{
-				post.data.pubDate.toLocaleDateString("en-US", {
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				})
-			}
-		</p>
-		<div class="prose prose-slate mt-8 max-w-none">
-			<Content />
-		</div>
-	</article>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <a href={`${base}blog`} class="text-sm text-wale-700 hover:underline">&larr; Back to blog</a>
+    <h1 class="mt-4 font-display text-3xl font-bold text-wale-800 sm:text-4xl">{post.data.title}</h1>
+    <p class="mt-2 text-sm text-slate-500">
+      {
+        post.data.pubDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      }
+    </p>
+    <div
+      class="prose prose-slate mt-8 max-w-none prose-a:text-wale-700 prose-headings:font-display prose-headings:text-wale-800"
+    >
+      <Content />
+    </div>
+  </article>
 </Layout>
