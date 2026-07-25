@@ -8,12 +8,17 @@ const ALLOWED_ORIGINS = [process.env.SITE_ORIGIN, "http://localhost:4321"].filte
 );
 
 function corsHeaders(origin: string | null) {
-	const allowOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
-	return {
-		"Access-Control-Allow-Origin": allowOrigin ?? "",
+	const headers: Record<string, string> = {
 		"Access-Control-Allow-Methods": "POST, OPTIONS",
 		"Access-Control-Allow-Headers": "Content-Type",
 	};
+	// Only echo back the origin if it's actually allowed — falling back to a
+	// default here would send a mismatched header, which browsers reject with
+	// a confusing error rather than a clean "not allowed".
+	if (origin && ALLOWED_ORIGINS.includes(origin)) {
+		headers["Access-Control-Allow-Origin"] = origin;
+	}
+	return headers;
 }
 
 export async function OPTIONS(request: NextRequest) {
