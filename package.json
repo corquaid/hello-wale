@@ -2,6 +2,7 @@
   "name": "hello-wale",
   "private": true,
   "type": "module",
+  "packageManager": "npm@11.11.0",
   "engines": {
     "node": ">=22.12.0"
   },
