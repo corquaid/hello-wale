@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - "apps/site/**"
+      - ".github/workflows/deploy-site.yml"
   workflow_dispatch:
 
 permissions:
@@ -24,6 +27,7 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
+          path: apps/site
           node-version: 22
 
   deploy:
