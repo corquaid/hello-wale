@@ -20,7 +20,7 @@ export function AssignPointsForm({ customerId }: { customerId: string }) {
 					type="number"
 					step="1"
 					required
-					className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-wale-700 focus:outline-none"
+					className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
 				/>
 			</div>
 
@@ -33,7 +33,7 @@ export function AssignPointsForm({ customerId }: { customerId: string }) {
 					name="reason"
 					required
 					placeholder="e.g. Welcome bonus, order #1234 redemption"
-					className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-wale-700 focus:outline-none"
+					className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
 				/>
 			</div>
 
