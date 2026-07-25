@@ -6,7 +6,14 @@
       "persistent": true
     },
     "build": {
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "DASHBOARD_USERNAME",
+        "DASHBOARD_PASSWORD",
+        "SESSION_SECRET"
+      ]
     },
     "lint": {}
   }
