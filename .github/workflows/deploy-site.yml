@@ -30,6 +30,8 @@ jobs:
           path: apps/site
           node-version: 22
           package-manager: npm@latest
+        env:
+          PUBLIC_CONTACT_API_URL: https://app.hellowale.com/api/contact
 
   deploy:
     needs: build
