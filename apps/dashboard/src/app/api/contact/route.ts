@@ -38,32 +38,32 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ error: "Missing required fields" }, { status: 400, headers });
 	}
 
-	const apiKey = process.env.SENDGRID_API_KEY;
-	const fromEmail = process.env.SENDGRID_FROM_EMAIL;
+	const apiKey = process.env.RESEND_API_KEY;
+	const fromEmail = process.env.RESEND_FROM_EMAIL;
 	const toEmail = process.env.CONTACT_TO_EMAIL;
 
 	if (!apiKey || !fromEmail || !toEmail) {
-		console.error("Contact form is not configured: missing SendGrid env vars");
+		console.error("Contact form is not configured: missing Resend env vars");
 		return NextResponse.json({ error: "Contact form is not available right now" }, { status: 503, headers });
 	}
 
-	const sendgridResponse = await fetch("https://api.sendgrid.com/v3/mail/send", {
+	const resendResponse = await fetch("https://api.resend.com/emails", {
 		method: "POST",
 		headers: {
 			Authorization: `Bearer ${apiKey}`,
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			personalizations: [{ to: [{ email: toEmail }] }],
-			from: { email: fromEmail, name: "HelloWale contact form" },
-			reply_to: { email, name },
+			from: `HelloWale contact form <${fromEmail}>`,
+			to: [toEmail],
+			reply_to: email,
 			subject: `New contact form message from ${name}`,
-			content: [{ type: "text/plain", value: `Name: ${name}\nEmail: ${email}\n\n${message}` }],
+			text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
 		}),
 	});
 
-	if (!sendgridResponse.ok) {
-		console.error("SendGrid error:", sendgridResponse.status, await sendgridResponse.text());
+	if (!resendResponse.ok) {
+		console.error("Resend error:", resendResponse.status, await resendResponse.text());
 		return NextResponse.json({ error: "Failed to send message" }, { status: 502, headers });
 	}
 
