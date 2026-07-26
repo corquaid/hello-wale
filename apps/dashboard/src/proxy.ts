@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
 
 	if (session && isPublicRoute) {
 		const url = request.nextUrl.clone();
-		url.pathname = "/customers";
+		url.pathname = "/";
 		return NextResponse.redirect(url);
 	}
 

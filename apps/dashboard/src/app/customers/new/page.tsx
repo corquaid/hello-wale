@@ -9,7 +9,7 @@ export default function NewCustomerPage() {
 
 	return (
 		<div className="max-w-md space-y-6">
-			<h1 className="text-2xl font-semibold text-gray-900">Add employee</h1>
+			<h1 className="font-display text-2xl font-semibold text-gray-900">Add employee</h1>
 
 			<form action={formAction} className="space-y-4 rounded-lg border border-gray-200 bg-white p-6">
 				<div className="space-y-1">

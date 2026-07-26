@@ -12,7 +12,11 @@
         "SUPABASE_SERVICE_ROLE_KEY",
         "DASHBOARD_USERNAME",
         "DASHBOARD_PASSWORD",
-        "SESSION_SECRET"
+        "SESSION_SECRET",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL",
+        "CONTACT_TO_EMAIL",
+        "SITE_ORIGIN"
       ]
     },
     "lint": {}

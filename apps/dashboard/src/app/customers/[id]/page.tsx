@@ -21,7 +21,7 @@ export default async function CustomerDetailPage({
 		<div className="space-y-8">
 			<div className="flex items-start justify-between">
 				<div>
-					<h1 className="text-2xl font-semibold text-gray-900">{customer.name}</h1>
+					<h1 className="font-display text-2xl font-semibold text-gray-900">{customer.name}</h1>
 					<p className="text-sm text-gray-500">{customer.email}</p>
 				</div>
 				<DeleteCustomerButton customerId={customer.customer_id} name={customer.name} />
@@ -33,12 +33,12 @@ export default async function CustomerDetailPage({
 			</div>
 
 			<div>
-				<h2 className="mb-3 text-lg font-medium text-gray-900">Assign points</h2>
+				<h2 className="mb-3 font-display text-lg font-medium text-gray-900">Points adjustment</h2>
 				<AssignPointsForm customerId={customer.customer_id} />
 			</div>
 
 			<div>
-				<h2 className="mb-3 text-lg font-medium text-gray-900">History</h2>
+				<h2 className="mb-3 font-display text-lg font-medium text-gray-900">History</h2>
 				{transactions.length === 0 ? (
 					<p className="text-sm text-gray-500">No points activity yet.</p>
 				) : (

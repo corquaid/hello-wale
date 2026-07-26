@@ -31,5 +31,5 @@ export async function login(
 	}
 
 	await createSession(username);
-	redirect("/customers");
+	redirect("/");
 }

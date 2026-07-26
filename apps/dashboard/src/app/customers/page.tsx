@@ -7,7 +7,7 @@ export default async function CustomersPage() {
 	return (
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
-				<h1 className="text-2xl font-semibold text-gray-900">Customers</h1>
+				<h1 className="font-display text-2xl font-semibold text-gray-900">Customers</h1>
 				<Link
 					href="/customers/new"
 					className="rounded-md bg-wale-700 px-3 py-2 text-sm font-medium text-white hover:bg-wale-800"
@@ -34,7 +34,7 @@ export default async function CustomersPage() {
 									<td className="px-4 py-3">
 										<Link
 											href={`/customers/${customer.customer_id}`}
-											className="font-medium text-gray-900 hover:underline"
+											className="font-medium text-gray-900"
 										>
 											{customer.name}
 										</Link>

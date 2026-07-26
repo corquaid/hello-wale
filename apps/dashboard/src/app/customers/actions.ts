@@ -38,6 +38,7 @@ export async function createCustomer(
 	}
 
 	revalidatePath("/customers");
+	revalidatePath("/");
 	redirect(`/customers/${data.id}`);
 }
 
@@ -49,6 +50,8 @@ export async function deleteCustomer(customerId: string) {
 	if (error) throw error;
 
 	revalidatePath("/customers");
+	revalidatePath("/customers/transactions");
+	revalidatePath("/");
 	redirect("/customers");
 }
 
@@ -87,6 +90,8 @@ export async function assignPoints(
 
 	revalidatePath(`/customers/${customerId}`);
 	revalidatePath("/customers");
+	revalidatePath("/customers/transactions");
+	revalidatePath("/");
 }
 
 export async function signOut() {

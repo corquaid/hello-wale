@@ -44,7 +44,7 @@ export function AssignPointsForm({ customerId }: { customerId: string }) {
 				disabled={pending}
 				className="rounded-md bg-wale-700 px-3 py-2 text-sm font-medium text-white hover:bg-wale-800 disabled:opacity-50"
 			>
-				{pending ? "Saving…" : "Assign points"}
+				{pending ? "Saving…" : "Complete transaction"}
 			</button>
 		</form>
 	);
