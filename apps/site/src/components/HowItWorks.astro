@@ -73,18 +73,20 @@ const {
 				{
 					steps.map((step, index) => (
 						<div
-							class="flex h-full w-[85%] shrink-0 snap-center flex-col justify-between gap-8 rounded-[20px] bg-white p-8 sm:w-[60%] lg:w-auto lg:shrink"
+							class="flex h-full w-[85%] shrink-0 snap-center flex-col gap-8 rounded-[20px] bg-white p-8 sm:w-[60%] lg:w-auto lg:shrink"
 							data-slide
 						>
 							<p class="font-display text-4xl font-bold tracking-[-0.6px] text-wale-700">
 								{step.number}
 							</p>
 
-							<img
-								src={stepIcons[index].src}
-								alt=""
-								class="h-28 w-auto self-center object-contain"
-							/>
+							<div class="flex flex-1 justify-center">
+								<img
+									src={stepIcons[index].src}
+									alt=""
+									class="h-28 w-auto object-contain"
+								/>
+							</div>
 
 							<div class="flex flex-col items-start gap-4">
 								<p class="font-display text-2xl font-bold tracking-[-0.078px] text-[#131313]">

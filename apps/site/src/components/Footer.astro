@@ -2,6 +2,12 @@
 import { Image } from "astro:assets";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import logoLight from "../assets/images/logo-horizontal-secondary.png";
+import ctaCompaniesIcon from "../assets/images/footer-cta-companies.png";
+import ctaHostsIcon from "../assets/images/footer-cta-hosts.png";
+import ctaGuestsIcon from "../assets/images/footer-cta-guests.png";
+import socialFacebook from "../assets/images/footer-social-facebook.png";
+import socialInstagram from "../assets/images/footer-social-instagram.png";
+import socialX from "../assets/images/footer-social-x.png";
 import { useTranslations, type Locale } from "../i18n/utils";
 
 interface Props {
@@ -10,89 +16,197 @@ interface Props {
 
 const { lang = "en" } = Astro.props;
 const t = useTranslations(lang);
+const footer = t.common.footer;
 const base = import.meta.env.BASE_URL;
 
-const exploreLinks = [
-	{ href: getRelativeLocaleUrl(lang, "companies"), label: t.nav.forCompanies },
-	{ href: getRelativeLocaleUrl(lang, "hosts"), label: t.nav.forHosts },
-	{ href: getRelativeLocaleUrl(lang, "professionals"), label: t.nav.forProfessionals },
+const companiesLinks = [
+	{ label: footer.columns.companies.links[0], href: getRelativeLocaleUrl(lang, "companies") },
+	{ label: footer.columns.companies.links[1], href: `${base}contact` },
+	{ label: footer.columns.companies.links[2], href: "#" },
+	{ label: footer.columns.companies.links[3], href: "#" },
 ];
 
-const resourceLinks = [
-	{ href: "#", label: t.nav.story },
-	{ href: `${base}blog`, label: t.nav.blog },
-	{ href: `${base}faq`, label: t.nav.faq },
+const hostsLinks = [
+	{ label: footer.columns.hosts.links[0], href: getRelativeLocaleUrl(lang, "hosts") },
+	{ label: footer.columns.hosts.links[1], href: getRelativeLocaleUrl(lang, "hosts") },
+	{ label: footer.columns.hosts.links[2], href: "#" },
 ];
+
+const companyLinks = [
+	{ label: footer.columns.company.links[0], href: "#" },
+	{ label: footer.columns.company.links[1], href: `${base}blog` },
+	{ label: footer.columns.company.links[2], href: `${base}contact` },
+];
+
+const legalLinks = footer.columns.legal.links.map((label) => ({ label, href: "#" }));
+
+const socialLinks = [
+	{ label: "Facebook", icon: socialFacebook, href: "#" },
+	{ label: "Instagram", icon: socialInstagram, href: "#" },
+	{ label: "X", icon: socialX, href: "#" },
+];
+
+const ctaCards = [
+	{ ...footer.ctaCards.companies, icon: ctaCompaniesIcon, href: getRelativeLocaleUrl(lang, "companies") },
+	{ ...footer.ctaCards.hosts, icon: ctaHostsIcon, href: getRelativeLocaleUrl(lang, "hosts") },
+	{ ...footer.ctaCards.guests, icon: ctaGuestsIcon, href: getRelativeLocaleUrl(lang, "professionals") },
+];
+
+const copyright = footer.copyright.replace("{year}", String(new Date().getFullYear()));
 ---
 
-<footer
-	class="px-6 py-16 text-white sm:px-10 lg:px-20 lg:py-20"
-	style="background: linear-gradient(101deg, #914D61 -159.59%, #380121 170.76%);"
->
-	<div class="mx-auto flex max-w-7xl flex-col gap-12 lg:gap-16">
-		<div class="flex flex-col gap-12 lg:flex-row lg:justify-between">
-			<div class="flex max-w-sm flex-col items-start gap-4 text-left">
-				<a href={getRelativeLocaleUrl(lang, "")} class="flex w-fit items-center">
-					<Image
-						src={logoLight}
-						alt="hellowale"
-						widths={[300, 600]}
-						class="aspect-3781/876 h-8 w-auto max-w-none"
-					/>
-				</a>
-				<p class="font-display text-sm leading-6 text-white/70">
-					{t.common.footer.tagline}
+<footer class="border-t border-white/15 bg-linear-to-t from-[#914d61] to-[#380121] px-6 pt-10 pb-8 text-white sm:px-10 lg:px-24 lg:pt-14 lg:pb-10">
+	<div class="mx-auto flex max-w-7xl flex-col gap-10">
+		<div class="flex items-center justify-between gap-6">
+			<a href={getRelativeLocaleUrl(lang, "")} class="flex w-fit shrink-0 items-center">
+				<Image
+					src={logoLight}
+					alt="hellowale"
+					widths={[300, 600]}
+					class="aspect-3781/876 h-7 w-auto max-w-none lg:h-8"
+				/>
+			</a>
+			<button
+				type="button"
+				data-back-to-top
+				class="flex items-center gap-2 sm:gap-4"
+				aria-label={footer.backToTop}
+			>
+				<span class="hidden font-display text-base text-white/90 sm:inline">{footer.backToTop}</span>
+				<span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/30 text-xl sm:size-14">
+					↑
+				</span>
+			</button>
+		</div>
+
+		<div class="h-px w-full bg-white/15"></div>
+
+		<div class="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:flex lg:flex-nowrap lg:justify-between lg:gap-8">
+			<div class="flex flex-col items-start gap-6">
+				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
+					{footer.columns.companies.heading}
 				</p>
+				<nav class="flex flex-col items-start gap-3">
+					{
+						companiesLinks.map((link) => (
+							<a href={link.href} class="font-display text-[15px] text-white/70 hover:text-white">
+								{link.label}
+							</a>
+						))
+					}
+				</nav>
 			</div>
 
-			<div class="grid grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-3 lg:gap-16">
-				<div class="flex flex-col gap-4">
-					<p class="font-display text-[11px] font-semibold tracking-[0.22px] text-white/45 uppercase">
-						{t.common.footer.exploreHeading}
-					</p>
-					<nav class="flex flex-col gap-3">
-						{
-							exploreLinks.map((link) => (
-								<a href={link.href} class="font-display text-sm text-white/80 hover:text-white">
-									{link.label}
-								</a>
-							))
-						}
-					</nav>
-				</div>
+			<div class="flex flex-col items-start gap-6">
+				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
+					{footer.columns.hosts.heading}
+				</p>
+				<nav class="flex flex-col items-start gap-3">
+					{
+						hostsLinks.map((link) => (
+							<a href={link.href} class="font-display text-[15px] text-white/70 hover:text-white">
+								{link.label}
+							</a>
+						))
+					}
+				</nav>
+			</div>
 
-				<div class="flex flex-col gap-4">
-					<p class="font-display text-[11px] font-semibold tracking-[0.22px] text-white/45 uppercase">
-						{t.common.footer.resourcesHeading}
-					</p>
-					<nav class="flex flex-col gap-3">
-						{
-							resourceLinks.map((link) => (
-								<a href={link.href} class="font-display text-sm text-white/80 hover:text-white">
-									{link.label}
-								</a>
-							))
-						}
-					</nav>
-				</div>
+			<div class="flex flex-col items-start gap-6">
+				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
+					{footer.columns.company.heading}
+				</p>
+				<nav class="flex flex-col items-start gap-3">
+					{
+						companyLinks.map((link) => (
+							<a href={link.href} class="font-display text-[15px] text-white/70 hover:text-white">
+								{link.label}
+							</a>
+						))
+					}
+				</nav>
+			</div>
 
-				<div class="flex flex-col gap-4">
-					<p class="font-display text-[11px] font-semibold tracking-[0.22px] text-white/45 uppercase">
-						{t.common.footer.contactHeading}
-					</p>
-					<nav class="flex flex-col gap-3">
-						<a href={`${base}contact`} class="font-display text-sm text-white/80 hover:text-white">
-							{t.common.footer.contactLabel}
-						</a>
-					</nav>
+			<div class="flex flex-col items-start gap-6">
+				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
+					{footer.columns.legal.heading}
+				</p>
+				<nav class="flex flex-col items-start gap-3">
+					{
+						legalLinks.map((link) => (
+							<a href={link.href} class="font-display text-[15px] text-white/70 hover:text-white">
+								{link.label}
+							</a>
+						))
+					}
+				</nav>
+			</div>
+
+			<div class="col-span-2 flex flex-col items-start gap-6 sm:col-span-1">
+				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
+					{footer.contactHeading}
+				</p>
+				<div class="flex flex-col items-start gap-4">
+					<a href={`mailto:${footer.contactEmail}`} class="flex items-center gap-3">
+						<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8 text-sm">
+							✉
+						</span>
+						<span class="font-display text-[15px] text-white/95">{footer.contactEmail}</span>
+					</a>
+					<div class="flex items-center gap-3">
+						<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8 text-sm">
+							☏
+						</span>
+						<span class="font-display text-[15px] text-white/95">{footer.contactPhone}</span>
+					</div>
+				</div>
+				<div class="flex items-start gap-3 pt-2">
+					{
+						socialLinks.map((social) => (
+							<a href={social.href} aria-label={social.label} class="block size-11 shrink-0">
+								<img src={social.icon.src} alt="" class="size-11" />
+							</a>
+						))
+					}
 				</div>
 			</div>
 		</div>
 
-		<div class="flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-			<p class="font-display text-xs text-white/50">
-				&copy; {new Date().getFullYear()} HelloWale. {t.common.footerRights}
-			</p>
+		<div class="h-px w-full bg-white/15"></div>
+
+		<div class="flex flex-col gap-4 lg:flex-row">
+			{
+				ctaCards.map((card) => (
+					<a
+						href={card.href}
+						class="flex flex-1 items-center gap-5 rounded-[20px] border border-white/8 bg-white/6 px-6 py-8 transition hover:bg-white/10"
+					>
+						<img src={card.icon.src} alt="" class="size-14 shrink-0 rounded-full" />
+						<div class="flex flex-1 flex-col items-start gap-1">
+							<p class="font-display text-[22px] font-bold tracking-[-0.066px] text-white">
+								{card.title}
+							</p>
+							<p class="font-display text-xs leading-[1.5] text-white/70">{card.description}</p>
+						</div>
+						<span class="flex size-12 shrink-0 items-center justify-center text-lg">→</span>
+					</a>
+				))
+			}
+		</div>
+
+		<div class="h-px w-full bg-white/10"></div>
+
+		<div class="flex flex-col items-start gap-2 pt-2 font-display text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+			<p>{copyright}</p>
+			<p>{footer.designedBy}</p>
 		</div>
 	</div>
 </footer>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>("[data-back-to-top]").forEach((button) => {
+		button.addEventListener("click", () => {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+		});
+	});
+</script>

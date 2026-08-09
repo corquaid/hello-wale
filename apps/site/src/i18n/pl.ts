@@ -55,14 +55,45 @@ export const pl: Dictionary = {
 		partnerWithUs: "Zostań partnerem",
 	},
 	common: {
-		footerRights: "Wszelkie prawa zastrzeżone.",
 		footer: {
-			tagline:
-				"Platforma dla pobytów łączących pracę zdalną z podróżą — stworzona dla firm, gospodarzy i profesjonalistów zdalnych.",
-			exploreHeading: "Poznaj",
-			resourcesHeading: "Zasoby",
+			backToTop: "Powrót do góry",
+			columns: {
+				companies: {
+					heading: "Dla firm",
+					links: ["Poznaj workation", "Zostań partnerem", "Cennik", "Case studies"],
+				},
+				hosts: {
+					heading: "Dla gospodarzy",
+					links: ["Zostań gospodarzem", "Korzyści dla pierwszych gospodarzy", "Materiały dla gospodarzy"],
+				},
+				company: {
+					heading: "Firma",
+					links: ["Historia HelloWale", "Blog", "Skontaktuj się z nami"],
+				},
+				legal: {
+					heading: "Informacje prawne",
+					links: ["Regulamin", "Polityka prywatności", "Polityka cookies"],
+				},
+			},
 			contactHeading: "Skontaktuj się",
-			contactLabel: "Skontaktuj się z nami",
+			contactEmail: "hello@hellowale.com",
+			contactPhone: "+48 XXX XXX XXX",
+			ctaCards: {
+				companies: {
+					title: "Dla firm",
+					description: "Kompletny pakiet workation dla Twojego zespołu",
+				},
+				hosts: {
+					title: "Dla gospodarzy",
+					description: "Proste zarządzanie ofertą przez cały rok",
+				},
+				guests: {
+					title: "Dla gości",
+					description: "Odkryj miejsca gotowe do pracy na całym świecie",
+				},
+			},
+			copyright: "© HelloWale {year} · HelloWale, Warszawa, Polska",
+			designedBy: "Zaprojektowane przez GreenAgency",
 		},
 		forCompanies: {
 			eyebrow: "Dla firm",
@@ -107,19 +138,19 @@ export const pl: Dictionary = {
 					title: "Tam, gdzie pogłębia się koncentracja",
 					description:
 						"To samo biurko, ten sam widok, te same myśli — mózg filtruje znajome otoczenie, w tym pomysły, które z niego płyną.",
-					alt: "Osoba w słuchawkach skupiona na laptopie przy oknie",
+					alt: "Przytulne domowe stanowisko pracy z podstawką na laptopa, monitorem i drzewkiem oliwnym przy słonecznym oknie",
 				},
 				{
 					title: "Tam, gdzie rodzą się pomysły",
 					description:
 						"Dlaczego najlepsze pomysły przychodzą na wakacjach, a rzadko przy biurku. Nowe otoczenie aktywuje tryb domyślny mózgu — źródło wglądu.",
-					alt: "Dwoje współpracowników przybijających piątkę w jasnym biurze",
+					alt: "Mężczyzna pracujący przy biurku z regulacją wysokości, za oknem widać plażę i ocean",
 				},
 				{
 					title: "Tam, gdzie wraca energia",
 					description:
 						"Dlaczego tydzień z dala od biurka daje więcej niż miesiąc urlopu przy nim. Natura i nowe przestrzenie szybciej regenerują zdolności poznawcze niż sam odpoczynek.",
-					alt: "Para współpracująca razem, jedna osoba w okularach, w jasnej, ciepłej przestrzeni",
+					alt: "Mężczyzna oddychający świeżym powietrzem na pomoście nad jeziorem, otoczony górami",
 				},
 			],
 		},

@@ -1,8 +1,18 @@
 ---
 import { Image } from "astro:assets";
 import companiesDoor from "../assets/images/companies-door.jpg";
-import benefitIcon from "../assets/images/benefit-icon.png";
+import benefitIconLowerCost from "../assets/images/benefit-icon-lower-cost.png";
+import benefitIconEmployerBranding from "../assets/images/benefit-icon-employer-branding.png";
+import benefitIconHigherCreativity from "../assets/images/benefit-icon-higher-creativity.png";
+import benefitIconBetterRetention from "../assets/images/benefit-icon-better-retention.png";
 import CtaButton from "./CtaButton.astro";
+
+const benefitIcons = [
+	benefitIconLowerCost,
+	benefitIconEmployerBranding,
+	benefitIconHigherCreativity,
+	benefitIconBetterRetention,
+];
 
 interface Props {
 	eyebrow?: string;
@@ -61,9 +71,13 @@ const {
 
 				<div class="grid w-full max-w-xl grid-cols-1 gap-4 sm:grid-cols-2">
 					{
-						benefits.map((benefit) => (
+						benefits.map((benefit, index) => (
 							<div class="flex items-center gap-2 rounded-xl bg-[#fff3e7] px-5 py-4">
-								<img src={benefitIcon.src} alt="" class="h-8 w-8 shrink-0 object-contain" />
+								<img
+									src={benefitIcons[index]?.src}
+									alt=""
+									class="h-8 w-8 shrink-0 object-contain"
+								/>
 								<p class="font-display text-base font-medium text-wale-700">{benefit}</p>
 							</div>
 						))

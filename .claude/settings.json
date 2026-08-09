@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Figma__get_figma_skill",
+      "mcp__claude_ai_Figma__get_design_context",
+      "Bash(jq -r .[1].text /Users/cormac-cc/.claude/projects/-Users-cormac-cc-Coding-hello-wale/d12b16e3-33c2-4b78-a6ec-cfdf851e8e69/tool-results/mcp-claude_ai_Figma-get_design_context-1786274010414.txt)",
+      "Bash(jq -r .[0].text /Users/cormac-cc/.claude/projects/-Users-cormac-cc-Coding-hello-wale/d12b16e3-33c2-4b78-a6ec-cfdf851e8e69/tool-results/mcp-claude_ai_Figma-get_design_context-1786274010414.txt)",
+      "mcp__claude_ai_Figma__download_assets",
+      "Bash(mkdir -p whatwedo forcompanies usecases science forhosts howitworks review)",
+      "Bash(curl -sL -o whatwedo/raw1.png \"https://www.figma.com/api/mcp/asset/12613d2c-22b6-4d64-877d-d4102b5277ae\")",
+      "Bash(curl -sL -o whatwedo/raw2.png \"https://www.figma.com/api/mcp/asset/f381fc15-5974-4283-b45a-f9795107675b\")",
+      "Bash(curl -sL -o whatwedo/raw3.jpeg \"https://www.figma.com/api/mcp/asset/3517818f-ac1d-44b9-b8ff-8b7be36b685c\")",
+      "Bash(curl -sL -o whatwedo/raw4.png \"https://www.figma.com/api/mcp/asset/2027beea-4092-443d-8a9a-7b10cad7be4f\")"
+    ]
+  }
+}

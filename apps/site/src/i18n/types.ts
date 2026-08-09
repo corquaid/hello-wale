@@ -42,6 +42,16 @@ export interface Pillar {
 	cta: string;
 }
 
+export interface FooterLinkColumn {
+	heading: string;
+	links: string[];
+}
+
+export interface FooterCtaCard {
+	title: string;
+	description: string;
+}
+
 export interface HeroCopy {
 	beforeText: string;
 	bubbleText: string;
@@ -86,13 +96,24 @@ export interface Dictionary {
 		partnerWithUs: string;
 	};
 	common: {
-		footerRights: string;
 		footer: {
-			tagline: string;
-			exploreHeading: string;
-			resourcesHeading: string;
+			backToTop: string;
+			columns: {
+				companies: FooterLinkColumn;
+				hosts: FooterLinkColumn;
+				company: FooterLinkColumn;
+				legal: FooterLinkColumn;
+			};
 			contactHeading: string;
-			contactLabel: string;
+			contactEmail: string;
+			contactPhone: string;
+			ctaCards: {
+				companies: FooterCtaCard;
+				hosts: FooterCtaCard;
+				guests: FooterCtaCard;
+			};
+			copyright: string;
+			designedBy: string;
 		};
 		forCompanies: {
 			eyebrow: string;

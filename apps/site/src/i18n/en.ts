@@ -52,13 +52,45 @@ export const en: Dictionary = {
 		partnerWithUs: "Partner with us",
 	},
 	common: {
-		footerRights: "All rights reserved.",
 		footer: {
-			tagline: "The platform for remote work stays — built for companies, hosts, and remote professionals.",
-			exploreHeading: "Explore",
-			resourcesHeading: "Resources",
+			backToTop: "Back to top",
+			columns: {
+				companies: {
+					heading: "For Companies",
+					links: ["Learn about workation", "Partner with us", "Pricing", "Case studies"],
+				},
+				hosts: {
+					heading: "For Hosts",
+					links: ["Become a host", "Founding host benefits", "Host resources"],
+				},
+				company: {
+					heading: "Company",
+					links: ["HelloWale Story", "Blog", "Contact us"],
+				},
+				legal: {
+					heading: "Legal",
+					links: ["Terms & Conditions", "Privacy Policy", "Cookie Policy"],
+				},
+			},
 			contactHeading: "Get in touch",
-			contactLabel: "Contact us",
+			contactEmail: "hello@hellowale.com",
+			contactPhone: "+48 XXX XXX XXX",
+			ctaCards: {
+				companies: {
+					title: "For Companies",
+					description: "Complete workation benefits for your team",
+				},
+				hosts: {
+					title: "For Hosts",
+					description: "Simple year-round hosting management",
+				},
+				guests: {
+					title: "For Guests",
+					description: "Discover work-ready stays around the world",
+				},
+			},
+			copyright: "© HelloWale {year} · HelloWale, Warsaw, Poland",
+			designedBy: "Designed by GreenAgency",
 		},
 		forCompanies: {
 			eyebrow: "For Companies",
@@ -103,19 +135,19 @@ export const en: Dictionary = {
 					title: "Where focus deepens",
 					description:
 						"Same desk, same view, same thinking — the brain filters familiar surroundings, including the ideas that come from them.",
-					alt: "A person wearing headphones focused on a laptop by a window",
+					alt: "A cozy home desk setup with a laptop stand, monitor, and olive plant by a sunlit window",
 				},
 				{
 					title: "Where ideas connect",
 					description:
 						"Why the best ideas come on holiday and rarely back at the desk. Novel environments activate the brain's default mode — the source of insight.",
-					alt: "Two colleagues high-fiving in a bright office",
+					alt: "A man working at a standing desk with a beach and ocean visible through the window",
 				},
 				{
 					title: "Where energy returns",
 					description:
 						"Why a week away often beats a month at the desk. Nature and new spaces reset cognitive capacity faster than time off alone.",
-					alt: "A couple collaborating together, one wearing glasses, in a bright warm space",
+					alt: "A man breathing in the fresh air on a lakeside dock surrounded by mountains",
 				},
 			],
 		},
@@ -151,13 +183,13 @@ export const en: Dictionary = {
 					cta: "Partner your company",
 				},
 				{
-					heading: "Hosts facing seasonality",
-					body: "Help your team break routine, boost wellbeing, and build a culture people stay for.",
+					heading: "Where empty months fill up",
+					body: "Bring in professional remote guests when tourists don't. Longer stays, steadier income, year-round bookings.",
 					cta: "List your property",
 				},
 				{
-					heading: "Remote professionals tired of working alone",
-					body: "Help your team break routine, boost wellbeing, and build a culture people stay for.",
+					heading: "For anyone whose desk stopped inspiring them.",
+					body: "Solo or small groups. A few days or a full month. Find stays that give you what your desk can't.",
 					cta: "Get early access",
 				},
 			],
