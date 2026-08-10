@@ -25,17 +25,17 @@ const howItWorksSteps = [
 
 const forHostsBenefits = [
 	{
-		icon: "💸",
+		icon: "zero-rates",
 		title: "0% rates",
 		description: "Rates at 0% for the first free months.",
 	},
 	{
-		icon: "🤝",
+		icon: "co-create",
 		title: "Co-create the platform with us",
 		description: "Your feedback shapes the product.",
 	},
 	{
-		icon: "⭐",
+		icon: "featured",
 		title: "Featured listing everyone sees",
 		description: "On our homepage, in our launch press.",
 	},

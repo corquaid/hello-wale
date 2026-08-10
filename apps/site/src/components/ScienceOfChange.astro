@@ -91,7 +91,10 @@ const {
 								widths={cardWide[index] ? [640, 1024, 1600] : [480, 768, 1100]}
 								sizes={cardWide[index] ? "100vw" : "(min-width: 1024px) 50vw, 85vw"}
 							/>
-							<div class="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/10 to-transparent" />
+							<div
+								class="pointer-events-none absolute inset-0 -z-10"
+								style="background: linear-gradient(0deg, #000 -9.1%, rgba(0, 0, 0, 0.00) 50%);"
+							/>
 							<div
 								class:list={[
 									"absolute bottom-0 left-0 flex flex-col items-start gap-3 p-8",

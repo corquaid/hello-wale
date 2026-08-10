@@ -28,17 +28,17 @@ const howItWorksSteps = [
 
 const forHostsBenefits = [
 	{
-		icon: "💸",
+		icon: "zero-rates",
 		title: "0% stawki",
 		description: "Stawki 0% przez pierwsze darmowe miesiące.",
 	},
 	{
-		icon: "🤝",
+		icon: "co-create",
 		title: "Współtwórz platformę razem z nami",
 		description: "Twoja opinia kształtuje produkt.",
 	},
 	{
-		icon: "⭐",
+		icon: "featured",
 		title: "Wyróżniona oferta widoczna dla wszystkich",
 		description: "Na naszej stronie głównej i w materiałach promujących nasz start.",
 	},

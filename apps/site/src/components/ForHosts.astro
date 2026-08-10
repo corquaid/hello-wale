@@ -1,7 +1,16 @@
 ---
 import { Image } from "astro:assets";
 import hostsBg from "../assets/images/hosts-bg.jpg";
+import iconZeroRates from "../assets/images/benefit-icon-hosts-zero-rates.png";
+import iconCoCreate from "../assets/images/benefit-icon-hosts-co-create.png";
+import iconFeatured from "../assets/images/benefit-icon-hosts-featured.png";
 import CtaButton from "./CtaButton.astro";
+
+const benefitIcons: Record<string, ImageMetadata> = {
+	"zero-rates": iconZeroRates,
+	"co-create": iconCoCreate,
+	featured: iconFeatured,
+};
 
 interface Benefit {
 	icon: string;
@@ -23,17 +32,17 @@ const {
 	paragraph = "We're partnering with a small group of founding hosts to shape what HelloWale becomes. Get in early, help us design it, and earn exclusive launch benefits for life.",
 	benefits = [
 		{
-			icon: "💸",
+			icon: "zero-rates",
 			title: "0% rates",
 			description: "Rates at 0% for the first free months.",
 		},
 		{
-			icon: "🤝",
+			icon: "co-create",
 			title: "Co-create the platform with us",
 			description: "Your feedback shapes the product.",
 		},
 		{
-			icon: "⭐",
+			icon: "featured",
 			title: "Featured listing everyone sees",
 			description: "On our homepage, in our launch press.",
 		},
@@ -76,9 +85,11 @@ const {
 			{
 				benefits.map((benefit) => (
 					<div class="flex items-center gap-4 rounded-xl bg-white p-5 shadow-sm">
-						<div class="flex size-10 shrink-0 items-center justify-center text-lg">
-							{benefit.icon}
-						</div>
+						<img
+							src={benefitIcons[benefit.icon]?.src}
+							alt=""
+							class="h-10 w-10 shrink-0 object-contain"
+						/>
 						<div class="flex flex-col items-start gap-0.5">
 							<p class="font-display text-[15px] font-bold tracking-[-0.045px] text-[#131313]">
 								{benefit.title}
