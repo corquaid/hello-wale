@@ -1,14 +1,19 @@
 ---
+import companiesDesk from "@/assets/images/bigger-picture.png";
+import companiesHeroPhoto from "@/assets/images/companies-page-hero.png";
+import scienceFocus from "@/assets/images/science-of-change-1.png";
+import scienceIdeas from "@/assets/images/science-of-change-2.png";
+import scienceEnergyCompanies from "@/assets/images/companies-science-of-change-3.jpg";
+import usecaseMarketing from "@/assets/images/usecase-marketing.jpg";
+import usecaseTechteam from "@/assets/images/usecase-techteam-2.jpg";
+import { useTranslations, type Locale } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
+import ForCompanies from "../ForCompanies.astro";
 import Hero from "../Hero.astro";
 import HowItWorks from "../HowItWorks.astro";
-import ForCompanies from "../ForCompanies.astro";
-import WhyWellbeing from "../WhyWellbeing.astro";
-import UseCases from "../UseCases.astro";
 import ScienceOfChange from "../ScienceOfChange.astro";
-import usecaseMarketing from "@/assets/images/usecase-marketing.jpg";
-import usecaseTechteam from "@/assets/images/usecase-techteam.jpg";
-import { useTranslations, type Locale } from "@/i18n/utils";
+import UseCases from "../UseCases.astro";
+import WhyWellbeing from "../WhyWellbeing.astro";
 
 interface Props {
 	lang: Locale;
@@ -38,9 +43,11 @@ const useCases = t.useCases.items.map((item, index) => ({
 		bubbleText={t.hero.bubbleText}
 		afterText={t.hero.afterText}
 		subtext={t.hero.subtext}
-		showPhoto={false}
-		navLogoVariant="primary"
-		navTextVariant="dark"
+		photo={companiesHeroPhoto}
+		showPhoto={true}
+		photoScale={1.15}
+		photoOrigin="bottom"
+		contentPosition="end"
 		ctas={[
 			{ label: t.hero.ctaMaroon, variant: "maroon" },
 			{ label: t.hero.ctaPeach, variant: "peach" },
@@ -55,7 +62,7 @@ const useCases = t.useCases.items.map((item, index) => ({
 		steps={t.howItWorks.steps}
 		ctaLabel={t.howItWorks.ctaLabel}
 	/>
-	<section class="bg-white px-6 py-16 text-center sm:py-20">
+	<section class="bg-white px-6 py-16 text-center sm:py-16">
 		<p class="font-display text-3xl font-bold tracking-[-0.96px] text-wale-700 sm:text-4xl lg:text-5xl">
 			{t.biggerPicture}
 		</p>
@@ -64,7 +71,9 @@ const useCases = t.useCases.items.map((item, index) => ({
 		eyebrow={common.forCompanies.eyebrow}
 		headline={common.forCompanies.headline}
 		subtext={common.forCompanies.subtext}
-		imageAlt={common.forCompanies.imageAlt}
+		image={companiesDesk}
+		imageAlt="A standing desk with a laptop and monitor overlooking green hills through a window"
+		imageLayout="compact"
 		benefits={common.forCompanies.benefits}
 		ctaLabel={common.forCompanies.ctaLabel}
 	/>
@@ -86,5 +95,6 @@ const useCases = t.useCases.items.map((item, index) => ({
 		headline={common.scienceOfChange.headline}
 		subtext={common.scienceOfChange.subtext}
 		cards={common.scienceOfChange.cards}
+		images={[scienceFocus, scienceIdeas, scienceEnergyCompanies]}
 	/>
 </Layout>

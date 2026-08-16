@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import companiesDoor from "../assets/images/companies-door.jpg";
 import benefitIconLowerCost from "../assets/images/benefit-icon-lower-cost.png";
 import benefitIconEmployerBranding from "../assets/images/benefit-icon-employer-branding.png";
@@ -18,7 +19,9 @@ interface Props {
 	eyebrow?: string;
 	headline?: string;
 	subtext?: string;
+	image?: ImageMetadata;
 	imageAlt?: string;
+	imageLayout?: "full" | "compact";
 	benefits?: string[];
 	ctaLabel?: string;
 }
@@ -27,25 +30,48 @@ const {
 	eyebrow = "For Companies",
 	headline = "The wellbeing benefit\nyour team will actually use.",
 	subtext = "Workation isn't a perk anymore — it's how the best teams stay sharp, creative, and retained. HelloWale makes it simple to offer.",
+	image = companiesDoor,
 	imageAlt = "A hotel-style door hanger reading 'Where work doesn't feel like work anymore' on a dark wood door surrounded by jungle greenery",
+	imageLayout = "full",
 	benefits = ["Lower cost than you think", "Employer branding", "Higher creativity", "Better retention"],
 	ctaLabel = "Partner your company",
 } = Astro.props;
+
+const isCompact = imageLayout === "compact";
 ---
 
-<section class="bg-white">
-	<div class="flex flex-col lg:flex-row">
-		<div class="relative h-90 shrink-0 sm:h-120 lg:h-auto lg:w-[49%]">
+<section class:list={["bg-white", isCompact && "px-6 py-16 sm:px-10 lg:px-20 lg:py-24"]}>
+	<div
+		class:list={[
+			"flex flex-col",
+			isCompact
+				? "mx-auto max-w-7xl gap-10 lg:flex-row lg:items-center lg:gap-16"
+				: "lg:flex-row",
+		]}
+	>
+		<div
+			class:list={[
+				"relative w-full shrink-0 overflow-hidden",
+				isCompact
+					? "aspect-51/55 rounded-tl-4xl rounded-tr-4xl rounded-bl-4xl lg:w-[45%]"
+					: "h-90 sm:h-120 lg:h-auto lg:w-[49%]",
+			]}
+		>
 			<Image
-				src={companiesDoor}
+				src={image}
 				alt={imageAlt}
 				class="absolute inset-0 h-full w-full object-cover"
 				widths={[640, 960, 1400, 2048]}
-				sizes="(min-width: 1024px) 60vw, 100vw"
+				sizes={isCompact ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 60vw, 100vw"}
 			/>
 		</div>
 
-		<div class="flex flex-1 flex-col items-start justify-center gap-8 px-6 py-16 sm:px-10 lg:px-20 lg:py-24">
+		<div
+			class:list={[
+				"flex flex-1 flex-col items-start justify-center gap-8",
+				!isCompact && "px-6 py-16 sm:px-10 lg:px-20 lg:py-24",
+			]}
+		>
 			<div class="flex flex-col items-start gap-6">
 				<p
 					class="text-wale-700 font-display text-[11px] tracking-[0.33px] uppercase"
