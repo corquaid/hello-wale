@@ -1,0 +1,74 @@
+---
+interface Props {
+	heading?: string;
+	subtext?: string;
+	placeholder?: string;
+	emailAriaLabel?: string;
+	submitAriaLabel?: string;
+	successMessage?: string;
+}
+
+const {
+	heading = "Better ideas, delivered.",
+	subtext = "Launch news, early access, and founding offers for companies and hosts, before anyone else hears about them.",
+	placeholder = "Enter your email address",
+	emailAriaLabel = "Email address",
+	submitAriaLabel = "Submit",
+	successMessage = "Thanks — we'll be in touch when it's your turn.",
+} = Astro.props;
+---
+
+<section class="px-6 py-10 sm:px-10 lg:px-20">
+	<div
+		class="mx-auto flex max-w-7xl flex-col items-center gap-8 rounded-[40px] px-6 py-16 text-center sm:px-16 sm:py-20"
+		style="background-image: linear-gradient(166deg, #fadec2 1.5%, #d19161 33.7%, #3d142b 99.96%);"
+	>
+		<p class="font-display text-3xl font-bold tracking-[-0.16px] text-white sm:text-[40px]">{heading}</p>
+		<p class="max-w-121 font-display text-base tracking-[-0.064px] text-white">{subtext}</p>
+
+		<form
+			class="mx-auto flex w-full max-w-101 items-center justify-between rounded-bl-2xl rounded-tl-2xl rounded-tr-2xl border border-wale-peach bg-wale-peach/16 py-3 pr-3 pl-6"
+			data-email-capture
+		>
+			<input
+				type="email"
+				required
+				placeholder={placeholder}
+				aria-label={emailAriaLabel}
+				class="w-full bg-transparent font-display text-sm text-white placeholder:text-white/80 focus:outline-none"
+			/>
+			<button
+				type="submit"
+				aria-label={submitAriaLabel}
+				class="flex size-14.75 shrink-0 items-center justify-center rounded-bl-2xl rounded-tl-2xl rounded-tr-2xl bg-wale-cream"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="#511A3B"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="h-4 w-4"
+				>
+					<path d="M5 12h14M13 6l6 6-6 6" />
+				</svg>
+			</button>
+		</form>
+		<p class="hidden font-display text-sm text-wale-peach" data-email-success>
+			{successMessage}
+		</p>
+	</div>
+</section>
+
+<script>
+	document.querySelectorAll<HTMLFormElement>("[data-email-capture]").forEach((form) => {
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+			const success = form.parentElement?.querySelector<HTMLElement>("[data-email-success]");
+			form.classList.add("hidden");
+			success?.classList.remove("hidden");
+		});
+	});
+</script>

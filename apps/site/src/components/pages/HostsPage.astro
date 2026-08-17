@@ -5,6 +5,7 @@ import ForHosts from "../ForHosts.astro";
 import AntiSeasonality from "../AntiSeasonality.astro";
 import HowItWorks from "../HowItWorks.astro";
 import hostsHeroDoor from "@/assets/images/hosts-hero-door.jpg";
+import hostsHeroMobile from "@/assets/images/hosts-hero-bg-mobile.jpg";
 import { useTranslations, type Locale } from "@/i18n/utils";
 
 interface Props {
@@ -32,6 +33,7 @@ const t = useTranslations(lang).hostsPage;
 			{ label: t.hero.ctaListing, variant: "cream" },
 		]}
 		photo={hostsHeroDoor}
+		mobilePhoto={hostsHeroMobile}
 		navVariant="transparent"
 		align="left"
 		bubbleWidthClass="w-[5.4em]"

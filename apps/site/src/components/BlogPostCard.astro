@@ -1,26 +1,65 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { getTopicLabel } from "@/content/blog-topics";
+import { formatPostDate, getReadingTime } from "@/lib/blog";
 
 interface Props {
 	post: CollectionEntry<"blog">;
+	variant?: "grid" | "sidebar";
 }
 
-const { post } = Astro.props;
+const { post, variant = "grid" } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const meta = `${formatPostDate(post.data.pubDate)}  ·  ${getReadingTime(post.body)}`;
 ---
 
-<article class="py-6">
-	<a href={`${base}blog/${post.id}`} class="font-display text-xl font-semibold text-wale-800 hover:text-wale-700">
-		{post.data.title}
-	</a>
-	<p class="mt-1 text-sm text-slate-500">
-		{
-			post.data.pubDate.toLocaleDateString("en-US", {
-				year: "numeric",
-				month: "long",
-				day: "numeric",
-			})
-		}
-	</p>
-	<p class="mt-2 text-slate-600">{post.data.description}</p>
-</article>
+{
+	variant === "grid" ? (
+		<a
+			href={`${base}blog/${post.id}`}
+			class="group flex flex-col overflow-hidden rounded-3xl transition-opacity hover:opacity-90"
+		>
+			<div class="h-48 w-full overflow-hidden rounded-3xl">
+				<Image
+					src={post.data.heroImage}
+					alt=""
+					class="h-full w-full object-cover"
+					widths={[320, 480, 640]}
+					sizes="(min-width: 1024px) 25vw, 90vw"
+					loading="lazy"
+				/>
+			</div>
+			<div class="flex flex-1 flex-col justify-center p-8">
+				<div class="flex flex-col items-start gap-3">
+					<div class="flex flex-wrap gap-1.5">
+						{post.data.categories.map(category => (
+							<span class="rounded-full bg-[#ffe7d3] px-2.5 py-1.5 font-display text-[10px] text-wale-700">
+								{getTopicLabel(category)}
+							</span>
+						))}
+					</div>
+					<p class="font-display text-base leading-tight text-[#0f1d3a]">{post.data.title}</p>
+					<p class="text-xs text-[#5c6680]">{meta}</p>
+				</div>
+			</div>
+		</a>
+	) : (
+		<a href={`${base}blog/${post.id}`} class="flex flex-1 items-center gap-6 p-8 transition-opacity hover:opacity-90">
+			<div class="size-29 shrink-0 overflow-hidden rounded-2xl">
+				<Image
+					src={post.data.heroImage}
+					alt=""
+					class="h-full w-full object-cover"
+					widths={[116, 232]}
+					sizes="116px"
+					loading="lazy"
+				/>
+			</div>
+			<div class="flex flex-1 flex-col gap-4 font-display">
+				<p class="text-base leading-tight text-[#0f1d3a]">{post.data.title}</p>
+				<p class="text-xs text-[#5c6680]">{meta}</p>
+			</div>
+		</a>
+	)
+}

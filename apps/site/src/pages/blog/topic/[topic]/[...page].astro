@@ -1,0 +1,62 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import BlogTopics from "@/components/BlogTopics.astro";
+import BlogPostCard from "@/components/BlogPostCard.astro";
+import BlogCta from "@/components/BlogCta.astro";
+import BlogPagination from "@/components/BlogPagination.astro";
+import { BLOG_TOPICS, getTopicLabel } from "@/content/blog-topics";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+	return BLOG_TOPICS.flatMap(topic => {
+		const topicPosts = posts.filter(post => post.data.categories.includes(topic.slug));
+		return paginate(topicPosts, { pageSize: 8, params: { topic: topic.slug } });
+	});
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { topic } = Astro.params;
+const base = import.meta.env.BASE_URL;
+
+const firstRow = page.data.slice(0, 4);
+const secondRow = page.data.slice(4, 8);
+const topicLabel = getTopicLabel(topic!);
+---
+
+<Layout title={`${topicLabel} — Blog`} description={`Articles about ${topicLabel.toLowerCase()}.`}>
+	<BlogTopics activeSlug={topic} />
+
+	<section class="px-6 py-10 sm:px-10 lg:px-20">
+		<div class="mx-auto flex max-w-7xl flex-col gap-10">
+			<p class="font-display text-2xl leading-tight text-[#0a1633] sm:text-[32px]">{topicLabel}</p>
+
+			{page.data.length === 0 ? (
+				<p class="text-[#5c6680]">No articles in this topic yet.</p>
+			) : (
+				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					{firstRow.map(post => <BlogPostCard post={post} />)}
+				</div>
+			)}
+		</div>
+	</section>
+
+	{secondRow.length > 0 && (
+		<>
+			<BlogCta />
+			<section class="px-6 pb-10 sm:px-10 lg:px-20">
+				<div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					{secondRow.map(post => <BlogPostCard post={post} />)}
+				</div>
+			</section>
+		</>
+	)}
+
+	<section class="px-6 pb-16 sm:px-10 lg:px-20">
+		<div class="mx-auto max-w-7xl">
+			<BlogPagination page={page} basePath={`${base}blog/topic/${topic}`} />
+		</div>
+	</section>
+</Layout>

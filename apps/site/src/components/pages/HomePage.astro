@@ -12,6 +12,7 @@ import HowItWorks from "../HowItWorks.astro";
 import EmailCapture from "../EmailCapture.astro";
 import usecaseMarketing from "@/assets/images/usecase-marketing.jpg";
 import usecaseTechteam from "@/assets/images/usecase-techteam-2.jpg";
+import homepageHeroMobile from "@/assets/images/homepage-hero-bg-mobile.png";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { useTranslations, type Locale } from "@/i18n/utils";
 
@@ -44,6 +45,7 @@ const useCases = t.useCases.items.map((item, index) => ({
 			{ label: t.hero.ctaGhost, variant: "ghost" },
 			{ label: t.hero.ctaCream, variant: "cream" },
 		]}
+		mobilePhoto={homepageHeroMobile}
 		lang={lang}
 		currentPath=""
 	/>

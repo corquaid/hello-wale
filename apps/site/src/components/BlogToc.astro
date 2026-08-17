@@ -1,0 +1,64 @@
+---
+export interface TocEntry {
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	entries: TocEntry[];
+	heading?: string;
+}
+
+const { entries, heading = "Table of contents" } = Astro.props;
+---
+
+{
+	entries.length > 0 && (
+		<nav
+			class="sticky top-24 flex w-full flex-col gap-3 self-start rounded-3xl bg-[#fff2e5] px-6 py-8"
+			data-toc
+			aria-label="Table of contents"
+		>
+			<p class="font-display text-base text-[#0f1d3a]">{heading}</p>
+			{entries.map(entry => (
+				<a
+					href={`#${entry.slug}`}
+					data-toc-link={entry.slug}
+					class="group flex items-center gap-3 rounded-xl py-2 pr-6 pl-4 font-display text-base text-wale-700/33 transition-colors data-[active=true]:text-[#0a1633]"
+				>
+					<span class="size-2 shrink-0 rounded-full bg-wale-700/33 transition-colors group-data-[active=true]:bg-wale-700" />
+					{entry.text}
+				</a>
+			))}
+		</nav>
+	)
+}
+
+<script>
+	document.querySelectorAll<HTMLElement>("[data-toc]").forEach((toc) => {
+		const links = Array.from(toc.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"));
+		const targets = links
+			.map((link) => document.getElementById(link.dataset.tocLink ?? ""))
+			.filter((el): el is HTMLElement => el !== null);
+		if (targets.length === 0) return;
+
+		const setActive = (slug: string) => {
+			links.forEach((link) => {
+				link.dataset.active = String(link.dataset.tocLink === slug);
+			});
+		};
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				const visible = entries
+					.filter((entry) => entry.isIntersecting)
+					.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+				if (visible) setActive(visible.target.id);
+			},
+			{ rootMargin: "-15% 0px -70% 0px", threshold: 0 },
+		);
+		targets.forEach((target) => observer.observe(target));
+
+		setActive(targets[0]!.id);
+	});
+</script>

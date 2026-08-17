@@ -22,6 +22,7 @@ interface Props {
 	showCtas?: boolean;
 	showPhoto?: boolean;
 	photo?: ImageMetadata;
+	mobilePhoto?: ImageMetadata;
 	navVariant?: "solid" | "transparent";
 	navLogoVariant?: "secondary" | "primary";
 	navTextVariant?: "light" | "dark";
@@ -31,6 +32,9 @@ interface Props {
 	photoPosition?: string;
 	photoScale?: number;
 	photoOrigin?: string;
+	mobilePhotoPosition?: string;
+	mobilePhotoScale?: number;
+	mobilePhotoOrigin?: string;
 	lang?: Locale;
 	currentPath?: string;
 }
@@ -47,6 +51,7 @@ const {
 	showCtas = true,
 	showPhoto = true,
 	photo = heroBg,
+	mobilePhoto,
 	navVariant = "transparent",
 	navLogoVariant = "secondary",
 	navTextVariant = "light",
@@ -56,6 +61,9 @@ const {
 	photoPosition = "center",
 	photoScale = 1,
 	photoOrigin = "center",
+	mobilePhotoPosition = "center",
+	mobilePhotoScale = 1,
+	mobilePhotoOrigin = "center",
 	lang = "en",
 	currentPath = "",
 } = Astro.props;
@@ -68,16 +76,41 @@ const {
 	{
 		showPhoto && (
 			<div class="absolute inset-0" aria-hidden="true">
-				<Image
-					src={photo}
-					alt=""
-					class="h-full w-full object-cover"
-					style={`object-position: ${photoPosition}; transform: scale(${photoScale}); transform-origin: ${photoOrigin};`}
-					widths={[640, 1024, 1512, 2048]}
-					sizes="100vw"
-					loading="eager"
-					fetchpriority="high"
-				/>
+				{mobilePhoto ? (
+					<>
+						<Image
+							src={mobilePhoto}
+							alt=""
+							class="h-full w-full object-cover md:hidden"
+							style={`object-position: ${mobilePhotoPosition}; transform: scale(${mobilePhotoScale}); transform-origin: ${mobilePhotoOrigin};`}
+							widths={[640, 750, 828]}
+							sizes="100vw"
+							loading="eager"
+							fetchpriority="high"
+						/>
+						<Image
+							src={photo}
+							alt=""
+							class="hidden h-full w-full object-cover md:block"
+							style={`object-position: ${photoPosition}; transform: scale(${photoScale}); transform-origin: ${photoOrigin};`}
+							widths={[1024, 1512, 2048]}
+							sizes="100vw"
+							loading="eager"
+							fetchpriority="high"
+						/>
+					</>
+				) : (
+					<Image
+						src={photo}
+						alt=""
+						class="h-full w-full object-cover"
+						style={`object-position: ${photoPosition}; transform: scale(${photoScale}); transform-origin: ${photoOrigin};`}
+						widths={[640, 1024, 1512, 2048]}
+						sizes="100vw"
+						loading="eager"
+						fetchpriority="high"
+					/>
+				)}
 				<div class="absolute inset-0 bg-black/25" />
 			</div>
 		)

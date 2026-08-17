@@ -1,0 +1,64 @@
+---
+import type { Page } from "astro";
+
+interface Props {
+	page: Page<unknown>;
+	/** Route base with no trailing slash, e.g. `${base}blog` or `${base}blog/topic/wellbeing`. */
+	basePath: string;
+}
+
+const { page, basePath } = Astro.props;
+
+const pageHref = (pageNumber: number) => (pageNumber === 1 ? basePath : `${basePath}/${pageNumber}`);
+
+const pageNumbers = Array.from({ length: page.lastPage }, (_, i) => i + 1);
+---
+
+{
+	page.lastPage > 1 && (
+		<nav class="flex items-center justify-center gap-2 pt-8" aria-label="Blog pagination">
+			{page.url.prev ? (
+				<a
+					href={pageHref(page.currentPage - 1)}
+					aria-label="Previous page"
+					class="flex size-10 items-center justify-center rounded-full bg-white"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0a1633" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 rotate-180">
+						<path d="M5 12h14M13 6l6 6-6 6" />
+					</svg>
+				</a>
+			) : (
+				<span class="size-10" aria-hidden="true" />
+			)}
+
+			<div class="flex items-center gap-2 px-4">
+				{pageNumbers.map(pageNumber => (
+					<a
+						href={pageHref(pageNumber)}
+						aria-current={pageNumber === page.currentPage ? "page" : undefined}
+						class:list={[
+							"flex size-10 items-center justify-center rounded-full font-display text-sm",
+							pageNumber === page.currentPage ? "bg-wale-peach text-white" : "text-[#0a1633] hover:bg-slate-100",
+						]}
+					>
+						{pageNumber}
+					</a>
+				))}
+			</div>
+
+			{page.url.next ? (
+				<a
+					href={pageHref(page.currentPage + 1)}
+					aria-label="Next page"
+					class="flex size-10 items-center justify-center rounded-full bg-wale-700"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+						<path d="M5 12h14M13 6l6 6-6 6" />
+					</svg>
+				</a>
+			) : (
+				<span class="size-10" aria-hidden="true" />
+			)}
+		</nav>
+	)
+}

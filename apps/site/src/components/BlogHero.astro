@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import BlogPostCard from "@/components/BlogPostCard.astro";
+import { getTopicLabel } from "@/content/blog-topics";
+import { formatPostDate, getReadingTime } from "@/lib/blog";
+
+interface Props {
+	featured: CollectionEntry<"blog">;
+	sidebar: CollectionEntry<"blog">[];
+}
+
+const { featured, sidebar } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const meta = `${formatPostDate(featured.data.pubDate)}  ·  ${getReadingTime(featured.body)}`;
+---
+
+<section class="px-6 py-10 sm:px-10 lg:px-20 lg:py-10">
+	<div class="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-8 lg:grid-cols-[831fr_489fr]">
+		<a
+			href={`${base}blog/${featured.id}`}
+			class="group relative flex min-h-100 items-end overflow-hidden rounded-[32px] p-6 sm:p-10 lg:min-h-117"
+		>
+			<Image
+				src={featured.data.heroImage}
+				alt=""
+				class="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+				widths={[600, 900, 1200]}
+				sizes="(min-width: 1024px) 55vw, 90vw"
+				loading="eager"
+			/>
+			<div class="absolute inset-0 -z-10 bg-linear-to-t from-black/80 via-black/10 to-transparent"></div>
+			<div class="relative flex flex-col items-start gap-4">
+				<div class="flex flex-wrap gap-2">
+					{featured.data.categories.map(category => (
+						<span class="rounded-full bg-[#ffe7d3] px-4 py-2 font-display text-xs text-wale-700">
+							{getTopicLabel(category)}
+						</span>
+					))}
+				</div>
+				<p class="font-display text-2xl leading-tight text-white sm:text-[32px]">{featured.data.title}</p>
+				<p class="text-xs text-white">{meta}</p>
+			</div>
+		</a>
+
+		<div class="flex flex-col divide-y divide-slate-100">
+			{sidebar.map(post => <BlogPostCard post={post} variant="sidebar" />)}
+		</div>
+	</div>
+</section>
