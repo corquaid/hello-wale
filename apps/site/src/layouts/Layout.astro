@@ -8,6 +8,7 @@ interface Props {
 	title: string;
 	description?: string;
 	showNav?: boolean;
+	navVariant?: "solid" | "floating";
 	lang?: Locale;
 	currentPath?: string;
 	translatedHref?: string;
@@ -17,6 +18,7 @@ const {
 	title,
 	description = "HelloWale — the platform for remote work stays.",
 	showNav = true,
+	navVariant = "solid",
 	lang = "en",
 	currentPath = "",
 	translatedHref,
@@ -40,7 +42,9 @@ const {
 		<title>{title} · HelloWale</title>
 	</head>
 	<body class="flex min-h-screen flex-col bg-white text-slate-900">
-		{showNav && <Nav lang={lang} currentPath={currentPath} translatedHref={translatedHref} />}
+		{showNav && (
+			<Nav variant={navVariant} lang={lang} currentPath={currentPath} translatedHref={translatedHref} />
+		)}
 		<main class="flex-1">
 			<slot />
 		</main>

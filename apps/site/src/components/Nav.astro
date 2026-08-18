@@ -1,9 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import logoSecondary from "../assets/images/logo-horizontal-secondary.png";
-import logoPrimary from "../assets/images/logo-horizontal-primary.png";
-import logoDark from "../assets/images/logo-horizontal-dark.png";
+import logoColoured from "../assets/images/logo-horizontal-coloured.png";
 import CtaButton from "./CtaButton.astro";
 import {
 	useTranslations,
@@ -14,25 +12,14 @@ import {
 } from "../i18n/utils";
 
 interface Props {
-	variant?: "solid" | "transparent";
-	logoVariant?: "secondary" | "primary";
-	textVariant?: "light" | "dark";
+	variant?: "solid" | "floating";
 	lang?: Locale;
 	currentPath?: string;
 	translatedHref?: string;
 }
 
-const {
-	variant = "solid",
-	logoVariant = "secondary",
-	textVariant = "light",
-	lang = "en",
-	currentPath = "",
-	translatedHref,
-} = Astro.props;
-const isTransparent = variant === "transparent";
-const isDarkText = isTransparent && textVariant === "dark";
-const logoLight = logoVariant === "primary" ? logoPrimary : logoSecondary;
+const { variant = "solid", lang = "en", currentPath = "", translatedHref } = Astro.props;
+const isFloating = variant === "floating";
 const base = import.meta.env.BASE_URL;
 const t = useTranslations(lang);
 
@@ -49,11 +36,7 @@ const rightLinks = [
 	{ href: homeHref, label: t.nav.faq },
 ];
 
-const linkClass = isDarkText
-	? "font-display text-[13px] font-medium text-wale-700 hover:text-wale-800"
-	: isTransparent
-		? "font-display text-[13px] font-medium text-white"
-		: "font-display text-[13px] font-medium text-gray-700 hover:text-wale-700";
+const linkClass = "font-display text-[13px] font-medium text-gray-700 hover:text-wale-700";
 
 // `translatedHref` lets a dynamic page (e.g. a specific blog post) point the
 // switcher at its exact counterpart instead of the generic route swap below.
@@ -65,28 +48,30 @@ const getLocaleHref = (loc: Locale) => {
 	return getRelativeLocaleUrl(loc, isCurrentPathTranslated ? currentPath : "");
 };
 
-const langToggleClass = isDarkText
-	? "flex items-center gap-1.5 rounded-full px-3 py-2 font-display text-[13px] font-medium text-wale-700/80 transition-colors hover:bg-black/5 hover:text-wale-800"
-	: isTransparent
-		? "flex items-center gap-1.5 rounded-full px-3 py-2 font-display text-[13px] font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-		: "flex items-center gap-1.5 rounded-full px-3 py-2 font-display text-[13px] font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-wale-700";
+const langToggleClass =
+	"flex items-center gap-1.5 rounded-full px-3 py-2 font-display text-[13px] font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-wale-700";
 ---
 
 <header
 	class={
-		isTransparent
-			? "relative z-10 py-6"
+		isFloating
+			? "relative z-10 px-0 pt-4 sm:px-6 sm:pt-6 lg:px-8 lg:pt-8"
 			: "relative z-10 border-b border-gray-200 bg-white px-6 py-4 lg:px-20"
 	}
 >
-	<div class="mx-auto hidden max-w-7xl items-center justify-between lg:flex">
+	<div
+		class:list={[
+			"mx-auto hidden max-w-7xl items-center justify-between lg:flex",
+			isFloating && "rounded-2xl bg-white px-6 py-3 shadow-[0_10px_62px_0_rgba(0,0,0,0.04)]",
+		]}
+	>
 		<nav class="flex flex-1 items-center gap-8">
 			{leftLinks.map((link) => <a href={link.href} class={linkClass}>{link.label}</a>)}
 		</nav>
 
 		<a href={homeHref} class="flex shrink-0 items-center">
 			<Image
-				src={isTransparent ? logoLight : logoDark}
+				src={logoColoured}
 				alt="hellowale"
 				widths={[300, 600]}
 				loading="eager"
@@ -146,14 +131,19 @@ const langToggleClass = isDarkText
 			<CtaButton
 				label={t.nav.partnerWithUs}
 				href={`${base}contact`}
-				variant={isTransparent ? "cream" : "primary"}
+				variant="primary"
 				size="nav"
-				class={isTransparent ? "" : "hover:bg-wale-800"}
+				class="hover:bg-wale-800"
 			/>
 		</div>
 	</div>
 
-	<div class="relative mx-auto flex max-w-7xl items-center lg:hidden">
+	<div
+		class:list={[
+			"relative mx-auto flex max-w-7xl items-center justify-between lg:hidden",
+			isFloating && "rounded-xl bg-white px-4 py-3 shadow-[0_10px_62px_0_rgba(0,0,0,0.04)]",
+		]}
+	>
 		<button
 			type="button"
 			data-nav-toggle
@@ -169,7 +159,7 @@ const langToggleClass = isDarkText
 				stroke="currentColor"
 				stroke-width="2"
 				stroke-linecap="round"
-				class={isDarkText ? "h-6 w-6 text-wale-700" : isTransparent ? "h-6 w-6 text-white" : "h-6 w-6 text-gray-700"}
+				class="h-6 w-6 text-gray-700"
 			>
 				<path d="M4 6h16M4 12h16M4 18h16" />
 			</svg>
@@ -177,7 +167,7 @@ const langToggleClass = isDarkText
 
 		<a href={homeHref} class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
 			<Image
-				src={isTransparent ? logoLight : logoDark}
+				src={logoColoured}
 				alt="hellowale"
 				widths={[220, 440]}
 				loading="eager"
@@ -204,7 +194,7 @@ const langToggleClass = isDarkText
 	>
 		<div class="relative flex items-center justify-center">
 			<Image
-				src={logoDark}
+				src={logoColoured}
 				alt="hellowale"
 				widths={[220, 440]}
 				loading="eager"
