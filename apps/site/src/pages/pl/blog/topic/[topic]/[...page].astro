@@ -9,7 +9,7 @@ import BlogPagination from "@/components/BlogPagination.astro";
 import { BLOG_TOPICS, getTopicLabel } from "@/content/blog-topics";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const posts = (await getCollection("blog", ({ data }) => data.lang !== "pl")).sort(
+	const posts = (await getCollection("blog", ({ data }) => data.lang === "pl")).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
 
@@ -25,27 +25,27 @@ const base = import.meta.env.BASE_URL;
 
 const firstRow = page.data.slice(0, 4);
 const secondRow = page.data.slice(4, 8);
-const topicLabel = getTopicLabel(topic!);
+const topicLabel = getTopicLabel(topic!, "pl");
 ---
 
 <Layout
 	title={`${topicLabel} — Blog`}
-	description={`Articles about ${topicLabel.toLowerCase()}.`}
-	lang="en"
+	description={`Artykuły o temacie: ${topicLabel.toLowerCase()}.`}
+	lang="pl"
 	currentPath="blog"
-	translatedHref={`${base}pl/blog/topic/${topic}`}
+	translatedHref={`${base}blog/topic/${topic}`}
 >
-	<BlogTopics activeSlug={topic} />
+	<BlogTopics activeSlug={topic} lang="pl" heading="Wybierz temat" />
 
 	<section class="px-6 py-10 sm:px-10 lg:px-20">
 		<div class="mx-auto flex max-w-7xl flex-col gap-10">
 			<p class="font-display text-2xl leading-tight text-[#0a1633] sm:text-[32px]">{topicLabel}</p>
 
 			{page.data.length === 0 ? (
-				<p class="text-[#5c6680]">No articles in this topic yet.</p>
+				<p class="text-[#5c6680]">Brak artykułów w tym temacie.</p>
 			) : (
 				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-					{firstRow.map(post => <BlogPostCard post={post} />)}
+					{firstRow.map(post => <BlogPostCard post={post} lang="pl" />)}
 				</div>
 			)}
 		</div>
@@ -53,10 +53,17 @@ const topicLabel = getTopicLabel(topic!);
 
 	{secondRow.length > 0 && (
 		<>
-			<BlogCta />
+			<BlogCta
+				heading="Lepsze pomysły, prosto na skrzynkę."
+				subtext="Nowości, wcześniejszy dostęp i oferty specjalne dla firm i gospodarzy, zanim usłyszy o nich ktokolwiek inny."
+				placeholder="Podaj adres e-mail"
+				emailAriaLabel="Adres e-mail"
+				submitAriaLabel="Wyślij"
+				successMessage="Dzięki — odezwiemy się, gdy przyjdzie Twoja kolej."
+			/>
 			<section class="px-6 pb-10 sm:px-10 lg:px-20">
 				<div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-					{secondRow.map(post => <BlogPostCard post={post} />)}
+					{secondRow.map(post => <BlogPostCard post={post} lang="pl" />)}
 				</div>
 			</section>
 		</>
@@ -64,7 +71,7 @@ const topicLabel = getTopicLabel(topic!);
 
 	<section class="px-6 pb-16 sm:px-10 lg:px-20">
 		<div class="mx-auto max-w-7xl">
-			<BlogPagination page={page} basePath={`${base}blog/topic/${topic}`} />
+			<BlogPagination page={page} basePath={`${base}pl/blog/topic/${topic}`} lang="pl" />
 		</div>
 	</section>
 </Layout>

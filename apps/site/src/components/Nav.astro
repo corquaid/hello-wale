@@ -19,6 +19,7 @@ interface Props {
 	textVariant?: "light" | "dark";
 	lang?: Locale;
 	currentPath?: string;
+	translatedHref?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
 	textVariant = "light",
 	lang = "en",
 	currentPath = "",
+	translatedHref,
 } = Astro.props;
 const isTransparent = variant === "transparent";
 const isDarkText = isTransparent && textVariant === "dark";
@@ -43,8 +45,8 @@ const leftLinks = [
 
 const rightLinks = [
 	{ href: "#", label: t.nav.story },
-	{ href: `${base}blog`, label: t.nav.blog },
-	{ href: `${base}faq`, label: t.nav.faq },
+	{ href: `${base}${lang === "pl" ? "pl/" : ""}blog`, label: t.nav.blog },
+	{ href: homeHref, label: t.nav.faq },
 ];
 
 const linkClass = isDarkText
@@ -53,11 +55,15 @@ const linkClass = isDarkText
 		? "font-display text-[13px] font-medium text-white"
 		: "font-display text-[13px] font-medium text-gray-700 hover:text-wale-700";
 
-// Falls back to each locale's homepage when the current page has no
-// translation yet, so the switcher never links to a 404.
+// `translatedHref` lets a dynamic page (e.g. a specific blog post) point the
+// switcher at its exact counterpart instead of the generic route swap below.
+// Without it, falls back to each locale's homepage when the current page has
+// no translation yet, so the switcher never links to a 404.
 const isCurrentPathTranslated = translatedRoutes.includes(currentPath);
-const getLocaleHref = (loc: Locale) =>
-	getRelativeLocaleUrl(loc, isCurrentPathTranslated ? currentPath : "");
+const getLocaleHref = (loc: Locale) => {
+	if (loc !== lang && translatedHref) return translatedHref;
+	return getRelativeLocaleUrl(loc, isCurrentPathTranslated ? currentPath : "");
+};
 
 const langToggleClass = isDarkText
 	? "flex items-center gap-1.5 rounded-full px-3 py-2 font-display text-[13px] font-medium text-wale-700/80 transition-colors hover:bg-black/5 hover:text-wale-800"

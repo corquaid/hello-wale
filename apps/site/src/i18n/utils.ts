@@ -16,7 +16,7 @@ export function useTranslations(locale: Locale): Dictionary {
 // that currently exist in every locale. Extend this list as more pages
 // get translated — it determines whether the Nav language switcher swaps
 // to the same page in the other locale, or falls back to that locale's home.
-export const translatedRoutes = ["", "companies", "hosts", "professionals"];
+export const translatedRoutes = ["", "companies", "hosts", "professionals", "blog"];
 
 export function getAlternateLocale(locale: Locale): Locale {
 	return locale === "en" ? "pl" : "en";

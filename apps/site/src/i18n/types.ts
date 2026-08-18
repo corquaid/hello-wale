@@ -104,16 +104,15 @@ export interface Dictionary {
 				company: FooterLinkColumn;
 				legal: FooterLinkColumn;
 			};
-			contactHeading: string;
-			contactEmail: string;
-			contactPhone: string;
 			ctaCards: {
 				companies: FooterCtaCard;
 				hosts: FooterCtaCard;
 				guests: FooterCtaCard;
 			};
 			copyright: string;
-			designedBy: string;
+			designedByPrefix: string;
+			designedByName: string;
+			euFundingNotice: string;
 		};
 		forCompanies: {
 			eyebrow: string;

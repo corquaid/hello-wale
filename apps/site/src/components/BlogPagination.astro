@@ -1,26 +1,32 @@
 ---
 import type { Page } from "astro";
+import type { Locale } from "@/i18n/utils";
 
 interface Props {
 	page: Page<unknown>;
 	/** Route base with no trailing slash, e.g. `${base}blog` or `${base}blog/topic/wellbeing`. */
 	basePath: string;
+	lang?: Locale;
 }
 
-const { page, basePath } = Astro.props;
+const { page, basePath, lang = "en" } = Astro.props;
 
 const pageHref = (pageNumber: number) => (pageNumber === 1 ? basePath : `${basePath}/${pageNumber}`);
 
 const pageNumbers = Array.from({ length: page.lastPage }, (_, i) => i + 1);
+const labels =
+	lang === "pl"
+		? { nav: "Paginacja bloga", prev: "Poprzednia strona", next: "Następna strona" }
+		: { nav: "Blog pagination", prev: "Previous page", next: "Next page" };
 ---
 
 {
 	page.lastPage > 1 && (
-		<nav class="flex items-center justify-center gap-2 pt-8" aria-label="Blog pagination">
+		<nav class="flex items-center justify-center gap-2 pt-8" aria-label={labels.nav}>
 			{page.url.prev ? (
 				<a
 					href={pageHref(page.currentPage - 1)}
-					aria-label="Previous page"
+					aria-label={labels.prev}
 					class="flex size-10 items-center justify-center rounded-full bg-white"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0a1633" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 rotate-180">
@@ -49,7 +55,7 @@ const pageNumbers = Array.from({ length: page.lastPage }, (_, i) => i + 1);
 			{page.url.next ? (
 				<a
 					href={pageHref(page.currentPage + 1)}
-					aria-label="Next page"
+					aria-label={labels.next}
 					class="flex size-10 items-center justify-center rounded-full bg-wale-700"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">

@@ -4,22 +4,25 @@ import { Image } from "astro:assets";
 import BlogPostCard from "@/components/BlogPostCard.astro";
 import { getTopicLabel } from "@/content/blog-topics";
 import { formatPostDate, getReadingTime } from "@/lib/blog";
+import type { Locale } from "@/i18n/utils";
 
 interface Props {
 	featured: CollectionEntry<"blog">;
 	sidebar: CollectionEntry<"blog">[];
+	lang?: Locale;
 }
 
-const { featured, sidebar } = Astro.props;
+const { featured, sidebar, lang = "en" } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const meta = `${formatPostDate(featured.data.pubDate)}  ·  ${getReadingTime(featured.body)}`;
+const href = `${base}${lang === "pl" ? "pl/" : ""}blog/${featured.id}`;
+const meta = `${formatPostDate(featured.data.pubDate, lang)}  ·  ${getReadingTime(featured.body, lang)}`;
 ---
 
 <section class="px-6 py-10 sm:px-10 lg:px-20 lg:py-10">
 	<div class="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-8 lg:grid-cols-[831fr_489fr]">
 		<a
-			href={`${base}blog/${featured.id}`}
-			class="group relative flex min-h-100 items-end overflow-hidden rounded-[32px] p-6 sm:p-10 lg:min-h-117"
+			href={href}
+			class="group relative flex min-h-100 items-end overflow-hidden rounded-4xl p-6 sm:p-10 lg:min-h-117"
 		>
 			<Image
 				src={featured.data.heroImage}
@@ -34,7 +37,7 @@ const meta = `${formatPostDate(featured.data.pubDate)}  ·  ${getReadingTime(fea
 				<div class="flex flex-wrap gap-2">
 					{featured.data.categories.map(category => (
 						<span class="rounded-full bg-[#ffe7d3] px-4 py-2 font-display text-xs text-wale-700">
-							{getTopicLabel(category)}
+							{getTopicLabel(category, lang)}
 						</span>
 					))}
 				</div>
@@ -44,7 +47,7 @@ const meta = `${formatPostDate(featured.data.pubDate)}  ·  ${getReadingTime(fea
 		</a>
 
 		<div class="flex flex-col divide-y divide-slate-100">
-			{sidebar.map(post => <BlogPostCard post={post} variant="sidebar" />)}
+			{sidebar.map(post => <BlogPostCard post={post} variant="sidebar" lang={lang} />)}
 		</div>
 	</div>
 </section>

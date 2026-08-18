@@ -75,9 +75,6 @@ export const pl: Dictionary = {
 					links: ["Regulamin", "Polityka prywatności", "Polityka cookies"],
 				},
 			},
-			contactHeading: "Skontaktuj się",
-			contactEmail: "hello@hellowale.com",
-			contactPhone: "+48 XXX XXX XXX",
 			ctaCards: {
 				companies: {
 					title: "Dla firm",
@@ -92,8 +89,10 @@ export const pl: Dictionary = {
 					description: "Odkryj miejsca gotowe do pracy na całym świecie",
 				},
 			},
-			copyright: "© HelloWale {year} · HelloWale, Warszawa, Polska",
-			designedBy: "Zaprojektowane przez GreenAgency",
+			copyright: "© HelloWale {year} · Wszelkie prawa zastrzeżone.",
+			designedByPrefix: "Zaprojektowane przez ",
+			designedByName: "GreenAgency",
+			euFundingNotice: "Z wkładem Programu EISMEA Unii Europejskiej",
 		},
 		forCompanies: {
 			eyebrow: "Dla firm",

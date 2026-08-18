@@ -3,14 +3,18 @@ import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { getTopicLabel } from "@/content/blog-topics";
 import { formatPostDate, getReadingTime } from "@/lib/blog";
+import type { Locale } from "@/i18n/utils";
 import logoIcon from "@/assets/images/logo-icon-secondary.png";
 
 interface Props {
 	post: CollectionEntry<"blog">;
 	author?: string;
+	lang?: Locale;
 }
 
-const { post, author = "HelloWale Team" } = Astro.props;
+const { post, author, lang = "en" } = Astro.props;
+const authorName = author ?? (lang === "pl" ? "Zespół HelloWale" : "HelloWale Team");
+const publishedLabel = lang === "pl" ? "Opublikowano" : "Published";
 ---
 
 <div class="flex flex-col items-start gap-4">
@@ -18,7 +22,7 @@ const { post, author = "HelloWale Team" } = Astro.props;
 		{
 			post.data.categories.map(category => (
 				<span class="rounded-full bg-[#ffe7d3] px-4 py-2 font-display text-xs font-medium text-wale-700">
-					{getTopicLabel(category)}
+					{getTopicLabel(category, lang)}
 				</span>
 			))
 		}
@@ -29,9 +33,9 @@ const { post, author = "HelloWale Team" } = Astro.props;
 			<Image src={logoIcon} alt="" class="h-full w-full object-contain" />
 		</span>
 		<div class="flex flex-col gap-1">
-			<p class="font-display text-sm text-[#0a1633]">{author}</p>
+			<p class="font-display text-sm text-[#0a1633]">{authorName}</p>
 			<p class="text-xs text-[#0a1633]">
-				Published: {formatPostDate(post.data.pubDate)} · {getReadingTime(post.body)}
+				{publishedLabel}: {formatPostDate(post.data.pubDate, lang)} · {getReadingTime(post.body, lang)}
 			</p>
 		</div>
 	</div>

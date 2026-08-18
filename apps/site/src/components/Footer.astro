@@ -5,9 +5,8 @@ import logoLight from "../assets/images/logo-horizontal-secondary.png";
 import ctaCompaniesIcon from "../assets/images/footer-cta-companies.png";
 import ctaHostsIcon from "../assets/images/footer-cta-hosts.png";
 import ctaGuestsIcon from "../assets/images/footer-cta-guests.png";
-import socialFacebook from "../assets/images/footer-social-facebook.png";
-import socialInstagram from "../assets/images/footer-social-instagram.png";
-import socialX from "../assets/images/footer-social-x.png";
+import euEmblem from "../assets/images/eu-emblem.svg";
+import fuTourismLogo from "../assets/images/FU-TOURISM-Logo-(1200x230)-transparent-white.png";
 import { useTranslations, type Locale } from "../i18n/utils";
 
 interface Props {
@@ -34,17 +33,13 @@ const hostsLinks = [
 
 const companyLinks = [
 	{ label: footer.columns.company.links[0], href: "#" },
-	{ label: footer.columns.company.links[1], href: `${base}blog` },
+	{ label: footer.columns.company.links[1], href: `${base}${lang === "pl" ? "pl/" : ""}blog` },
 	{ label: footer.columns.company.links[2], href: `${base}contact` },
 ];
 
 const legalLinks = footer.columns.legal.links.map((label) => ({ label, href: "#" }));
 
-const socialLinks = [
-	{ label: "Facebook", icon: socialFacebook, href: "#" },
-	{ label: "Instagram", icon: socialInstagram, href: "#" },
-	{ label: "X", icon: socialX, href: "#" },
-];
+const socialLinks = [{ label: "LinkedIn", href: "https://www.linkedin.com/company/hellowale" }];
 
 const ctaCards = [
 	{ ...footer.ctaCards.companies, icon: ctaCompaniesIcon, href: getRelativeLocaleUrl(lang, "companies") },
@@ -69,11 +64,11 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 			<button
 				type="button"
 				data-back-to-top
-				class="flex items-center gap-2 sm:gap-4"
+				class="group flex items-center gap-2 sm:gap-4"
 				aria-label={footer.backToTop}
 			>
-				<span class="hidden font-display text-base text-white/90 sm:inline">{footer.backToTop}</span>
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/30 text-xl sm:size-14">
+				<span class="hidden font-display text-base text-white/90 transition-colors group-hover:text-white sm:inline">{footer.backToTop}</span>
+				<span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/30 text-xl transition-colors group-hover:border-white group-hover:bg-white/10 sm:size-14">
 					↑
 				</span>
 			</button>
@@ -143,28 +138,25 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 			</div>
 
 			<div class="col-span-2 flex flex-col items-start gap-6 sm:col-span-1">
-				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
-					{footer.contactHeading}
-				</p>
-				<div class="flex flex-col items-start gap-4">
-					<a href={`mailto:${footer.contactEmail}`} class="flex items-center gap-3">
-						<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8 text-sm">
-							✉
-						</span>
-						<span class="font-display text-[15px] text-white/95">{footer.contactEmail}</span>
-					</a>
-					<div class="flex items-center gap-3">
-						<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/8 text-sm">
-							☏
-						</span>
-						<span class="font-display text-[15px] text-white/95">{footer.contactPhone}</span>
-					</div>
-				</div>
-				<div class="flex items-start gap-3 pt-2">
+				<div class="flex items-start gap-3">
 					{
 						socialLinks.map((social) => (
-							<a href={social.href} aria-label={social.label} class="block size-11 shrink-0">
-								<img src={social.icon.src} alt="" class="size-11" />
+							<a
+							href={social.href}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={social.label}
+							class="block size-11 shrink-0"
+						>
+								<svg viewBox="0 0 24 24" class="size-11" fill="none">
+									<circle cx="12" cy="12" r="12" fill="#ffe5cc" />
+									<g transform="translate(4 4) scale(0.667)">
+										<path
+											fill="#511a3b"
+											d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"
+										/>
+									</g>
+								</svg>
 							</a>
 						))
 					}
@@ -186,7 +178,7 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 							<p class="font-display text-[22px] font-bold tracking-[-0.066px] text-white">
 								{card.title}
 							</p>
-							<p class="font-display text-xs leading-[1.5] text-white/70">{card.description}</p>
+							<p class="font-display text-xs leading-normal text-white/70">{card.description}</p>
 						</div>
 						<span class="flex size-12 shrink-0 items-center justify-center text-lg">→</span>
 					</a>
@@ -196,9 +188,34 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 
 		<div class="h-px w-full bg-white/10"></div>
 
-		<div class="flex flex-col items-start gap-2 pt-2 font-display text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
-			<p>{copyright}</p>
-			<p>{footer.designedBy}</p>
+		<div class="flex flex-col items-center gap-8 pt-2 sm:grid sm:grid-cols-3 sm:items-center">
+			<p class="font-display text-xs text-white/50 sm:justify-self-start">{copyright}</p>
+
+			<div class="flex flex-col items-center gap-3 sm:justify-self-center">
+				<div class="flex items-center gap-4">
+					<img
+						src={euEmblem.src}
+						alt="European Union emblem"
+						class="h-10 w-auto shrink-0 border border-white/60"
+					/>
+					<div class="h-8 w-px bg-white/30"></div>
+					<a href="https://www.fu-tourism.eu/" target="_blank" rel="noopener noreferrer" class="shrink-0">
+						<img src={fuTourismLogo.src} alt="FU-TOURISM" class="h-6 w-auto" />
+					</a>
+				</div>
+				<p class="max-w-xs text-center font-display text-xs text-white/60 italic">
+					{footer.euFundingNotice}
+				</p>
+			</div>
+
+			<p class="font-display text-xs text-white/50 sm:justify-self-end">
+				{footer.designedByPrefix}<a
+					href="https://greenagency.co"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="transition-colors hover:text-white"
+				>{footer.designedByName}</a>
+			</p>
 		</div>
 	</div>
 </footer>

@@ -9,11 +9,13 @@ import BlogRelatedArticles from "@/components/BlogRelatedArticles.astro";
 import BlogCta from "@/components/BlogCta.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => data.lang !== "pl");
-  const plPosts = await getCollection("blog", ({ data }) => data.lang === "pl");
+  const posts = await getCollection("blog", ({ data }) => data.lang === "pl");
+  const enPosts = await getCollection("blog", ({ data }) => data.lang !== "pl");
 
   return posts.map(post => {
-    const translatedPost = plPosts.find(pl => pl.data.translationKey === post.id);
+    const translatedPost = post.data.translationKey
+      ? enPosts.find(en => en.id === post.data.translationKey)
+      : undefined;
     return {
       params: { id: post.id },
       props: { post, allPosts: posts, translatedPostId: translatedPost?.id },
@@ -25,10 +27,10 @@ const { post, allPosts, translatedPostId } = Astro.props;
 const { Content, headings } = await render(post);
 const base = import.meta.env.BASE_URL;
 
-const translatedHref = translatedPostId ? `${base}pl/blog/${translatedPostId}` : `${base}pl/blog`;
+const translatedHref = translatedPostId ? `${base}blog/${translatedPostId}` : `${base}blog`;
 
 const tocEntries = [
-  { slug: "introduction", text: "Introduction" },
+  { slug: "introduction", text: "Wprowadzenie" },
   ...headings.filter(heading => heading.depth === 2).map(heading => ({ slug: heading.slug, text: heading.text })),
 ];
 ---
@@ -36,15 +38,15 @@ const tocEntries = [
 <Layout
   title={post.data.title}
   description={post.data.description}
-  lang="en"
+  lang="pl"
   currentPath="blog"
   translatedHref={translatedHref}
 >
   <article class="mx-auto max-w-7xl px-6 py-8 sm:px-10 lg:px-20 lg:py-16">
-    <a href={`${base}blog`} class="text-sm text-wale-700 hover:underline">&larr; Back to blog</a>
+    <a href={`${base}pl/blog`} class="text-sm text-wale-700 hover:underline">&larr; Wróć do bloga</a>
 
     <div class="mt-6">
-      <BlogArticleHeader post={post} lang="en" />
+      <BlogArticleHeader post={post} lang="pl" />
     </div>
 
     <div class="mt-8 aspect-video overflow-hidden rounded-3xl">
@@ -66,14 +68,21 @@ const tocEntries = [
         <Content />
       </div>
 
-      <BlogToc entries={tocEntries} />
+      <BlogToc entries={tocEntries} heading="Spis treści" />
     </div>
 
     <BlogGallery images={post.data.images} />
   </article>
 
-  <BlogRelatedArticles post={post} allPosts={allPosts} lang="en" />
-  <BlogCta />
+  <BlogRelatedArticles post={post} allPosts={allPosts} lang="pl" />
+  <BlogCta
+    heading="Lepsze pomysły, prosto na skrzynkę."
+    subtext="Nowości, wcześniejszy dostęp i oferty specjalne dla firm i gospodarzy, zanim usłyszy o nich ktokolwiek inny."
+    placeholder="Podaj adres e-mail"
+    emailAriaLabel="Adres e-mail"
+    submitAriaLabel="Wyślij"
+    successMessage="Dzięki — odezwiemy się, gdy przyjdzie Twoja kolej."
+  />
 </Layout>
 
 <style>

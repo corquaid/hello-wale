@@ -72,9 +72,6 @@ export const en: Dictionary = {
 					links: ["Terms & Conditions", "Privacy Policy", "Cookie Policy"],
 				},
 			},
-			contactHeading: "Get in touch",
-			contactEmail: "hello@hellowale.com",
-			contactPhone: "+48 XXX XXX XXX",
 			ctaCards: {
 				companies: {
 					title: "For Companies",
@@ -89,8 +86,10 @@ export const en: Dictionary = {
 					description: "Discover work-ready stays around the world",
 				},
 			},
-			copyright: "© HelloWale {year} · HelloWale, Warsaw, Poland",
-			designedBy: "Designed by GreenAgency",
+			copyright: "© HelloWale {year} · All rights reserved.",
+			designedByPrefix: "Designed by ",
+			designedByName: "GreenAgency",
+			euFundingNotice: "With the contribution of the EISMEA Programme of the European Union",
 		},
 		forCompanies: {
 			eyebrow: "For Companies",

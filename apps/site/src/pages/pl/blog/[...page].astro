@@ -9,7 +9,7 @@ import BlogCta from "@/components/BlogCta.astro";
 import BlogPagination from "@/components/BlogPagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const posts = (await getCollection("blog", ({ data }) => data.lang !== "pl")).sort(
+	const posts = (await getCollection("blog", ({ data }) => data.lang === "pl")).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
 	return paginate(posts, { pageSize: 8 });
@@ -18,7 +18,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
-const allPosts = (await getCollection("blog", ({ data }) => data.lang !== "pl")).sort(
+const allPosts = (await getCollection("blog", ({ data }) => data.lang === "pl")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const [featured, ...sidebar] = allPosts.slice(0, 4);
@@ -29,30 +29,37 @@ const secondRow = page.data.slice(4, 8);
 
 <Layout
 	title="Blog"
-	description="Stories on remote work, wellbeing, and the future of work-travel."
-	lang="en"
+	description="Historie o pracy zdalnej, dobrostanie i przyszłości pracy w podróży."
+	lang="pl"
 	currentPath="blog"
 >
-	{page.currentPage === 1 && featured && <BlogHero featured={featured} sidebar={sidebar} />}
+	{page.currentPage === 1 && featured && <BlogHero featured={featured} sidebar={sidebar} lang="pl" />}
 
-	<BlogTopics />
+	<BlogTopics lang="pl" heading="Wybierz temat" />
 
 	<section class="px-6 py-10 sm:px-10 lg:px-20">
 		<div class="mx-auto flex max-w-7xl flex-col gap-10">
-			<p class="font-display text-2xl leading-tight text-[#0a1633] sm:text-[32px]">All articles</p>
+			<p class="font-display text-2xl leading-tight text-[#0a1633] sm:text-[32px]">Wszystkie artykuły</p>
 
 			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-				{firstRow.map(post => <BlogPostCard post={post} />)}
+				{firstRow.map(post => <BlogPostCard post={post} lang="pl" />)}
 			</div>
 		</div>
 	</section>
 
 	{secondRow.length > 0 && (
 		<>
-			<BlogCta />
+			<BlogCta
+				heading="Lepsze pomysły, prosto na skrzynkę."
+				subtext="Nowości, wcześniejszy dostęp i oferty specjalne dla firm i gospodarzy, zanim usłyszy o nich ktokolwiek inny."
+				placeholder="Podaj adres e-mail"
+				emailAriaLabel="Adres e-mail"
+				submitAriaLabel="Wyślij"
+				successMessage="Dzięki — odezwiemy się, gdy przyjdzie Twoja kolej."
+			/>
 			<section class="px-6 pb-10 sm:px-10 lg:px-20">
 				<div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-					{secondRow.map(post => <BlogPostCard post={post} />)}
+					{secondRow.map(post => <BlogPostCard post={post} lang="pl" />)}
 				</div>
 			</section>
 		</>
@@ -60,7 +67,7 @@ const secondRow = page.data.slice(4, 8);
 
 	<section class="px-6 pb-16 sm:px-10 lg:px-20">
 		<div class="mx-auto max-w-7xl">
-			<BlogPagination page={page} basePath={`${base}blog`} />
+			<BlogPagination page={page} basePath={`${base}pl/blog`} lang="pl" />
 		</div>
 	</section>
 </Layout>
