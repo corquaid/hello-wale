@@ -1,0 +1,14 @@
+# Build output and caches
+dist
+.astro
+.next
+.turbo
+.vercel
+.wrangler
+node_modules
+
+# Lockfiles
+package-lock.json
+
+# Auto-generated
+CHANGELOG.md

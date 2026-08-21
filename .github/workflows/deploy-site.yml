@@ -32,6 +32,9 @@ jobs:
           package-manager: npm@latest
         env:
           PUBLIC_CONTACT_API_URL: https://app.hellowale.com/api/contact
+          # Public HubSpot form target (no secret key) — see apps/site/.env.example.
+          PUBLIC_HUBSPOT_PORTAL_ID: "149149943"
+          PUBLIC_HUBSPOT_PARTNER_FORM_GUID: fc942536-05b9-4099-ba88-0462e575e367
 
   deploy:
     needs: build
