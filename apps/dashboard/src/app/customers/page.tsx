@@ -10,7 +10,7 @@ export default async function CustomersPage() {
 				<h1 className="font-display text-2xl font-semibold text-gray-900">Customers</h1>
 				<Link
 					href="/customers/new"
-					className="rounded-md bg-wale-700 px-3 py-2 text-sm font-medium text-white hover:bg-wale-800"
+					className="bg-wale-700 hover:bg-wale-800 rounded-md px-3 py-2 text-sm font-medium text-white"
 				>
 					Add employee
 				</Link>

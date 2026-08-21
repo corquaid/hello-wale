@@ -1,39 +1,39 @@
 {
-  "permissions": {
-    "allow": [
-      "mcp__claude_ai_Figma__get_figma_skill",
-      "mcp__claude_ai_Figma__get_design_context",
-      "Bash(jq -r .[1].text /Users/cormac-cc/.claude/projects/-Users-cormac-cc-Coding-hello-wale/d12b16e3-33c2-4b78-a6ec-cfdf851e8e69/tool-results/mcp-claude_ai_Figma-get_design_context-1786274010414.txt)",
-      "Bash(jq -r .[0].text /Users/cormac-cc/.claude/projects/-Users-cormac-cc-Coding-hello-wale/d12b16e3-33c2-4b78-a6ec-cfdf851e8e69/tool-results/mcp-claude_ai_Figma-get_design_context-1786274010414.txt)",
-      "mcp__claude_ai_Figma__download_assets",
-      "Bash(mkdir -p whatwedo forcompanies usecases science forhosts howitworks review)",
-      "Bash(curl -sL -o whatwedo/raw1.png \"https://www.figma.com/api/mcp/asset/12613d2c-22b6-4d64-877d-d4102b5277ae\")",
-      "Bash(curl -sL -o whatwedo/raw2.png \"https://www.figma.com/api/mcp/asset/f381fc15-5974-4283-b45a-f9795107675b\")",
-      "Bash(curl -sL -o whatwedo/raw3.jpeg \"https://www.figma.com/api/mcp/asset/3517818f-ac1d-44b9-b8ff-8b7be36b685c\")",
-      "Bash(curl -sL -o whatwedo/raw4.png \"https://www.figma.com/api/mcp/asset/2027beea-4092-443d-8a9a-7b10cad7be4f\")",
-      "Bash(python3 -c \"import bs4; print\\('bs4 ok'\\)\")",
-      "Bash(python3 -c \"import html2text; print\\('html2text ok'\\)\")",
-      "Bash(python3 -c ' *)",
-      "Bash(curl -s \"http://localhost:4321/hello-wale/blog/workation-wellbeing-employee-benefits\" -o /private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad/post1.html)",
-      "Bash(rm -rf /Users/cormac-cc/Coding/hello-wale/apps/site/dist *)",
-      "Bash(curl -sL -o blog-img-1-team-table.png \"https://www.figma.com/api/mcp/asset/7d4d09cb-3aa7-4a3b-aae1-3716601e83d0.png\")",
-      "Bash(curl -sL -o blog-img-2-woman-balcony.png \"https://www.figma.com/api/mcp/asset/a49bfc08-514a-434e-ac53-3ee3dada7f07.png\")",
-      "Bash(curl -sL -o blog-img-3-two-men-laptop.png \"https://www.figma.com/api/mcp/asset/afb76c24-f597-42c7-be0a-73e4401219c2.png\")",
-      "Bash(curl -sL -o blog-img-4-man-dock.png \"https://www.figma.com/api/mcp/asset/8483e7f6-3901-4e2b-b445-0498867a70cf.png\")",
-      "Bash(curl -sL -o blog-img-5-team-meeting.png \"https://www.figma.com/api/mcp/asset/54d81ba2-221a-4135-9983-0bfdae57ad2d.png\")",
-      "Bash(git status *)",
-      "Bash(curl -sL -o post1-inline.png \"https://www.figma.com/api/mcp/asset/c3ffb5e1-94ea-4b36-a739-caeba03f1e70.png\")",
-      "Bash(curl -sL -o post2-hero.png \"https://www.figma.com/api/mcp/asset/f060cc45-0599-41ac-ac2b-1bc5095c7707.png\")",
-      "Bash(curl -sL -o post2-inline.png \"https://www.figma.com/api/mcp/asset/b0928065-d30f-4eaa-af43-943ec0a15b01.png\")",
-      "Bash(curl -sL -o post3-hero.png \"https://www.figma.com/api/mcp/asset/ebfbab8a-b473-424b-854d-8748d3eae1a6.png\")",
-      "Bash(curl -sL -o post3-inline.png \"https://www.figma.com/api/mcp/asset/0866f77c-1dc0-414c-a270-986dc5c9c8f1.png\")",
-      "Bash(curl -sL -o test-raw1.png \"https://www.figma.com/api/mcp/asset/604cbd5f-3507-4041-9dae-dd648f06bd21\")",
-      "Bash(curl -sL -o test-raw2.png \"https://www.figma.com/api/mcp/asset/b916a254-5493-4d72-a0ce-d8e07fbc99c1\")",
-      "Bash(curl -sL -o /private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad/post6-inline-fix.png \"https://www.figma.com/api/mcp/asset/afb76c24-f597-42c7-be0a-73e4401219c2.png\")",
-      "Bash(curl -s \"http://localhost:4321/hello-wale/blog/your-team-works-remotely-thats-not-a-workation\" -o /private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad/post6-check.html)"
-    ],
-    "additionalDirectories": [
-      "/private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad"
-    ]
-  }
+	"permissions": {
+		"allow": [
+			"mcp__claude_ai_Figma__get_figma_skill",
+			"mcp__claude_ai_Figma__get_design_context",
+			"Bash(jq -r .[1].text /Users/cormac-cc/.claude/projects/-Users-cormac-cc-Coding-hello-wale/d12b16e3-33c2-4b78-a6ec-cfdf851e8e69/tool-results/mcp-claude_ai_Figma-get_design_context-1786274010414.txt)",
+			"Bash(jq -r .[0].text /Users/cormac-cc/.claude/projects/-Users-cormac-cc-Coding-hello-wale/d12b16e3-33c2-4b78-a6ec-cfdf851e8e69/tool-results/mcp-claude_ai_Figma-get_design_context-1786274010414.txt)",
+			"mcp__claude_ai_Figma__download_assets",
+			"Bash(mkdir -p whatwedo forcompanies usecases science forhosts howitworks review)",
+			"Bash(curl -sL -o whatwedo/raw1.png \"https://www.figma.com/api/mcp/asset/12613d2c-22b6-4d64-877d-d4102b5277ae\")",
+			"Bash(curl -sL -o whatwedo/raw2.png \"https://www.figma.com/api/mcp/asset/f381fc15-5974-4283-b45a-f9795107675b\")",
+			"Bash(curl -sL -o whatwedo/raw3.jpeg \"https://www.figma.com/api/mcp/asset/3517818f-ac1d-44b9-b8ff-8b7be36b685c\")",
+			"Bash(curl -sL -o whatwedo/raw4.png \"https://www.figma.com/api/mcp/asset/2027beea-4092-443d-8a9a-7b10cad7be4f\")",
+			"Bash(python3 -c \"import bs4; print\\('bs4 ok'\\)\")",
+			"Bash(python3 -c \"import html2text; print\\('html2text ok'\\)\")",
+			"Bash(python3 -c ' *)",
+			"Bash(curl -s \"http://localhost:4321/hello-wale/blog/workation-wellbeing-employee-benefits\" -o /private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad/post1.html)",
+			"Bash(rm -rf /Users/cormac-cc/Coding/hello-wale/apps/site/dist *)",
+			"Bash(curl -sL -o blog-img-1-team-table.png \"https://www.figma.com/api/mcp/asset/7d4d09cb-3aa7-4a3b-aae1-3716601e83d0.png\")",
+			"Bash(curl -sL -o blog-img-2-woman-balcony.png \"https://www.figma.com/api/mcp/asset/a49bfc08-514a-434e-ac53-3ee3dada7f07.png\")",
+			"Bash(curl -sL -o blog-img-3-two-men-laptop.png \"https://www.figma.com/api/mcp/asset/afb76c24-f597-42c7-be0a-73e4401219c2.png\")",
+			"Bash(curl -sL -o blog-img-4-man-dock.png \"https://www.figma.com/api/mcp/asset/8483e7f6-3901-4e2b-b445-0498867a70cf.png\")",
+			"Bash(curl -sL -o blog-img-5-team-meeting.png \"https://www.figma.com/api/mcp/asset/54d81ba2-221a-4135-9983-0bfdae57ad2d.png\")",
+			"Bash(git status *)",
+			"Bash(curl -sL -o post1-inline.png \"https://www.figma.com/api/mcp/asset/c3ffb5e1-94ea-4b36-a739-caeba03f1e70.png\")",
+			"Bash(curl -sL -o post2-hero.png \"https://www.figma.com/api/mcp/asset/f060cc45-0599-41ac-ac2b-1bc5095c7707.png\")",
+			"Bash(curl -sL -o post2-inline.png \"https://www.figma.com/api/mcp/asset/b0928065-d30f-4eaa-af43-943ec0a15b01.png\")",
+			"Bash(curl -sL -o post3-hero.png \"https://www.figma.com/api/mcp/asset/ebfbab8a-b473-424b-854d-8748d3eae1a6.png\")",
+			"Bash(curl -sL -o post3-inline.png \"https://www.figma.com/api/mcp/asset/0866f77c-1dc0-414c-a270-986dc5c9c8f1.png\")",
+			"Bash(curl -sL -o test-raw1.png \"https://www.figma.com/api/mcp/asset/604cbd5f-3507-4041-9dae-dd648f06bd21\")",
+			"Bash(curl -sL -o test-raw2.png \"https://www.figma.com/api/mcp/asset/b916a254-5493-4d72-a0ce-d8e07fbc99c1\")",
+			"Bash(curl -sL -o /private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad/post6-inline-fix.png \"https://www.figma.com/api/mcp/asset/afb76c24-f597-42c7-be0a-73e4401219c2.png\")",
+			"Bash(curl -s \"http://localhost:4321/hello-wale/blog/your-team-works-remotely-thats-not-a-workation\" -o /private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad/post6-check.html)"
+		],
+		"additionalDirectories": [
+			"/private/tmp/claude-501/-Users-cormac-cc-Coding-hello-wale/8b33286b-bc46-4391-adb3-8780a716446b/scratchpad"
+		]
+	}
 }

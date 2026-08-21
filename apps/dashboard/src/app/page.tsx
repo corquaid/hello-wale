@@ -46,7 +46,7 @@ export default async function HomePage({
 							name="from"
 							type="date"
 							defaultValue={from}
-							className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
+							className="focus:border-wale-700 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 focus:outline-none"
 						/>
 					</div>
 					<div className="space-y-1">
@@ -58,24 +58,27 @@ export default async function HomePage({
 							name="to"
 							type="date"
 							defaultValue={to}
-							className="rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
+							className="focus:border-wale-700 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 focus:outline-none"
 						/>
 					</div>
 					<button
 						type="submit"
-						className="rounded-md bg-wale-700 px-4 py-1.5 text-sm font-medium text-white hover:bg-wale-800"
+						className="bg-wale-700 hover:bg-wale-800 rounded-md px-4 py-1.5 text-sm font-medium text-white"
 					>
 						Filter
 					</button>
 					{(from || to) && (
-						<Link href="/" className="px-2 py-1.5 text-sm font-medium text-gray-500 hover:text-wale-700">
+						<Link
+							href="/"
+							className="hover:text-wale-700 px-2 py-1.5 text-sm font-medium text-gray-500"
+						>
 							Reset
 						</Link>
 					)}
 				</form>
 
 				<div className="rounded-lg border border-gray-200 bg-white p-6">
-					<h2 className="mb-4 font-display text-lg font-medium text-gray-900">Points activity</h2>
+					<h2 className="font-display mb-4 text-lg font-medium text-gray-900">Points activity</h2>
 					<PointsActivityChart data={activity} />
 				</div>
 			</div>

@@ -54,20 +54,22 @@ const {
 <section class="bg-wale-cream/50 px-6 py-20 sm:px-10 lg:px-20 lg:py-30">
 	<div class="mx-auto flex max-w-7xl flex-col items-center gap-16">
 		<div class="flex flex-col items-center gap-4 text-center">
-			<p class="font-display text-[11px] font-semibold tracking-[0.33px] text-wale-700 uppercase">
+			<p class="font-display text-wale-700 text-[11px] font-semibold tracking-[0.33px] uppercase">
 				{eyebrow}
 			</p>
-			<p class="max-w-3xl font-display text-4xl leading-tight font-bold tracking-[-1.12px] text-black sm:text-5xl lg:text-[56px] lg:leading-16">
+			<p
+				class="font-display max-w-3xl text-4xl leading-tight font-bold tracking-[-1.12px] text-black sm:text-5xl lg:text-[56px] lg:leading-16"
+			>
 				{headline}
 			</p>
-			<p class="max-w-xl font-display text-[17px] leading-7 text-[#5f5f5f]">
+			<p class="font-display max-w-xl text-[17px] leading-7 text-[#5f5f5f]">
 				{subtext}
 			</p>
 		</div>
 
 		<div class="w-full" data-slider>
 			<div
-				class="scrollbar-none -mr-6 flex w-full cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto pb-4 select-none active:cursor-grabbing sm:-mr-10 lg:mr-0 lg:grid lg:cursor-auto lg:grid-cols-4 lg:snap-none lg:overflow-visible lg:pb-0 lg:active:cursor-auto"
+				class="-mr-6 flex w-full cursor-grab snap-x snap-mandatory scrollbar-none gap-4 overflow-x-auto pb-4 select-none active:cursor-grabbing sm:-mr-10 lg:mr-0 lg:grid lg:cursor-auto lg:snap-none lg:grid-cols-4 lg:overflow-visible lg:pb-0 lg:active:cursor-auto"
 				data-track
 			>
 				{
@@ -76,25 +78,19 @@ const {
 							class="flex h-full w-[85%] shrink-0 snap-center flex-col gap-8 rounded-[20px] bg-white p-8 sm:w-[60%] lg:w-auto lg:shrink"
 							data-slide
 						>
-							<p class="font-display text-4xl font-bold tracking-[-0.6px] text-wale-700">
+							<p class="font-display text-wale-700 text-4xl font-bold tracking-[-0.6px]">
 								{step.number}
 							</p>
 
 							<div class="flex flex-1 justify-center">
-								<img
-									src={stepIcons[index].src}
-									alt=""
-									class="h-28 w-auto object-contain"
-								/>
+								<img src={stepIcons[index].src} alt="" class="h-28 w-auto object-contain" />
 							</div>
 
 							<div class="flex flex-col items-start gap-4">
 								<p class="font-display text-2xl font-bold tracking-[-0.078px] text-[#131313]">
 									{step.title}
 								</p>
-								<p class="font-display text-[13px] leading-5 text-[#888785]">
-									{step.description}
-								</p>
+								<p class="font-display text-[13px] leading-5 text-[#888785]">{step.description}</p>
 							</div>
 						</div>
 					))
@@ -108,7 +104,7 @@ const {
 							type="button"
 							aria-label={`Go to slide ${index + 1}`}
 							data-dot={index}
-							class="h-2 w-2 rounded-full bg-wale-700/25 transition-all data-[active=true]:w-6 data-[active=true]:bg-wale-700"
+							class="bg-wale-700/25 data-[active=true]:bg-wale-700 h-2 w-2 rounded-full transition-all data-[active=true]:w-6"
 						/>
 					))
 				}

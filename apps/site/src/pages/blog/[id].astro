@@ -9,16 +9,16 @@ import BlogRelatedArticles from "@/components/BlogRelatedArticles.astro";
 import BlogCta from "@/components/BlogCta.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => data.lang !== "pl");
-  const plPosts = await getCollection("blog", ({ data }) => data.lang === "pl");
+	const posts = await getCollection("blog", ({ data }) => data.lang !== "pl");
+	const plPosts = await getCollection("blog", ({ data }) => data.lang === "pl");
 
-  return posts.map(post => {
-    const translatedPost = plPosts.find(pl => pl.data.translationKey === post.id);
-    return {
-      params: { id: post.id },
-      props: { post, allPosts: posts, translatedPostId: translatedPost?.id },
-    };
-  });
+	return posts.map((post) => {
+		const translatedPost = plPosts.find((pl) => pl.data.translationKey === post.id);
+		return {
+			params: { id: post.id },
+			props: { post, allPosts: posts, translatedPostId: translatedPost?.id },
+		};
+	});
 }
 
 const { post, allPosts, translatedPostId } = Astro.props;
@@ -28,67 +28,69 @@ const base = import.meta.env.BASE_URL;
 const translatedHref = translatedPostId ? `${base}pl/blog/${translatedPostId}` : `${base}pl/blog`;
 
 const tocEntries = [
-  { slug: "introduction", text: "Introduction" },
-  ...headings.filter(heading => heading.depth === 2).map(heading => ({ slug: heading.slug, text: heading.text })),
+	{ slug: "introduction", text: "Introduction" },
+	...headings
+		.filter((heading) => heading.depth === 2)
+		.map((heading) => ({ slug: heading.slug, text: heading.text })),
 ];
 ---
 
 <Layout
-  title={post.data.title}
-  description={post.data.description}
-  navVariant="floating"
-  lang="en"
-  currentPath="blog"
-  translatedHref={translatedHref}
+	title={post.data.title}
+	description={post.data.description}
+	navVariant="floating"
+	lang="en"
+	currentPath="blog"
+	translatedHref={translatedHref}
 >
-  <article class="mx-auto max-w-7xl px-6 py-8 sm:px-10 lg:px-20 lg:py-16">
-    <a href={`${base}blog`} class="text-sm text-wale-700 hover:underline">&larr; Back to blog</a>
+	<article class="mx-auto max-w-7xl px-6 py-8 sm:px-10 lg:px-20 lg:py-16">
+		<a href={`${base}blog`} class="text-wale-700 text-sm hover:underline">&larr; Back to blog</a>
 
-    <div class="mt-6">
-      <BlogArticleHeader post={post} lang="en" />
-    </div>
+		<div class="mt-6">
+			<BlogArticleHeader post={post} lang="en" />
+		</div>
 
-    <div class="mt-8 aspect-video overflow-hidden rounded-3xl">
-      <Image
-        src={post.data.heroImage}
-        alt=""
-        class="h-full w-full object-cover"
-        widths={[600, 900, 1200]}
-        sizes="(min-width: 1024px) 800px, 90vw"
-        loading="eager"
-      />
-    </div>
+		<div class="mt-8 aspect-video overflow-hidden rounded-3xl">
+			<Image
+				src={post.data.heroImage}
+				alt=""
+				class="h-full w-full object-cover"
+				widths={[600, 900, 1200]}
+				sizes="(min-width: 1024px) 800px, 90vw"
+				loading="eager"
+			/>
+		</div>
 
-    <div class="mt-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-[800fr_408fr]">
-      <div
-        class="blog-prose prose prose-slate max-w-none prose-headings:font-display prose-headings:text-wale-700 prose-headings:scroll-mt-24 prose-a:text-wale-700"
-      >
-        <span id="introduction"></span>
-        <Content />
-      </div>
+		<div class="mt-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-[800fr_408fr]">
+			<div
+				class="blog-prose prose prose-slate prose-headings:font-display prose-headings:text-wale-700 prose-headings:scroll-mt-24 prose-a:text-wale-700 max-w-none"
+			>
+				<span id="introduction"></span>
+				<Content />
+			</div>
 
-      <BlogToc entries={tocEntries} />
-    </div>
+			<BlogToc entries={tocEntries} />
+		</div>
 
-    <BlogGallery images={post.data.images} />
-  </article>
+		<BlogGallery images={post.data.images} />
+	</article>
 
-  <BlogRelatedArticles post={post} allPosts={allPosts} lang="en" />
-  <BlogCta />
+	<BlogRelatedArticles post={post} allPosts={allPosts} lang="en" />
+	<BlogCta />
 </Layout>
 
 <style>
-  .blog-prose :global(blockquote) {
-    border-left: none;
-    font-style: normal;
-    background-color: #fff2e5;
-    border-radius: 1.5rem;
-    padding: 2rem 2.5rem;
-    quotes: none;
-  }
+	.blog-prose :global(blockquote) {
+		border-left: none;
+		font-style: normal;
+		background-color: #fff2e5;
+		border-radius: 1.5rem;
+		padding: 2rem 2.5rem;
+		quotes: none;
+	}
 
-  .blog-prose :global(blockquote p:first-of-type::before),
-  .blog-prose :global(blockquote p:last-of-type::after) {
-    content: none;
-  }
+	.blog-prose :global(blockquote p:first-of-type::before),
+	.blog-prose :global(blockquote p:last-of-type::after) {
+		content: none;
+	}
 </style>

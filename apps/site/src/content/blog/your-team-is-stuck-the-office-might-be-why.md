@@ -20,7 +20,7 @@ A forest, a lake, or a mountain view aren't decoration. They're thinking tools. 
 
 Steve Jobs knew this. He was famous for walking meetings, often hours at a time, sometimes alone, often with someone he needed to think through a problem or close a deal with. Not because he liked fresh air — because movement and environment change how the mind works.
 
-The Japanese have a word for it: *shinrin-yoku*, roughly "forest bathing." Mindful time among trees, away from screens and schedules. In Japan it's not a wellness trend, it's a workplace benefit, one that's built into health insurance packages by employers who understand what recovery actually looks like. The science behind it is solid, the logic is simple: time in nature isn't passive recovery. It's active restoration.
+The Japanese have a word for it: _shinrin-yoku_, roughly "forest bathing." Mindful time among trees, away from screens and schedules. In Japan it's not a wellness trend, it's a workplace benefit, one that's built into health insurance packages by employers who understand what recovery actually looks like. The science behind it is solid, the logic is simple: time in nature isn't passive recovery. It's active restoration.
 
 > ## Team workation: when to go and how to get it right
 >

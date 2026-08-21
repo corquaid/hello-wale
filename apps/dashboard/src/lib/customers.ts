@@ -56,35 +56,31 @@ export const getCustomers = cache(async (): Promise<CustomerBalance[]> => {
 	return data;
 });
 
-export const getCustomer = cache(
-	async (customerId: string): Promise<CustomerBalance | null> => {
-		await requireSession();
-		const supabase = createAdminClient();
-		const { data, error } = await supabase
-			.from("customer_balances")
-			.select("*")
-			.eq("customer_id", customerId)
-			.maybeSingle();
+export const getCustomer = cache(async (customerId: string): Promise<CustomerBalance | null> => {
+	await requireSession();
+	const supabase = createAdminClient();
+	const { data, error } = await supabase
+		.from("customer_balances")
+		.select("*")
+		.eq("customer_id", customerId)
+		.maybeSingle();
 
-		if (error) throw error;
-		return data;
-	},
-);
+	if (error) throw error;
+	return data;
+});
 
-export const getTransactions = cache(
-	async (customerId: string): Promise<PointsTransaction[]> => {
-		await requireSession();
-		const supabase = createAdminClient();
-		const { data, error } = await supabase
-			.from("points_transactions")
-			.select("id, customer_id, delta, reason, created_by, created_at")
-			.eq("customer_id", customerId)
-			.order("created_at", { ascending: false });
+export const getTransactions = cache(async (customerId: string): Promise<PointsTransaction[]> => {
+	await requireSession();
+	const supabase = createAdminClient();
+	const { data, error } = await supabase
+		.from("points_transactions")
+		.select("id, customer_id, delta, reason, created_by, created_at")
+		.eq("customer_id", customerId)
+		.order("created_at", { ascending: false });
 
-		if (error) throw error;
-		return data;
-	},
-);
+	if (error) throw error;
+	return data;
+});
 
 export const getAllTransactions = cache(
 	async (filters: TransactionFilters = {}): Promise<PointsTransactionWithCustomer[]> => {

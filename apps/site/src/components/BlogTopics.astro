@@ -18,12 +18,14 @@ const blogBase = `${base}${lang === "pl" ? "pl/" : ""}blog`;
 		<p class="font-display text-2xl leading-tight text-[#0a1633] sm:text-[32px]">{heading}</p>
 		<div class="flex flex-wrap gap-3">
 			{
-				BLOG_TOPICS.map(topic => (
+				BLOG_TOPICS.map((topic) => (
 					<a
 						href={`${blogBase}/topic/${topic.slug}`}
 						class:list={[
-							"rounded-full px-5 py-2.5 font-display text-sm transition-colors",
-							topic.slug === activeSlug ? "bg-wale-700 text-white" : "bg-[#ffe7d3] text-wale-700 hover:bg-wale-peach",
+							"font-display rounded-full px-5 py-2.5 text-sm transition-colors",
+							topic.slug === activeSlug
+								? "bg-wale-700 text-white"
+								: "text-wale-700 hover:bg-wale-peach bg-[#ffe7d3]",
 						]}
 					>
 						{getTopicLabel(topic.slug, lang)}

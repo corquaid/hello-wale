@@ -8,10 +8,7 @@ export type LoginState = { error: string } | undefined;
 // Demo-mode auth: one shared username/password, set via env vars, not a
 // real user directory. Good enough for an MVP demo; swap for per-account
 // auth before this becomes the real admin tool.
-export async function login(
-	_prevState: LoginState,
-	formData: FormData,
-): Promise<LoginState> {
+export async function login(_prevState: LoginState, formData: FormData): Promise<LoginState> {
 	const username = formData.get("username");
 	const password = formData.get("password");
 
@@ -23,7 +20,9 @@ export async function login(
 	const expectedPassword = process.env.DASHBOARD_PASSWORD;
 
 	if (!expectedUsername || !expectedPassword) {
-		return { error: "Dashboard login is not configured (missing DASHBOARD_USERNAME/DASHBOARD_PASSWORD)." };
+		return {
+			error: "Dashboard login is not configured (missing DASHBOARD_USERNAME/DASHBOARD_PASSWORD).",
+		};
 	}
 
 	if (username !== expectedUsername || password !== expectedPassword) {

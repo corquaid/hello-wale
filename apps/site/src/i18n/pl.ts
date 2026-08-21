@@ -12,17 +12,20 @@ const howItWorksSteps = [
 	{
 		number: "02",
 		title: "Poznajemy Cię",
-		description: "Krótka rozmowa, by zrozumieć potrzeby Twojego zespołu lub ofertę Twojej nieruchomości.",
+		description:
+			"Krótka rozmowa, by zrozumieć potrzeby Twojego zespołu lub ofertę Twojej nieruchomości.",
 	},
 	{
 		number: "03",
 		title: "Partnerstwo",
-		description: "Poziom subskrypcji, stawki rezerwacji i korzyści founderskie dopasowane do Ciebie.",
+		description:
+			"Poziom subskrypcji, stawki rezerwacji i korzyści founderskie dopasowane do Ciebie.",
 	},
 	{
 		number: "04",
 		title: "Jesteś z nami. Na zawsze.",
-		description: "Partnerzy założyciele pozostają partnerami założycielami. Stała cena, dożywotnio.",
+		description:
+			"Partnerzy założyciele pozostają partnerami założycielami. Stała cena, dożywotnio.",
 	},
 ];
 
@@ -64,7 +67,11 @@ export const pl: Dictionary = {
 				},
 				hosts: {
 					heading: "Dla gospodarzy",
-					links: ["Zostań gospodarzem", "Korzyści dla pierwszych gospodarzy", "Materiały dla gospodarzy"],
+					links: [
+						"Zostań gospodarzem",
+						"Korzyści dla pierwszych gospodarzy",
+						"Materiały dla gospodarzy",
+					],
 				},
 				company: {
 					heading: "Firma",
@@ -101,13 +108,19 @@ export const pl: Dictionary = {
 				"Workation to już nie dodatek — to sposób, w jaki najlepsze zespoły utrzymują koncentrację, kreatywność i zaangażowanie. HelloWale sprawia, że łatwo go zaoferować.",
 			imageAlt:
 				"Zawieszka drzwiowa w stylu hotelowym z napisem „Gdzie praca nie przypomina już pracy” na ciemnych drewnianych drzwiach otoczonych zielenią dżungli",
-			benefits: ["Niższy koszt, niż myślisz", "Employer branding", "Większa kreatywność", "Lepsza retencja"],
+			benefits: [
+				"Niższy koszt, niż myślisz",
+				"Employer branding",
+				"Większa kreatywność",
+				"Lepsza retencja",
+			],
 			ctaLabel: "Zostań partnerem firmowym",
 		},
 		whyWellbeing: {
 			eyebrow: "Dlaczego wellbeing ma znaczenie",
 			headline: "Liczby stojące za lepszą pracą.",
-			subtext: "Wellbeing to różnica między zespołami, które się rozwijają, a tymi, które się wypalają.",
+			subtext:
+				"Wellbeing to różnica między zespołami, które się rozwijają, a tymi, które się wypalają.",
 			stats: [
 				{
 					value: "77%",
@@ -201,9 +214,11 @@ export const pl: Dictionary = {
 				{
 					company: "Agencja marketingowa",
 					badge: "25 pracowników",
-					description: "Kwartalne workation zespołowe na reset i burzę mózgów przed kolejnymi kampaniami.",
+					description:
+						"Kwartalne workation zespołowe na reset i burzę mózgów przed kolejnymi kampaniami.",
 					outcome: "Trzy kampanie. Jedna willa w Toskanii. Zero zmęczenia spotkaniami.",
-					imageAlt: "Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
+					imageAlt:
+						"Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
 					reverse: false,
 				},
 				{
@@ -281,9 +296,11 @@ export const pl: Dictionary = {
 				{
 					company: "Agencja marketingowa",
 					badge: "25 pracowników",
-					description: "Kwartalne workation zespołowe na reset i burzę mózgów przed kolejnymi kampaniami.",
+					description:
+						"Kwartalne workation zespołowe na reset i burzę mózgów przed kolejnymi kampaniami.",
 					outcome: "Trzy kampanie. Jedna willa w Toskanii. Zero zmęczenia spotkaniami.",
-					imageAlt: "Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
+					imageAlt:
+						"Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
 					reverse: false,
 				},
 				{
@@ -301,7 +318,8 @@ export const pl: Dictionary = {
 	hostsPage: {
 		meta: {
 			title: "Dla gospodarzy",
-			description: "Otwórz swoje drzwi na rosnącą społeczność — zostań partnerem założycielem HelloWale.",
+			description:
+				"Otwórz swoje drzwi na rosnącą społeczność — zostań partnerem założycielem HelloWale.",
 		},
 		hero: {
 			beforeText: "Otwórz",
@@ -352,7 +370,8 @@ export const pl: Dictionary = {
 	professionalsPage: {
 		meta: {
 			title: "Dla profesjonalistów zdalnych",
-			description: "Zdalna praca nie musi oznaczać samotności — znajdź miejsca dopasowane do Twojego stylu pracy.",
+			description:
+				"Zdalna praca nie musi oznaczać samotności — znajdź miejsca dopasowane do Twojego stylu pracy.",
 		},
 		hero: {
 			beforeText: "",

@@ -33,7 +33,12 @@ const {
 	image = companiesDoor,
 	imageAlt = "A hotel-style door hanger reading 'Where work doesn't feel like work anymore' on a dark wood door surrounded by jungle greenery",
 	imageLayout = "full",
-	benefits = ["Lower cost than you think", "Employer branding", "Higher creativity", "Better retention"],
+	benefits = [
+		"Lower cost than you think",
+		"Employer branding",
+		"Higher creativity",
+		"Better retention",
+	],
 	ctaLabel = "Partner your company",
 } = Astro.props;
 
@@ -44,9 +49,7 @@ const isCompact = imageLayout === "compact";
 	<div
 		class:list={[
 			"flex flex-col",
-			isCompact
-				? "mx-auto max-w-7xl gap-10 lg:flex-row lg:items-center lg:gap-16"
-				: "lg:flex-row",
+			isCompact ? "mx-auto max-w-7xl gap-10 lg:flex-row lg:items-center lg:gap-16" : "lg:flex-row",
 		]}
 	>
 		<div
@@ -73,14 +76,14 @@ const isCompact = imageLayout === "compact";
 			]}
 		>
 			<div class="flex flex-col items-start gap-6">
-				<p
-					class="text-wale-700 font-display text-[11px] tracking-[0.33px] uppercase"
-				>
+				<p class="text-wale-700 font-display text-[11px] tracking-[0.33px] uppercase">
 					{eyebrow}
 				</p>
 
 				<div class="flex flex-col gap-4">
-					<h2 class="font-display text-3xl leading-tight tracking-[-0.66px] text-black sm:text-4xl lg:text-[44px] lg:leading-13.5">
+					<h2
+						class="font-display text-3xl leading-tight tracking-[-0.66px] text-black sm:text-4xl lg:text-[44px] lg:leading-13.5"
+					>
 						{
 							headline.split("\n").map((line, index) => (
 								<>
@@ -90,7 +93,7 @@ const isCompact = imageLayout === "compact";
 							))
 						}
 					</h2>
-					<p class="max-w-md font-display text-[17px] leading-7 text-[#5f5f5f]">
+					<p class="font-display max-w-md text-[17px] leading-7 text-[#5f5f5f]">
 						{subtext}
 					</p>
 				</div>
@@ -104,7 +107,7 @@ const isCompact = imageLayout === "compact";
 									alt=""
 									class="h-8 w-8 shrink-0 object-contain"
 								/>
-								<p class="font-display text-base font-medium text-wale-700">{benefit}</p>
+								<p class="font-display text-wale-700 text-base font-medium">{benefit}</p>
 							</div>
 						))
 					}

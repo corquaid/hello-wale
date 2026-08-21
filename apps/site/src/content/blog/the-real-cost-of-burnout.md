@@ -56,7 +56,7 @@ Finding the right workation location is half the work. HelloWale does it for you
 
 ## Sources
 
-- American Journal of Preventive Medicine, "The Health and Economic Burden of Employee Burnout to U.S. Employers," 2025 — [ajpmonline.org](https://www.ajpmonline.org/article/S0749-3797(25)00023-6/abstract)
+- American Journal of Preventive Medicine, "The Health and Economic Burden of Employee Burnout to U.S. Employers," 2025 — [ajpmonline.org](<https://www.ajpmonline.org/article/S0749-3797(25)00023-6/abstract>)
 - Microsoft Work Trend Index 2025, via DHR Global — [dhrglobal.com](https://www.dhrglobal.com/news/microsoft-work-trend-index-2025-shows-workplace-capacity-strain/)
 - Deloitte, Workforce Intelligence Report, 2025
 - Meditopia, Employee Burnout Statistics 2026 — [meditopia.com](https://meditopia.com/en/forwork/articles/employee-burnout-statistics)

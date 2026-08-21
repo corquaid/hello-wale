@@ -16,10 +16,10 @@ export const BLOG_TOPICS: BlogTopic[] = [
 	{ slug: "for-hosts", label: "For Hosts", labelPl: "Dla gospodarzy" },
 ];
 
-export const BLOG_TOPIC_SLUGS = BLOG_TOPICS.map(topic => topic.slug) as [string, ...string[]];
+export const BLOG_TOPIC_SLUGS = BLOG_TOPICS.map((topic) => topic.slug) as [string, ...string[]];
 
 export function getTopicLabel(slug: string, lang: Locale = "en"): string {
-	const topic = BLOG_TOPICS.find(topic => topic.slug === slug);
+	const topic = BLOG_TOPICS.find((topic) => topic.slug === slug);
 	if (!topic) return slug;
 	return lang === "pl" ? topic.labelPl : topic.label;
 }

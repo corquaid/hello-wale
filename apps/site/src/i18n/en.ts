@@ -98,7 +98,12 @@ export const en: Dictionary = {
 				"Workation isn't a perk anymore — it's how the best teams stay sharp, creative, and retained. HelloWale makes it simple to offer.",
 			imageAlt:
 				"A hotel-style door hanger reading 'Where work doesn't feel like work anymore' on a dark wood door surrounded by jungle greenery",
-			benefits: ["Lower cost than you think", "Employer branding", "Higher creativity", "Better retention"],
+			benefits: [
+				"Lower cost than you think",
+				"Employer branding",
+				"Higher creativity",
+				"Better retention",
+			],
 			ctaLabel: "Partner your company",
 		},
 		whyWellbeing: {
@@ -253,7 +258,8 @@ export const en: Dictionary = {
 	companiesPage: {
 		meta: {
 			title: "For Companies",
-			description: "Give your team a wellbeing benefit they'll actually use — workation partnerships with HelloWale.",
+			description:
+				"Give your team a wellbeing benefit they'll actually use — workation partnerships with HelloWale.",
 		},
 		hero: {
 			beforeText: "Out of",
@@ -348,7 +354,8 @@ export const en: Dictionary = {
 	professionalsPage: {
 		meta: {
 			title: "For Remote Professionals",
-			description: "Remote doesn't have to mean alone — find places that work for the way you work.",
+			description:
+				"Remote doesn't have to mean alone — find places that work for the way you work.",
 		},
 		hero: {
 			beforeText: "",

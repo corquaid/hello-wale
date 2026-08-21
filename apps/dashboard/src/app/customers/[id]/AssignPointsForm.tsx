@@ -20,7 +20,7 @@ export function AssignPointsForm({ customerId }: { customerId: string }) {
 					type="number"
 					step="1"
 					required
-					className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
 				/>
 			</div>
 
@@ -33,7 +33,7 @@ export function AssignPointsForm({ customerId }: { customerId: string }) {
 					name="reason"
 					required
 					placeholder="e.g. Welcome bonus, order #1234 redemption"
-					className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
 				/>
 			</div>
 
@@ -42,7 +42,7 @@ export function AssignPointsForm({ customerId }: { customerId: string }) {
 			<button
 				type="submit"
 				disabled={pending}
-				className="rounded-md bg-wale-700 px-3 py-2 text-sm font-medium text-white hover:bg-wale-800 disabled:opacity-50"
+				className="bg-wale-700 hover:bg-wale-800 rounded-md px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
 			>
 				{pending ? "Saving…" : "Complete transaction"}
 			</button>

@@ -53,7 +53,7 @@ Workation może być wartościowym benefitem wellbeingowym, ale nie powinno opie
 
 Polska oferuje wiele miejsc sprzyjających pracy i regeneracji — blisko natury, bez zmiany jurysdykcji i bez dodatkowej warstwy formalności, która pojawia się przy pracy z zagranicy. Workation nie musi więc oznaczać wyjazdu na drugi koniec świata. Czasem wystarczy dobrze przygotowane miejsce w kraju, jasne zasady i zaufanie między pracownikiem a pracodawcą.
 
-*Ten tekst przedstawia ogólne zasady organizacji pracy w trakcie workation. W konkretnych przypadkach warto sprawdzić swoją sytuację z prawnikiem lub doradcą podatkowym.*
+_Ten tekst przedstawia ogólne zasady organizacji pracy w trakcie workation. W konkretnych przypadkach warto sprawdzić swoją sytuację z prawnikiem lub doradcą podatkowym._
 
 ## W czym Cię wesprze HelloWale
 

@@ -15,9 +15,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
  * anon key cannot read or write this data directly.
  */
 export function createAdminClient() {
-	return createSupabaseClient(
-		process.env.SUPABASE_URL!,
-		process.env.SUPABASE_SERVICE_ROLE_KEY!,
-		{ auth: { persistSession: false } },
-	);
+	return createSupabaseClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
+		auth: { persistSession: false },
+	});
 }

@@ -35,7 +35,13 @@ const useCases = t.useCases.items.map((item, index) => ({
 }));
 ---
 
-<Layout title={t.meta.title} description={t.meta.description} showNav={false} lang={lang} currentPath="">
+<Layout
+	title={t.meta.title}
+	description={t.meta.description}
+	showNav={false}
+	lang={lang}
+	currentPath=""
+>
 	<Hero
 		beforeText={t.hero.beforeText}
 		bubbleText={t.hero.bubbleText}

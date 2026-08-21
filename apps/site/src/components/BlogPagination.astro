@@ -11,7 +11,8 @@ interface Props {
 
 const { page, basePath, lang = "en" } = Astro.props;
 
-const pageHref = (pageNumber: number) => (pageNumber === 1 ? basePath : `${basePath}/${pageNumber}`);
+const pageHref = (pageNumber: number) =>
+	pageNumber === 1 ? basePath : `${basePath}/${pageNumber}`;
 
 const pageNumbers = Array.from({ length: page.lastPage }, (_, i) => i + 1);
 const labels =
@@ -29,7 +30,16 @@ const labels =
 					aria-label={labels.prev}
 					class="flex size-10 items-center justify-center rounded-full bg-white"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0a1633" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 rotate-180">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="#0a1633"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="h-4 w-4 rotate-180"
+					>
 						<path d="M5 12h14M13 6l6 6-6 6" />
 					</svg>
 				</a>
@@ -38,13 +48,15 @@ const labels =
 			)}
 
 			<div class="flex items-center gap-2 px-4">
-				{pageNumbers.map(pageNumber => (
+				{pageNumbers.map((pageNumber) => (
 					<a
 						href={pageHref(pageNumber)}
 						aria-current={pageNumber === page.currentPage ? "page" : undefined}
 						class:list={[
-							"flex size-10 items-center justify-center rounded-full font-display text-sm",
-							pageNumber === page.currentPage ? "bg-wale-peach text-white" : "text-[#0a1633] hover:bg-slate-100",
+							"font-display flex size-10 items-center justify-center rounded-full text-sm",
+							pageNumber === page.currentPage
+								? "bg-wale-peach text-white"
+								: "text-[#0a1633] hover:bg-slate-100",
 						]}
 					>
 						{pageNumber}
@@ -56,9 +68,18 @@ const labels =
 				<a
 					href={pageHref(page.currentPage + 1)}
 					aria-label={labels.next}
-					class="flex size-10 items-center justify-center rounded-full bg-wale-700"
+					class="bg-wale-700 flex size-10 items-center justify-center rounded-full"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="white"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="h-4 w-4"
+					>
 						<path d="M5 12h14M13 6l6 6-6 6" />
 					</svg>
 				</a>

@@ -55,11 +55,13 @@ const cardImages = images;
 	<div class="mx-auto flex max-w-7xl flex-col items-center gap-16">
 		<div class="flex flex-col items-center gap-4 text-center">
 			<p
-				class="bg-[linear-gradient(174deg,#fadec2_1.5%,#d19161_34%,#3d142b_100%)] bg-clip-text font-display text-[11px] tracking-[0.33px] text-transparent uppercase"
+				class="font-display bg-[linear-gradient(174deg,#fadec2_1.5%,#d19161_34%,#3d142b_100%)] bg-clip-text text-[11px] tracking-[0.33px] text-transparent uppercase"
 			>
 				{eyebrow}
 			</p>
-			<p class="max-w-3xl font-display text-4xl leading-tight font-bold tracking-[-1.12px] text-wale-700 sm:text-5xl lg:text-[56px] lg:leading-16">
+			<p
+				class="font-display text-wale-700 max-w-3xl text-4xl leading-tight font-bold tracking-[-1.12px] sm:text-5xl lg:text-[56px] lg:leading-16"
+			>
 				{
 					headline.split("\n").map((line, index) => (
 						<>
@@ -69,14 +71,14 @@ const cardImages = images;
 					))
 				}
 			</p>
-			<p class="max-w-2xl font-display text-[17px] leading-7 text-[#5f5f5f]">
+			<p class="font-display max-w-2xl text-[17px] leading-7 text-[#5f5f5f]">
 				{subtext}
 			</p>
 		</div>
 
 		<div class="w-full" data-slider>
 			<div
-				class="scrollbar-none -mr-6 flex w-full cursor-grab snap-x snap-mandatory gap-6 overflow-x-auto pb-4 select-none active:cursor-grabbing sm:-mr-10 lg:mr-0 lg:grid lg:cursor-auto lg:grid-cols-2 lg:snap-none lg:overflow-visible lg:pb-0 lg:active:cursor-auto"
+				class="-mr-6 flex w-full cursor-grab snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pb-4 select-none active:cursor-grabbing sm:-mr-10 lg:mr-0 lg:grid lg:cursor-auto lg:snap-none lg:grid-cols-2 lg:overflow-visible lg:pb-0 lg:active:cursor-auto"
 				data-track
 			>
 				{
@@ -134,7 +136,7 @@ const cardImages = images;
 							type="button"
 							aria-label={`Go to slide ${index + 1}`}
 							data-dot={index}
-							class="h-2 w-2 rounded-full bg-wale-700/25 transition-all data-[active=true]:w-6 data-[active=true]:bg-wale-700"
+							class="bg-wale-700/25 data-[active=true]:bg-wale-700 h-2 w-2 rounded-full transition-all data-[active=true]:w-6"
 						/>
 					))
 				}

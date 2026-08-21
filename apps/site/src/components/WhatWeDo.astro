@@ -7,141 +7,141 @@ import CtaButton from "./CtaButton.astro";
 const pillarVariants = ["gradient", "photo", "sand"] as const;
 
 interface Pillar {
-  heading: string;
-  body: string;
-  cta: string;
+	heading: string;
+	body: string;
+	cta: string;
 }
 
 interface Props {
-  eyebrow?: string;
-  headlineBefore?: string;
-  headlineAfter?: string;
-  headlineLine2?: string;
-  pillars?: Pillar[];
-  hrefs?: string[];
+	eyebrow?: string;
+	headlineBefore?: string;
+	headlineAfter?: string;
+	headlineLine2?: string;
+	pillars?: Pillar[];
+	hrefs?: string[];
 }
 
 const contactHref = `${import.meta.env.BASE_URL}contact`;
 
 const {
-  eyebrow = "Connecting people and places that work",
-  headlineBefore = "Burned-out teams.",
-  headlineAfter = "Empty winter calendars.",
-  headlineLine2 = "We're connecting the two.",
-  hrefs = [contactHref, contactHref, contactHref],
-  pillars = [
-    {
-      heading: "Companies struggling with retention",
-      body: "Help your team break routine, boost wellbeing, and build a culture people stay for.",
-      cta: "Partner your company",
-    },
-    {
-      heading: "Where empty months fill up",
-      body: "Bring in professional remote guests when tourists don't. Longer stays, steadier income, year-round bookings.",
-      cta: "List your property",
-    },
-    {
-      heading: "For anyone whose desk stopped inspiring them.",
-      body: "Solo or small groups. A few days or a full month. Find stays that give you what your desk can't.",
-      cta: "Get early access",
-    },
-  ],
+	eyebrow = "Connecting people and places that work",
+	headlineBefore = "Burned-out teams.",
+	headlineAfter = "Empty winter calendars.",
+	headlineLine2 = "We're connecting the two.",
+	hrefs = [contactHref, contactHref, contactHref],
+	pillars = [
+		{
+			heading: "Companies struggling with retention",
+			body: "Help your team break routine, boost wellbeing, and build a culture people stay for.",
+			cta: "Partner your company",
+		},
+		{
+			heading: "Where empty months fill up",
+			body: "Bring in professional remote guests when tourists don't. Longer stays, steadier income, year-round bookings.",
+			cta: "List your property",
+		},
+		{
+			heading: "For anyone whose desk stopped inspiring them.",
+			body: "Solo or small groups. A few days or a full month. Find stays that give you what your desk can't.",
+			cta: "Get early access",
+		},
+	],
 } = Astro.props;
 ---
 
 <section class="bg-wale-50 px-6 py-20 sm:px-10 lg:px-20 lg:py-30">
-  <div class="mx-auto flex max-w-7xl flex-col items-center gap-8 text-center">
-    <p class="font-display text-sm tracking-[0.42px] text-wale-700 uppercase">{eyebrow}</p>
+	<div class="mx-auto flex max-w-7xl flex-col items-center gap-8 text-center">
+		<p class="font-display text-wale-700 text-sm tracking-[0.42px] uppercase">{eyebrow}</p>
 
-    <h2 class="font-display text-3xl leading-tight tracking-[-0.48px] text-wale-700 sm:text-4xl">
-      {headlineBefore}
-      <span
-        class="mx-1 inline-flex h-11 w-11 items-center justify-center rounded-full bg-wale-sand align-middle sm:h-14 sm:w-14"
-      >
-        <img src={eyebrowIcon.src} alt="" class="h-8 w-8 object-contain sm:h-10 sm:w-10" />
-      </span>
-      {headlineAfter}
-      <br />
-      {headlineLine2}
-    </h2>
+		<h2 class="font-display text-wale-700 text-3xl leading-tight tracking-[-0.48px] sm:text-4xl">
+			{headlineBefore}
+			<span
+				class="bg-wale-sand mx-1 inline-flex h-11 w-11 items-center justify-center rounded-full align-middle sm:h-14 sm:w-14"
+			>
+				<img src={eyebrowIcon.src} alt="" class="h-8 w-8 object-contain sm:h-10 sm:w-10" />
+			</span>
+			{headlineAfter}
+			<br />
+			{headlineLine2}
+		</h2>
 
-    <div class="w-full lg:mt-8" data-slider>
-      <div
-        class="scrollbar-none -mr-6 flex w-full cursor-grab snap-x snap-mandatory gap-6 overflow-x-auto pb-4 select-none active:cursor-grabbing sm:-mr-10 lg:mr-0 lg:cursor-auto lg:snap-none lg:items-end lg:justify-center lg:overflow-visible lg:pb-0 lg:active:cursor-auto"
-        data-track
-      >
-        {
-          pillars.map((pillar, index) => {
-            const variant = pillarVariants[index];
-            return (
-              <a
-                href={hrefs[index]}
-                class:list={[
-                  "relative isolate flex w-[85%] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-4xl px-8 py-12 sm:w-[60%] lg:h-144.75 lg:w-108",
-                  variant === "gradient" && "bg-linear-to-t from-[#914d61] to-[#380121]",
-                  variant === "sand" && "bg-wale-sand",
-                ]}
-                data-slide
-              >
-                {variant === "photo" && (
-                  <>
-                    <Image
-                      src={pillarHosts}
-                      alt=""
-                      class="absolute inset-0 -z-20 h-full w-full origin-top scale-110 object-cover"
-                      widths={[480, 768, 1200, 1800]}
-                      sizes="(min-width: 1024px) 700px, 100vw"
-                    />
-                    <div
-                      class="pointer-events-none absolute inset-0 -z-10"
-                      style="background: linear-gradient(8deg, #000 -6.06%, rgba(0, 0, 0, 0.00) 55.92%);"
-                    />
-                  </>
-                )}
+		<div class="w-full lg:mt-8" data-slider>
+			<div
+				class="-mr-6 flex w-full cursor-grab snap-x snap-mandatory scrollbar-none gap-6 overflow-x-auto pb-4 select-none active:cursor-grabbing sm:-mr-10 lg:mr-0 lg:cursor-auto lg:snap-none lg:items-end lg:justify-center lg:overflow-visible lg:pb-0 lg:active:cursor-auto"
+				data-track
+			>
+				{
+					pillars.map((pillar, index) => {
+						const variant = pillarVariants[index];
+						return (
+							<a
+								href={hrefs[index]}
+								class:list={[
+									"relative isolate flex w-[85%] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-4xl px-8 py-12 sm:w-[60%] lg:h-144.75 lg:w-108",
+									variant === "gradient" && "bg-linear-to-t from-[#914d61] to-[#380121]",
+									variant === "sand" && "bg-wale-sand",
+								]}
+								data-slide
+							>
+								{variant === "photo" && (
+									<>
+										<Image
+											src={pillarHosts}
+											alt=""
+											class="absolute inset-0 -z-20 h-full w-full origin-top scale-110 object-cover"
+											widths={[480, 768, 1200, 1800]}
+											sizes="(min-width: 1024px) 700px, 100vw"
+										/>
+										<div
+											class="pointer-events-none absolute inset-0 -z-10"
+											style="background: linear-gradient(8deg, #000 -6.06%, rgba(0, 0, 0, 0.00) 55.92%);"
+										/>
+									</>
+								)}
 
-                <p
-                  class:list={[
-                    "font-display text-left text-[32px] tracking-[-0.16px] lg:text-[40px]",
-                    variant === "sand" ? "text-wale-700" : "text-white",
-                  ]}
-                >
-                  {pillar.heading}
-                </p>
+								<p
+									class:list={[
+										"font-display text-left text-[32px] tracking-[-0.16px] lg:text-[40px]",
+										variant === "sand" ? "text-wale-700" : "text-white",
+									]}
+								>
+									{pillar.heading}
+								</p>
 
-                <div class="mt-10 flex flex-col items-start gap-6">
-                  <p
-                    class:list={[
-                      "font-display text-left text-[20px] font-light tracking-[-0.08px]",
-                      variant === "sand" ? "text-wale-700" : "text-white",
-                    ]}
-                  >
-                    {pillar.body}
-                  </p>
-                  <CtaButton
-                    as="span"
-                    label={pillar.cta}
-                    variant={variant === "photo" ? "peach" : "primary"}
-                    fullWidth
-                  />
-                </div>
-              </a>
-            );
-          })
-        }
-      </div>
+								<div class="mt-10 flex flex-col items-start gap-6">
+									<p
+										class:list={[
+											"font-display text-left text-[20px] font-light tracking-[-0.08px]",
+											variant === "sand" ? "text-wale-700" : "text-white",
+										]}
+									>
+										{pillar.body}
+									</p>
+									<CtaButton
+										as="span"
+										label={pillar.cta}
+										variant={variant === "photo" ? "peach" : "primary"}
+										fullWidth
+									/>
+								</div>
+							</a>
+						);
+					})
+				}
+			</div>
 
-      <div class="mt-2 flex justify-center gap-2 lg:hidden">
-        {
-          pillars.map((_, index) => (
-            <button
-              type="button"
-              aria-label={`Go to slide ${index + 1}`}
-              data-dot={index}
-              class="h-2 w-2 rounded-full bg-wale-700/25 transition-all data-[active=true]:w-6 data-[active=true]:bg-wale-700"
-            />
-          ))
-        }
-      </div>
-    </div>
-  </div>
+			<div class="mt-2 flex justify-center gap-2 lg:hidden">
+				{
+					pillars.map((_, index) => (
+						<button
+							type="button"
+							aria-label={`Go to slide ${index + 1}`}
+							data-dot={index}
+							class="bg-wale-700/25 data-[active=true]:bg-wale-700 h-2 w-2 rounded-full transition-all data-[active=true]:w-6"
+						/>
+					))
+				}
+			</div>
+		</div>
+	</div>
 </section>

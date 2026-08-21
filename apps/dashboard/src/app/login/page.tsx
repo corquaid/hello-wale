@@ -9,7 +9,7 @@ export default function LoginPage() {
 	const [state, formAction, pending] = useActionState(login, undefined);
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-wale-50 px-4">
+		<div className="bg-wale-50 flex min-h-screen items-center justify-center px-4">
 			<form
 				action={formAction}
 				className="w-full max-w-sm space-y-6 rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
@@ -27,7 +27,7 @@ export default function LoginPage() {
 							type="text"
 							autoComplete="username"
 							required
-							className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
+							className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
 						/>
 					</div>
 
@@ -41,7 +41,7 @@ export default function LoginPage() {
 							type="password"
 							autoComplete="current-password"
 							required
-							className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-wale-700 focus:outline-none"
+							className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
 						/>
 					</div>
 				</div>
@@ -51,7 +51,7 @@ export default function LoginPage() {
 				<button
 					type="submit"
 					disabled={pending}
-					className="w-full rounded-md bg-wale-700 px-3 py-2 text-sm font-medium text-white hover:bg-wale-800 disabled:opacity-50"
+					className="bg-wale-700 hover:bg-wale-800 w-full rounded-md px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
 				>
 					{pending ? "Signing in…" : "Sign in"}
 				</button>

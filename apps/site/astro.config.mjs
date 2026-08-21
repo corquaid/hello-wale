@@ -1,26 +1,26 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import react from '@astrojs/react';
+import react from "@astrojs/react";
 
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://hellowale.com',
-  base: '/',
+	site: "https://hellowale.com",
+	base: "/",
 
-  i18n: {
-    locales: ['en', 'pl'],
-    defaultLocale: 'en',
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
+	i18n: {
+		locales: ["en", "pl"],
+		defaultLocale: "en",
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
 
-  integrations: [react()],
+	integrations: [react()],
 
-  vite: {
-    plugins: [tailwindcss()]
-  }
+	vite: {
+		plugins: [tailwindcss()],
+	},
 });

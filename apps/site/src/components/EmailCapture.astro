@@ -51,7 +51,9 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative isolate flex min-h-200 flex-col justify-start overflow-hidden bg-linear-to-b from-[#914d61] to-[#380121] px-6 py-20 sm:min-h-237.5 sm:px-10 lg:min-h-287.5 lg:px-20 lg:py-30">
+<section
+	class="relative isolate flex min-h-200 flex-col justify-start overflow-hidden bg-linear-to-b from-[#914d61] to-[#380121] px-6 py-20 sm:min-h-237.5 sm:px-10 lg:min-h-287.5 lg:px-20 lg:py-30"
+>
 	<div class="absolute inset-x-0 bottom-0 -z-20 flex items-end gap-3 opacity-70 lg:gap-4">
 		{
 			columns.map((photos, colIndex) => (
@@ -80,50 +82,53 @@ const {
 		}
 	</div>
 
-	<div class="absolute inset-0 -z-10 bg-linear-to-b from-transparent from-70% via-[#380121]/70 via-90% to-[#380121]"></div>
+	<div
+		class="absolute inset-0 -z-10 bg-linear-to-b from-transparent from-70% via-[#380121]/70 via-90% to-[#380121]"
+	>
+	</div>
 
 	<div class="relative mx-auto flex max-w-3xl flex-col items-center gap-8 text-center">
-		<p class="font-display text-[11px] font-semibold tracking-[0.33px] text-wale-peach uppercase">
+		<p class="font-display text-wale-peach text-[11px] font-semibold tracking-[0.33px] uppercase">
 			{eyebrow}
 		</p>
-		<p class="font-display text-3xl leading-tight font-bold tracking-[-0.6px] text-white sm:text-4xl lg:text-[40px] lg:leading-12.5">
+		<p
+			class="font-display text-3xl leading-tight font-bold tracking-[-0.6px] text-white sm:text-4xl lg:text-[40px] lg:leading-12.5"
+		>
 			{headline}
 		</p>
-		<p class="max-w-xl font-display text-[17px] leading-7 text-[#eaeaea]">
+		<p class="font-display max-w-xl text-[17px] leading-7 text-[#eaeaea]">
 			{subtext}
 		</p>
 
-		<form
-			class="flex w-full max-w-md flex-col gap-2 sm:flex-row"
-			data-email-capture
-		>
+		<form class="flex w-full max-w-md flex-col gap-2 sm:flex-row" data-email-capture>
 			<input
 				type="email"
 				required
 				placeholder={placeholder}
 				aria-label={emailAriaLabel}
-				class="h-15 rounded-2xl border border-wale-peach bg-wale-peach/16 px-6 font-display text-sm text-white placeholder:text-white/70 focus:outline-none sm:flex-1"
+				class="border-wale-peach bg-wale-peach/16 font-display h-15 rounded-2xl border px-6 text-sm text-white placeholder:text-white/70 focus:outline-none sm:flex-1"
 			/>
 			<button
 				type="submit"
 				aria-label={submitAriaLabel}
-				class="flex h-15 w-full shrink-0 items-center justify-center rounded-bl-2xl rounded-tl-2xl rounded-tr-2xl bg-wale-cream sm:w-14.75"
+				class="bg-wale-cream flex h-15 w-full shrink-0 items-center justify-center rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl sm:w-14.75"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="#511A3B"
-					stroke-width="2"~
+					stroke-width="2"
+					~
 					stroke-linecap="round"
 					stroke-linejoin="round"
 					class="h-4 w-4"
 				>
-					<path d="M5 12h14M13 6l6 6-6 6" />
+					<path d="M5 12h14M13 6l6 6-6 6"></path>
 				</svg>
 			</button>
 		</form>
-		<p class="hidden font-display text-sm text-wale-peach" data-email-success>
+		<p class="font-display text-wale-peach hidden text-sm" data-email-success>
 			{successMessage}
 		</p>
 	</div>

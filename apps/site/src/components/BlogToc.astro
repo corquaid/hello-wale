@@ -20,13 +20,13 @@ const { entries, heading = "Table of contents" } = Astro.props;
 			aria-label="Table of contents"
 		>
 			<p class="font-display text-base text-[#0f1d3a]">{heading}</p>
-			{entries.map(entry => (
+			{entries.map((entry) => (
 				<a
 					href={`#${entry.slug}`}
 					data-toc-link={entry.slug}
-					class="group flex items-center gap-3 rounded-xl py-2 pr-6 pl-4 font-display text-base text-wale-700/33 transition-colors data-[active=true]:text-[#0a1633]"
+					class="group font-display text-wale-700/33 flex items-center gap-3 rounded-xl py-2 pr-6 pl-4 text-base transition-colors data-[active=true]:text-[#0a1633]"
 				>
-					<span class="size-2 shrink-0 rounded-full bg-wale-700/33 transition-colors group-data-[active=true]:bg-wale-700" />
+					<span class="bg-wale-700/33 group-data-[active=true]:bg-wale-700 size-2 shrink-0 rounded-full transition-colors" />
 					{entry.text}
 				</a>
 			))}

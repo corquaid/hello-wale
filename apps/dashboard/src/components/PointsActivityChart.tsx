@@ -1,11 +1,23 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+	Bar,
+	BarChart,
+	CartesianGrid,
+	Legend,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis,
+} from "recharts";
 import type { TooltipContentProps } from "recharts";
 import type { DailyActivity } from "@/lib/customers";
 
 function formatDate(date: string) {
-	return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+	return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
+		month: "short",
+		day: "numeric",
+	});
 }
 
 // Recharts' contentStyle/itemStyle props only accept inline style objects, not
@@ -54,7 +66,12 @@ export function PointsActivityChart({ data }: { data: DailyActivity[] }) {
 					formatter={(value) => <span className="text-black">{value}</span>}
 				/>
 				<Bar dataKey="awarded" name="Awarded" fill="var(--color-wale-700)" radius={[3, 3, 0, 0]} />
-				<Bar dataKey="redeemed" name="Redeemed" fill="var(--color-wale-gold)" radius={[3, 3, 0, 0]} />
+				<Bar
+					dataKey="redeemed"
+					name="Redeemed"
+					fill="var(--color-wale-gold)"
+					radius={[3, 3, 0, 0]}
+				/>
 			</BarChart>
 		</ResponsiveContainer>
 	);

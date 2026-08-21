@@ -28,7 +28,9 @@ const { images = [] } = Astro.props;
 							alt=""
 							class="h-full w-full object-cover"
 							widths={[400, 700, 1000]}
-							sizes={isCenterBlock ? "(min-width: 640px) 90vw, 90vw" : "(min-width: 640px) 45vw, 90vw"}
+							sizes={
+								isCenterBlock ? "(min-width: 640px) 90vw, 90vw" : "(min-width: 640px) 45vw, 90vw"
+							}
 						/>
 					</div>
 				);

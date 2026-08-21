@@ -123,22 +123,26 @@ const {
 			align === "left" ? "items-start text-left" : "items-center text-center",
 		]}
 	>
-		<h1 class="relative isolate font-display text-5xl font-bold leading-[1.02] text-white sm:text-6xl lg:text-7xl">
-			{beforeText} <span class="relative isolate -z-10">
+		<h1
+			class="font-display relative isolate text-5xl leading-[1.02] font-bold text-white sm:text-6xl lg:text-7xl"
+		>
+			{beforeText}
+			<span class="relative isolate -z-10">
 				<img
 					src={officeBubble.src}
 					alt=""
 					aria-hidden="true"
 					class:list={[
-						"absolute left-1/2 top-1/2 -z-10 h-[1.8em] max-w-none -translate-x-1/2 -translate-y-2/5",
+						"absolute top-1/2 left-1/2 -z-10 h-[1.8em] max-w-none -translate-x-1/2 -translate-y-2/5",
 						bubbleWidthClass,
 					]}
 				/>
-				<span class="relative text-wale-peach">{bubbleText}</span>
-			</span> {afterText}
+				<span class="text-wale-peach relative">{bubbleText}</span>
+			</span>
+			{afterText}
 		</h1>
 
-		<p class="max-w-xl font-display text-lg leading-[1.7] text-white">
+		<p class="font-display max-w-xl text-lg leading-[1.7] text-white">
 			{subtext}
 		</p>
 

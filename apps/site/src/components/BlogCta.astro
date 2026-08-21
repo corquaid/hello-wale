@@ -23,11 +23,13 @@ const {
 		class="mx-auto flex max-w-7xl flex-col items-center gap-8 rounded-[40px] px-6 py-16 text-center sm:px-16 sm:py-20"
 		style="background-image: linear-gradient(166deg, #fadec2 1.5%, #d19161 33.7%, #3d142b 99.96%);"
 	>
-		<p class="font-display text-3xl font-bold tracking-[-0.16px] text-white sm:text-[40px]">{heading}</p>
-		<p class="max-w-121 font-display text-base tracking-[-0.064px] text-white">{subtext}</p>
+		<p class="font-display text-3xl font-bold tracking-[-0.16px] text-white sm:text-[40px]">
+			{heading}
+		</p>
+		<p class="font-display max-w-121 text-base tracking-[-0.064px] text-white">{subtext}</p>
 
 		<form
-			class="mx-auto flex w-full max-w-101 items-center justify-between rounded-bl-2xl rounded-tl-2xl rounded-tr-2xl border border-wale-peach bg-wale-peach/16 py-3 pr-3 pl-6"
+			class="border-wale-peach bg-wale-peach/16 mx-auto flex w-full max-w-101 items-center justify-between rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl border py-3 pr-3 pl-6"
 			data-email-capture
 		>
 			<input
@@ -35,12 +37,12 @@ const {
 				required
 				placeholder={placeholder}
 				aria-label={emailAriaLabel}
-				class="w-full bg-transparent font-display text-sm text-white placeholder:text-white/80 focus:outline-none"
+				class="font-display w-full bg-transparent text-sm text-white placeholder:text-white/80 focus:outline-none"
 			/>
 			<button
 				type="submit"
 				aria-label={submitAriaLabel}
-				class="flex size-14.75 shrink-0 items-center justify-center rounded-bl-2xl rounded-tl-2xl rounded-tr-2xl bg-wale-cream"
+				class="bg-wale-cream flex size-14.75 shrink-0 items-center justify-center rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -52,11 +54,11 @@ const {
 					stroke-linejoin="round"
 					class="h-4 w-4"
 				>
-					<path d="M5 12h14M13 6l6 6-6 6" />
+					<path d="M5 12h14M13 6l6 6-6 6"></path>
 				</svg>
 			</button>
 		</form>
-		<p class="hidden font-display text-sm text-wale-peach" data-email-success>
+		<p class="font-display text-wale-peach hidden text-sm" data-email-success>
 			{successMessage}
 		</p>
 	</div>

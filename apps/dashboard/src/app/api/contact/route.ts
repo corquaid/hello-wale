@@ -22,7 +22,10 @@ function corsHeaders(origin: string | null) {
 }
 
 export async function OPTIONS(request: NextRequest) {
-	return new NextResponse(null, { status: 204, headers: corsHeaders(request.headers.get("origin")) });
+	return new NextResponse(null, {
+		status: 204,
+		headers: corsHeaders(request.headers.get("origin")),
+	});
 }
 
 export async function POST(request: NextRequest) {
@@ -49,7 +52,10 @@ export async function POST(request: NextRequest) {
 
 	if (!apiKey || !fromEmail || !toEmail) {
 		console.error("Contact form is not configured: missing Resend env vars");
-		return NextResponse.json({ error: "Contact form is not available right now" }, { status: 503, headers });
+		return NextResponse.json(
+			{ error: "Contact form is not available right now" },
+			{ status: 503, headers },
+		);
 	}
 
 	const resendResponse = await fetch("https://api.resend.com/emails", {

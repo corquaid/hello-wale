@@ -3,11 +3,7 @@ import { getCustomer, getTransactions } from "@/lib/customers";
 import { AssignPointsForm } from "./AssignPointsForm";
 import { DeleteCustomerButton } from "./DeleteCustomerButton";
 
-export default async function CustomerDetailPage({
-	params,
-}: {
-	params: Promise<{ id: string }>;
-}) {
+export default async function CustomerDetailPage({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
 	const customer = await getCustomer(id);
 
@@ -33,12 +29,12 @@ export default async function CustomerDetailPage({
 			</div>
 
 			<div>
-				<h2 className="mb-3 font-display text-lg font-medium text-gray-900">Points adjustment</h2>
+				<h2 className="font-display mb-3 text-lg font-medium text-gray-900">Points adjustment</h2>
 				<AssignPointsForm customerId={customer.customer_id} />
 			</div>
 
 			<div>
-				<h2 className="mb-3 font-display text-lg font-medium text-gray-900">History</h2>
+				<h2 className="font-display mb-3 text-lg font-medium text-gray-900">History</h2>
 				{transactions.length === 0 ? (
 					<p className="text-sm text-gray-500">No points activity yet.</p>
 				) : (

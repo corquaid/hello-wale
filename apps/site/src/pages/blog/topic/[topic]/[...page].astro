@@ -10,11 +10,11 @@ import { BLOG_TOPICS, getTopicLabel } from "@/content/blog-topics";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const posts = (await getCollection("blog", ({ data }) => data.lang !== "pl")).sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 	);
 
-	return BLOG_TOPICS.flatMap(topic => {
-		const topicPosts = posts.filter(post => post.data.categories.includes(topic.slug));
+	return BLOG_TOPICS.flatMap((topic) => {
+		const topicPosts = posts.filter((post) => post.data.categories.includes(topic.slug));
 		return paginate(topicPosts, { pageSize: 8, params: { topic: topic.slug } });
 	});
 }) satisfies GetStaticPaths;
@@ -42,26 +42,34 @@ const topicLabel = getTopicLabel(topic!);
 		<div class="mx-auto flex max-w-7xl flex-col gap-10">
 			<p class="font-display text-2xl leading-tight text-[#0a1633] sm:text-[32px]">{topicLabel}</p>
 
-			{page.data.length === 0 ? (
-				<p class="text-[#5c6680]">No articles in this topic yet.</p>
-			) : (
-				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-					{firstRow.map(post => <BlogPostCard post={post} />)}
-				</div>
-			)}
+			{
+				page.data.length === 0 ? (
+					<p class="text-[#5c6680]">No articles in this topic yet.</p>
+				) : (
+					<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+						{firstRow.map((post) => (
+							<BlogPostCard post={post} />
+						))}
+					</div>
+				)
+			}
 		</div>
 	</section>
 
-	{secondRow.length > 0 && (
-		<>
-			<BlogCta />
-			<section class="px-6 pb-10 sm:px-10 lg:px-20">
-				<div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-					{secondRow.map(post => <BlogPostCard post={post} />)}
-				</div>
-			</section>
-		</>
-	)}
+	{
+		secondRow.length > 0 && (
+			<>
+				<BlogCta />
+				<section class="px-6 pb-10 sm:px-10 lg:px-20">
+					<div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+						{secondRow.map((post) => (
+							<BlogPostCard post={post} />
+						))}
+					</div>
+				</section>
+			</>
+		)
+	}
 
 	<section class="px-6 pb-16 sm:px-10 lg:px-20">
 		<div class="mx-auto max-w-7xl">

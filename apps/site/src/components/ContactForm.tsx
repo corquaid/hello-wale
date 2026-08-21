@@ -32,8 +32,8 @@ export default function ContactForm() {
 
 	if (status === "submitted") {
 		return (
-			<div className="rounded-lg border border-wale-700/20 bg-wale-50 p-6 text-center">
-				<p className="font-display font-medium text-wale-800">Thanks for reaching out!</p>
+			<div className="border-wale-700/20 bg-wale-50 rounded-lg border p-6 text-center">
+				<p className="font-display text-wale-800 font-medium">Thanks for reaching out!</p>
 				<p className="mt-1 text-sm text-slate-600">We'll get back to you shortly.</p>
 			</div>
 		);
@@ -42,7 +42,7 @@ export default function ContactForm() {
 	return (
 		<form onSubmit={handleSubmit} className="space-y-5">
 			<div>
-				<label htmlFor="name" className="block text-sm font-medium text-wale-800">
+				<label htmlFor="name" className="text-wale-800 block text-sm font-medium">
 					Name
 				</label>
 				<input
@@ -50,11 +50,11 @@ export default function ContactForm() {
 					name="name"
 					type="text"
 					required
-					className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-wale-700 focus:outline-none"
+					className="focus:border-wale-700 mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:outline-none"
 				/>
 			</div>
 			<div>
-				<label htmlFor="email" className="block text-sm font-medium text-wale-800">
+				<label htmlFor="email" className="text-wale-800 block text-sm font-medium">
 					Email
 				</label>
 				<input
@@ -62,11 +62,11 @@ export default function ContactForm() {
 					name="email"
 					type="email"
 					required
-					className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-wale-700 focus:outline-none"
+					className="focus:border-wale-700 mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:outline-none"
 				/>
 			</div>
 			<div>
-				<label htmlFor="message" className="block text-sm font-medium text-wale-800">
+				<label htmlFor="message" className="text-wale-800 block text-sm font-medium">
 					Message
 				</label>
 				<textarea
@@ -74,16 +74,18 @@ export default function ContactForm() {
 					name="message"
 					rows={5}
 					required
-					className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-wale-700 focus:outline-none"
+					className="focus:border-wale-700 mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:outline-none"
 				/>
 			</div>
 			{status === "error" && (
-				<p className="text-sm text-red-600">Something went wrong sending your message. Please try again.</p>
+				<p className="text-sm text-red-600">
+					Something went wrong sending your message. Please try again.
+				</p>
 			)}
 			<button
 				type="submit"
 				disabled={status === "sending"}
-				className="rounded-bl-xl rounded-tl-xl rounded-tr-xl bg-wale-700 px-6 py-3.5 font-display text-sm font-medium tracking-[0.14px] text-white hover:bg-wale-800 disabled:opacity-50"
+				className="bg-wale-700 font-display hover:bg-wale-800 rounded-tl-xl rounded-tr-xl rounded-bl-xl px-6 py-3.5 text-sm font-medium tracking-[0.14px] text-white disabled:opacity-50"
 			>
 				{status === "sending" ? "Sending…" : "Send message"}
 			</button>

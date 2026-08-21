@@ -20,22 +20,24 @@ const publishedLabel = lang === "pl" ? "Opublikowano" : "Published";
 <div class="flex flex-col items-start gap-4">
 	<div class="flex flex-wrap gap-2">
 		{
-			post.data.categories.map(category => (
-				<span class="rounded-full bg-[#ffe7d3] px-4 py-2 font-display text-xs font-medium text-wale-700">
+			post.data.categories.map((category) => (
+				<span class="font-display text-wale-700 rounded-full bg-[#ffe7d3] px-4 py-2 text-xs font-medium">
 					{getTopicLabel(category, lang)}
 				</span>
 			))
 		}
 	</div>
-	<h1 class="font-display text-3xl leading-tight text-wale-700 sm:text-4xl">{post.data.title}</h1>
+	<h1 class="font-display text-wale-700 text-3xl leading-tight sm:text-4xl">{post.data.title}</h1>
 	<div class="flex items-center gap-4">
-		<span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-wale-700 p-2.5">
+		<span class="bg-wale-700 flex size-12 shrink-0 items-center justify-center rounded-full p-2.5">
 			<Image src={logoIcon} alt="" class="h-full w-full object-contain" />
 		</span>
 		<div class="flex flex-col gap-1">
 			<p class="font-display text-sm text-[#0a1633]">{authorName}</p>
 			<p class="text-xs text-[#0a1633]">
-				{publishedLabel}: {formatPostDate(post.data.pubDate, lang)} · {getReadingTime(post.body, lang)}
+				{publishedLabel}: {formatPostDate(post.data.pubDate, lang)} · {
+					getReadingTime(post.body, lang)
+				}
 			</p>
 		</div>
 	</div>

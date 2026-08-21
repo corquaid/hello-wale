@@ -42,15 +42,25 @@ const legalLinks = footer.columns.legal.links.map((label) => ({ label, href: "#"
 const socialLinks = [{ label: "LinkedIn", href: "https://www.linkedin.com/company/hellowale" }];
 
 const ctaCards = [
-	{ ...footer.ctaCards.companies, icon: ctaCompaniesIcon, href: getRelativeLocaleUrl(lang, "companies") },
+	{
+		...footer.ctaCards.companies,
+		icon: ctaCompaniesIcon,
+		href: getRelativeLocaleUrl(lang, "companies"),
+	},
 	{ ...footer.ctaCards.hosts, icon: ctaHostsIcon, href: getRelativeLocaleUrl(lang, "hosts") },
-	{ ...footer.ctaCards.guests, icon: ctaGuestsIcon, href: getRelativeLocaleUrl(lang, "professionals") },
+	{
+		...footer.ctaCards.guests,
+		icon: ctaGuestsIcon,
+		href: getRelativeLocaleUrl(lang, "professionals"),
+	},
 ];
 
 const copyright = footer.copyright.replace("{year}", String(new Date().getFullYear()));
 ---
 
-<footer class="border-t border-white/15 bg-linear-to-t from-[#914d61] to-[#380121] px-6 pt-10 pb-8 text-white sm:px-10 lg:px-24 lg:pt-14 lg:pb-10">
+<footer
+	class="border-t border-white/15 bg-linear-to-t from-[#914d61] to-[#380121] px-6 pt-10 pb-8 text-white sm:px-10 lg:px-24 lg:pt-14 lg:pb-10"
+>
 	<div class="mx-auto flex max-w-7xl flex-col gap-10">
 		<div class="flex items-center justify-between gap-6">
 			<a href={getRelativeLocaleUrl(lang, "")} class="flex w-fit shrink-0 items-center">
@@ -67,8 +77,13 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 				class="group flex items-center gap-2 sm:gap-4"
 				aria-label={footer.backToTop}
 			>
-				<span class="hidden font-display text-base text-white/90 transition-colors group-hover:text-white sm:inline">{footer.backToTop}</span>
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/30 text-xl transition-colors group-hover:border-white group-hover:bg-white/10 sm:size-14">
+				<span
+					class="font-display hidden text-base text-white/90 transition-colors group-hover:text-white sm:inline"
+					>{footer.backToTop}</span
+				>
+				<span
+					class="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/30 text-xl transition-colors group-hover:border-white group-hover:bg-white/10 sm:size-14"
+				>
 					↑
 				</span>
 			</button>
@@ -76,7 +91,9 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 
 		<div class="h-px w-full bg-white/15"></div>
 
-		<div class="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:flex lg:flex-nowrap lg:justify-between lg:gap-8">
+		<div
+			class="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:flex lg:flex-nowrap lg:justify-between lg:gap-8"
+		>
 			<div class="flex flex-col items-start gap-6">
 				<p class="font-display text-[17px] font-bold tracking-[-0.034px] text-white">
 					{footer.columns.companies.heading}
@@ -142,12 +159,12 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 					{
 						socialLinks.map((social) => (
 							<a
-							href={social.href}
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label={social.label}
-							class="block size-11 shrink-0"
-						>
+								href={social.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={social.label}
+								class="block size-11 shrink-0"
+							>
 								<svg viewBox="0 0 24 24" class="size-11" fill="none">
 									<circle cx="12" cy="12" r="12" fill="#ffe5cc" />
 									<g transform="translate(4 4) scale(0.667)">
@@ -199,11 +216,16 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 						class="h-10 w-auto shrink-0 border border-white/60"
 					/>
 					<div class="h-8 w-px bg-white/30"></div>
-					<a href="https://www.fu-tourism.eu/" target="_blank" rel="noopener noreferrer" class="shrink-0">
+					<a
+						href="https://www.fu-tourism.eu/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="shrink-0"
+					>
 						<img src={fuTourismLogo.src} alt="FU-TOURISM" class="h-6 w-auto" />
 					</a>
 				</div>
-				<p class="max-w-xs text-center font-display text-xs text-white/60 italic">
+				<p class="font-display max-w-xs text-center text-xs text-white/60 italic">
 					{footer.euFundingNotice}
 				</p>
 			</div>
@@ -213,8 +235,8 @@ const copyright = footer.copyright.replace("{year}", String(new Date().getFullYe
 					href="https://greenagency.co"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="transition-colors hover:text-white"
-				>{footer.designedByName}</a>
+					class="transition-colors hover:text-white">{footer.designedByName}</a
+				>
 			</p>
 		</div>
 	</div>

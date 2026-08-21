@@ -19,7 +19,10 @@ const meta = `${formatPostDate(post.data.pubDate, lang)}  ·  ${getReadingTime(p
 
 {
 	variant === "grid" ? (
-		<a href={href} class="group flex flex-col overflow-hidden rounded-3xl transition-opacity hover:opacity-90">
+		<a
+			href={href}
+			class="group flex flex-col overflow-hidden rounded-3xl transition-opacity hover:opacity-90"
+		>
 			<div class="h-48 w-full overflow-hidden rounded-3xl">
 				<Image
 					src={post.data.heroImage}
@@ -33,8 +36,8 @@ const meta = `${formatPostDate(post.data.pubDate, lang)}  ·  ${getReadingTime(p
 			<div class="flex flex-1 flex-col justify-center p-8">
 				<div class="flex flex-col items-start gap-3">
 					<div class="flex flex-wrap gap-1.5">
-						{post.data.categories.map(category => (
-							<span class="rounded-full bg-[#ffe7d3] px-2.5 py-1.5 font-display text-[10px] text-wale-700">
+						{post.data.categories.map((category) => (
+							<span class="font-display text-wale-700 rounded-full bg-[#ffe7d3] px-2.5 py-1.5 text-[10px]">
 								{getTopicLabel(category, lang)}
 							</span>
 						))}
@@ -56,7 +59,7 @@ const meta = `${formatPostDate(post.data.pubDate, lang)}  ·  ${getReadingTime(p
 					loading="lazy"
 				/>
 			</div>
-			<div class="flex flex-1 flex-col gap-4 font-display">
+			<div class="font-display flex flex-1 flex-col gap-4">
 				<p class="text-base leading-tight text-[#0f1d3a]">{post.data.title}</p>
 				<p class="text-xs text-[#5c6680]">{meta}</p>
 			</div>

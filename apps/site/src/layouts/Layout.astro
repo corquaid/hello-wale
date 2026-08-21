@@ -42,9 +42,16 @@ const {
 		<title>{title} · HelloWale</title>
 	</head>
 	<body class="flex min-h-screen flex-col bg-white text-slate-900">
-		{showNav && (
-			<Nav variant={navVariant} lang={lang} currentPath={currentPath} translatedHref={translatedHref} />
-		)}
+		{
+			showNav && (
+				<Nav
+					variant={navVariant}
+					lang={lang}
+					currentPath={currentPath}
+					translatedHref={translatedHref}
+				/>
+			)
+		}
 		<main class="flex-1">
 			<slot />
 		</main>
