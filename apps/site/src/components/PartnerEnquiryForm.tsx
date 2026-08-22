@@ -52,7 +52,7 @@ const INTENTS = [
 ];
 
 const inputClass =
-	"w-full rounded-lg bg-white px-6 py-5 text-sm text-wale-800 placeholder:text-wale-800/40 focus:outline-none focus:ring-2 focus:ring-wale-700/30";
+	"w-full rounded-lg border border-wale-700/15 bg-white px-6 py-5 text-sm text-wale-800 placeholder:text-wale-800/40 focus:outline-none focus:ring-2 focus:ring-wale-700/30";
 const labelClass = "flex items-center gap-1 text-sm font-medium text-wale-800/80";
 
 function SectionHeader({
@@ -211,7 +211,7 @@ export default function PartnerEnquiryForm() {
 							name="phoneCode"
 							defaultValue="+48"
 							aria-label="Country calling code"
-							className="text-wale-800 focus:ring-wale-700/30 rounded-lg bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
+							className="text-wale-800 focus:ring-wale-700/30 rounded-lg border border-wale-700/15 bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
 						>
 							{PHONE_CODES.map((entry) => (
 								<option key={entry.code} value={entry.code}>
@@ -295,16 +295,16 @@ export default function PartnerEnquiryForm() {
 					{INTENTS.map((intent) => (
 						<label
 							key={intent.id}
-							className="has-checked:bg-wale-700 flex cursor-pointer flex-col gap-2 rounded-xl bg-white p-5"
+							className="has-checked:bg-wale-700 has-checked:border-wale-700 flex cursor-pointer flex-col gap-2 rounded-xl border border-wale-700/15 bg-white p-5 transition-colors duration-200"
 						>
 							<input type="checkbox" name="intents" value={intent.id} className="peer sr-only" />
-							<span className="bg-wale-50 peer-checked:bg-wale-peach flex size-10 items-center justify-center rounded-full">
+							<span className="bg-wale-50 peer-checked:bg-wale-peach flex size-10 items-center justify-center rounded-full transition-colors duration-200">
 								<img src={intent.icon} alt="" className="size-7 rounded-full" />
 							</span>
-							<span className="font-display text-wale-800 text-sm font-bold peer-checked:text-white">
+							<span className="font-display text-wale-800 text-sm font-bold transition-colors duration-200 peer-checked:text-white">
 								{intent.title}
 							</span>
-							<span className="text-wale-800/60 peer-checked:text-wale-peach text-xs leading-relaxed">
+							<span className="text-wale-800/60 peer-checked:text-wale-peach text-xs leading-relaxed transition-colors duration-200">
 								{intent.description}
 							</span>
 						</label>
@@ -322,7 +322,7 @@ export default function PartnerEnquiryForm() {
 					name="message"
 					rows={5}
 					placeholder="Tell us what you're hoping HelloWale can do for your team, any specific stays you have in mind, or questions you'd like answered..."
-					className="text-wale-800 placeholder:text-wale-800/40 focus:ring-wale-700/30 w-full rounded-lg bg-white p-4 text-sm focus:ring-2 focus:outline-none"
+					className="text-wale-800 placeholder:text-wale-800/40 focus:ring-wale-700/30 w-full rounded-lg border border-wale-700/15 bg-white p-4 text-sm focus:ring-2 focus:outline-none"
 				/>
 			</div>
 
