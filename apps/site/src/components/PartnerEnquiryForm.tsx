@@ -3,6 +3,9 @@ import wellbeingIcon from "../assets/images/partner-intent-wellbeing.png";
 import retreatsIcon from "../assets/images/partner-intent-retreats.png";
 import individualIcon from "../assets/images/partner-intent-individual.png";
 import curiousIcon from "../assets/images/partner-intent-curious.png";
+import applicationSentIcon from "../assets/images/partner-application-sent.png";
+import SentModal from "./SentModal";
+import { ConsentCheckbox, inputClass, labelClass, SectionHeader, textareaClass } from "./formPrimitives";
 
 // HubSpot's Forms Submission API is public/CORS-enabled (no secret key), so
 // it's called directly from the browser — see developers.hubspot.com's
@@ -51,36 +54,11 @@ const INTENTS = [
 	},
 ];
 
-const inputClass =
-	"w-full rounded-lg border border-wale-700/15 bg-white px-6 py-5 text-sm text-wale-800 placeholder:text-wale-800/40 focus:outline-none focus:ring-2 focus:ring-wale-700/30";
-const labelClass = "flex items-center gap-1 text-sm font-medium text-wale-800/80";
-
-function SectionHeader({
-	number,
-	title,
-	subtext,
-}: {
-	number: number;
-	title: string;
-	subtext?: string;
-}) {
-	return (
-		<div className="flex flex-col gap-1">
-			<div className="flex items-center gap-3">
-				<span className="bg-wale-700 text-wale-gold flex size-7.5 shrink-0 items-center justify-center rounded-full text-xs font-bold">
-					{number}
-				</span>
-				<p className="font-display text-wale-800 text-lg font-bold tracking-[-0.036px]">{title}</p>
-			</div>
-			{subtext && <p className="text-wale-800/60 text-sm leading-relaxed">{subtext}</p>}
-		</div>
-	);
-}
-
 export default function PartnerEnquiryForm() {
 	const [status, setStatus] = useState<"idle" | "sending" | "submitted" | "error">("idle");
+	const [showModal, setShowModal] = useState(false);
 
-	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setStatus("sending");
 
@@ -152,25 +130,27 @@ export default function PartnerEnquiryForm() {
 				throw new Error("HubSpot submission failed");
 			}
 			setStatus("submitted");
+			setShowModal(true);
 		} catch (error) {
 			console.error("HubSpot submission failed:", error);
 			setStatus("error");
 		}
 	}
 
-	if (status === "submitted") {
-		return (
-			<div className="border-wale-700/15 rounded-xl border bg-white px-8 py-12 text-center">
-				<p className="font-display text-wale-800 text-xl font-bold">Thanks for reaching out!</p>
-				<p className="text-wale-800/65 mt-2 text-sm">
-					We've got your enquiry — we'll respond within 48 hours. No sales pressure promise.
-				</p>
-			</div>
-		);
-	}
-
 	return (
-		<form onSubmit={handleSubmit} className="flex flex-col gap-10">
+		<>
+			{showModal && (
+				<SentModal
+					icon={applicationSentIcon.src}
+					title="Application sent!"
+					body="Thank you! A real person from our team will reply within 48 hours. We've also sent a confirmation to your inbox."
+					closeLabel="Thank you"
+					secondaryLabel="Read our blog while you wait →"
+					secondaryHref={`${import.meta.env.BASE_URL}blog`}
+					onClose={() => setShowModal(false)}
+				/>
+			)}
+			<form onSubmit={handleSubmit} className="flex flex-col gap-10">
 			<div className="flex flex-col gap-4">
 				<SectionHeader number={1} title="About you" />
 				<div className="flex flex-col gap-4 sm:flex-row">
@@ -322,21 +302,12 @@ export default function PartnerEnquiryForm() {
 					name="message"
 					rows={5}
 					placeholder="Tell us what you're hoping HelloWale can do for your team, any specific stays you have in mind, or questions you'd like answered..."
-					className="text-wale-800 placeholder:text-wale-800/40 focus:ring-wale-700/30 w-full rounded-lg border border-wale-700/15 bg-white p-4 text-sm focus:ring-2 focus:outline-none"
+					className={textareaClass}
 				/>
 			</div>
 
 			<div className="flex flex-col gap-5">
-				<label className="flex cursor-pointer items-center gap-3">
-					<input type="checkbox" name="consent" required className="peer sr-only" />
-					<span className="border-wale-700/30 peer-checked:border-wale-700 peer-checked:bg-wale-700 flex size-5 shrink-0 items-center justify-center rounded border bg-white text-transparent peer-checked:text-white">
-						✓
-					</span>
-					<span className="text-wale-800/70 text-sm">
-						I've read and agree to the{" "}
-						<span className="text-wale-800 font-bold">Privacy Policy</span>.
-					</span>
-				</label>
+				<ConsentCheckbox label="Privacy Policy" />
 
 				{status === "error" && (
 					<p className="text-sm text-red-600">
@@ -357,5 +328,6 @@ export default function PartnerEnquiryForm() {
 				</p>
 			</div>
 		</form>
+		</>
 	);
 }

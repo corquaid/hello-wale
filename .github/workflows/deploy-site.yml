@@ -35,6 +35,10 @@ jobs:
           # Public HubSpot form target (no secret key) — see apps/site/.env.example.
           PUBLIC_HUBSPOT_PORTAL_ID: "149149943"
           PUBLIC_HUBSPOT_PARTNER_FORM_GUID: fc942536-05b9-4099-ba88-0462e575e367
+          # Set as a repo variable (Settings → Secrets and variables → Actions
+          # → Variables) once the become-a-host HubSpot form exists — see
+          # apps/site/.env.example.
+          PUBLIC_HUBSPOT_HOST_FORM_GUID: ${{ vars.PUBLIC_HUBSPOT_HOST_FORM_GUID }}
 
   deploy:
     needs: build

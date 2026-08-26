@@ -5,7 +5,7 @@ const CONTACT_API_URL = import.meta.env.PUBLIC_CONTACT_API_URL;
 export default function ContactForm() {
 	const [status, setStatus] = useState<"idle" | "sending" | "submitted" | "error">("idle");
 
-	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setStatus("sending");
 

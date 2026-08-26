@@ -14,6 +14,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang).hostsPage;
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
@@ -29,8 +30,8 @@ const t = useTranslations(lang).hostsPage;
 		afterText={t.hero.afterText}
 		subtext={t.hero.subtext}
 		ctas={[
-			{ label: t.hero.ctaPartner, variant: "ghost" },
-			{ label: t.hero.ctaListing, variant: "cream" },
+			{ label: t.hero.ctaPartner, href: `${base}partner-with-us`, variant: "ghost" },
+			{ label: t.hero.ctaListing, href: `${base}become-a-host`, variant: "cream" },
 		]}
 		photo={hostsHeroDoor}
 		mobilePhoto={hostsHeroMobile}
