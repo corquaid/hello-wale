@@ -14,8 +14,9 @@ import {
 // (same account/portal, different form). Standard contact properties used:
 // email, firstname, lastname, phone, city, country. Custom properties needed:
 // property_name, property_type, guest_capacity, bedrooms, work_ready_features
-// (;-joined), work_ready_other, availability, airbnb_url, booking_url,
-// space_story. Fields not on the form are silently rejected.
+// (;-joined), work_ready_other, availability, availability_months (;-joined —
+// only submitted when availability is "Specific months only"), airbnb_url,
+// booking_url, space_story. Fields not on the form are silently rejected.
 const HUBSPOT_PORTAL_ID = import.meta.env.PUBLIC_HUBSPOT_PORTAL_ID;
 const HUBSPOT_FORM_GUID = import.meta.env.PUBLIC_HUBSPOT_HOST_FORM_GUID;
 
@@ -42,10 +43,27 @@ const WORK_READY_OPTIONS = [
 ];
 
 const AVAILABILITY_OPTIONS = ["Year-round", "Mostly off-season (Oct—Apr)", "Specific months only"];
+const SPECIFIC_MONTHS_OPTION = "Specific months only";
+
+const MONTHS = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+];
 
 export default function HostApplicationForm() {
 	const [status, setStatus] = useState<"idle" | "sending" | "submitted" | "error">("idle");
 	const [showModal, setShowModal] = useState(false);
+	const [availability, setAvailability] = useState(AVAILABILITY_OPTIONS[0]);
 
 	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -69,7 +87,11 @@ export default function HostApplicationForm() {
 		const bedrooms = String(data.get("bedrooms") ?? "").trim();
 		const workReadyFeatures = data.getAll("workReady").map(String);
 		const workReadyOther = String(data.get("workReadyOther") ?? "").trim();
-		const availability = String(data.get("availability") ?? "").trim();
+		const availabilityValue = String(data.get("availability") ?? "").trim();
+		const availabilityMonths =
+			availabilityValue === SPECIFIC_MONTHS_OPTION
+				? data.getAll("availabilityMonths").map(String)
+				: [];
 		const airbnbUrl = String(data.get("airbnbUrl") ?? "").trim();
 		const bookingUrl = String(data.get("bookingUrl") ?? "").trim();
 		const spaceStory = String(data.get("spaceStory") ?? "").trim();
@@ -88,7 +110,8 @@ export default function HostApplicationForm() {
 			{ objectTypeId: "0-1", name: "bedrooms", value: bedrooms },
 			{ objectTypeId: "0-1", name: "work_ready_features", value: workReadyFeatures.join(";") },
 			{ objectTypeId: "0-1", name: "work_ready_other", value: workReadyOther },
-			{ objectTypeId: "0-1", name: "availability", value: availability },
+			{ objectTypeId: "0-1", name: "availability", value: availabilityValue },
+			{ objectTypeId: "0-1", name: "availability_months", value: availabilityMonths.join(";") },
 			{ objectTypeId: "0-1", name: "airbnb_url", value: airbnbUrl },
 			{ objectTypeId: "0-1", name: "booking_url", value: bookingUrl },
 			{ objectTypeId: "0-1", name: "space_story", value: spaceStory },
@@ -185,7 +208,7 @@ export default function HostApplicationForm() {
 							<select
 								id="phoneCode"
 								name="phoneCode"
-								defaultValue="+420"
+								defaultValue="+48"
 								aria-label="Country calling code"
 								className="text-wale-800 focus:ring-wale-700/30 border-wale-700/15 rounded-lg border bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
 							>
@@ -349,13 +372,14 @@ export default function HostApplicationForm() {
 				<div className="flex flex-col gap-4">
 					<SectionHeader number={4} title="When is it available?" />
 					<div className="flex flex-wrap gap-2">
-						{AVAILABILITY_OPTIONS.map((option, index) => (
+						{AVAILABILITY_OPTIONS.map((option) => (
 							<label key={option} className="cursor-pointer">
 								<input
 									type="radio"
 									name="availability"
 									value={option}
-									defaultChecked={index === 0}
+									checked={availability === option}
+									onChange={() => setAvailability(option)}
 									className="peer sr-only"
 								/>
 								<span className="peer-checked:bg-wale-700 border-wale-700/15 text-wale-800 inline-flex items-center rounded-full border bg-white px-5 py-2.5 text-sm font-medium transition-colors peer-checked:text-white">
@@ -364,6 +388,26 @@ export default function HostApplicationForm() {
 							</label>
 						))}
 					</div>
+					{availability === SPECIFIC_MONTHS_OPTION && (
+						<div className="flex flex-col gap-2">
+							<span className={labelClass}>Which months? Select all that apply.</span>
+							<div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+								{MONTHS.map((month) => (
+									<label key={month} className="cursor-pointer">
+										<input
+											type="checkbox"
+											name="availabilityMonths"
+											value={month}
+											className="peer sr-only"
+										/>
+										<span className="peer-checked:bg-wale-700 peer-checked:border-wale-700 border-wale-700/15 text-wale-800 flex items-center justify-center rounded-lg border bg-white px-3 py-2.5 text-sm font-medium transition-colors peer-checked:text-white">
+											{month}
+										</span>
+									</label>
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 
 				<div className="flex flex-col gap-4">
