@@ -1,7 +1,13 @@
 import { useState } from "react";
 import applicationSentIcon from "../assets/images/partner-application-sent.png";
 import SentModal from "./SentModal";
-import { ConsentCheckbox, inputClass, labelClass, SectionHeader, textareaClass } from "./formPrimitives";
+import {
+	ConsentCheckbox,
+	inputClass,
+	labelClass,
+	SectionHeader,
+	textareaClass,
+} from "./formPrimitives";
 
 // Same public/no-secret HubSpot Forms Submission API as PartnerEnquiryForm.tsx
 // — see the comment there for how it works. This uses a separate HubSpot form
@@ -181,7 +187,7 @@ export default function HostApplicationForm() {
 								name="phoneCode"
 								defaultValue="+420"
 								aria-label="Country calling code"
-								className="text-wale-800 focus:ring-wale-700/30 rounded-lg border border-wale-700/15 bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
+								className="text-wale-800 focus:ring-wale-700/30 border-wale-700/15 rounded-lg border bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
 							>
 								{PHONE_CODES.map((entry) => (
 									<option key={entry.code} value={entry.code}>
@@ -352,7 +358,7 @@ export default function HostApplicationForm() {
 									defaultChecked={index === 0}
 									className="peer sr-only"
 								/>
-								<span className="peer-checked:bg-wale-700 peer-checked:text-white border-wale-700/15 text-wale-800 inline-flex items-center rounded-full border bg-white px-5 py-2.5 text-sm font-medium transition-colors">
+								<span className="peer-checked:bg-wale-700 border-wale-700/15 text-wale-800 inline-flex items-center rounded-full border bg-white px-5 py-2.5 text-sm font-medium transition-colors peer-checked:text-white">
 									{option}
 								</span>
 							</label>
@@ -411,8 +417,7 @@ export default function HostApplicationForm() {
 
 					{status === "error" && (
 						<p className="text-sm text-red-600">
-							Something went wrong sending your application. Please try again, or email us
-							directly.
+							Something went wrong sending your application. Please try again, or email us directly.
 						</p>
 					)}
 

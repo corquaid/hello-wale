@@ -5,7 +5,13 @@ import individualIcon from "../assets/images/partner-intent-individual.png";
 import curiousIcon from "../assets/images/partner-intent-curious.png";
 import applicationSentIcon from "../assets/images/partner-application-sent.png";
 import SentModal from "./SentModal";
-import { ConsentCheckbox, inputClass, labelClass, SectionHeader, textareaClass } from "./formPrimitives";
+import {
+	ConsentCheckbox,
+	inputClass,
+	labelClass,
+	SectionHeader,
+	textareaClass,
+} from "./formPrimitives";
 
 // HubSpot's Forms Submission API is public/CORS-enabled (no secret key), so
 // it's called directly from the browser — see developers.hubspot.com's
@@ -151,183 +157,183 @@ export default function PartnerEnquiryForm() {
 				/>
 			)}
 			<form onSubmit={handleSubmit} className="flex flex-col gap-10">
-			<div className="flex flex-col gap-4">
-				<SectionHeader number={1} title="About you" />
-				<div className="flex flex-col gap-4 sm:flex-row">
-					<div className="flex flex-1 flex-col gap-2">
-						<label htmlFor="fullName" className={labelClass}>
-							Full name <span className="text-wale-800 font-bold">*</span>
+				<div className="flex flex-col gap-4">
+					<SectionHeader number={1} title="About you" />
+					<div className="flex flex-col gap-4 sm:flex-row">
+						<div className="flex flex-1 flex-col gap-2">
+							<label htmlFor="fullName" className={labelClass}>
+								Full name <span className="text-wale-800 font-bold">*</span>
+							</label>
+							<input
+								id="fullName"
+								name="fullName"
+								type="text"
+								required
+								placeholder="e.g. Elena Novak"
+								className={inputClass}
+							/>
+						</div>
+						<div className="flex flex-1 flex-col gap-2">
+							<label htmlFor="workEmail" className={labelClass}>
+								Work email <span className="text-wale-800 font-bold">*</span>
+							</label>
+							<input
+								id="workEmail"
+								name="workEmail"
+								type="email"
+								required
+								placeholder="you@company.com"
+								className={inputClass}
+							/>
+						</div>
+					</div>
+					<div className="flex flex-col gap-2">
+						<label htmlFor="phoneNumber" className={labelClass}>
+							Phone Number
+						</label>
+						<div className="flex gap-1">
+							<select
+								id="phoneCode"
+								name="phoneCode"
+								defaultValue="+48"
+								aria-label="Country calling code"
+								className="text-wale-800 focus:ring-wale-700/30 border-wale-700/15 rounded-lg border bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
+							>
+								{PHONE_CODES.map((entry) => (
+									<option key={entry.code} value={entry.code}>
+										{entry.label}
+									</option>
+								))}
+							</select>
+							<input
+								id="phoneNumber"
+								name="phoneNumber"
+								type="tel"
+								placeholder="600 123 456"
+								className={`${inputClass} flex-1`}
+							/>
+						</div>
+					</div>
+					<div className="flex flex-col gap-2">
+						<label htmlFor="jobTitle" className={labelClass}>
+							Job title
 						</label>
 						<input
-							id="fullName"
-							name="fullName"
+							id="jobTitle"
+							name="jobTitle"
+							type="text"
+							placeholder="e.g. Head of People, Founder, HR Manager"
+							className={inputClass}
+						/>
+					</div>
+				</div>
+
+				<div className="flex flex-col gap-6">
+					<SectionHeader number={2} title="About your company" />
+					<div className="flex flex-col gap-2">
+						<label htmlFor="companyName" className={labelClass}>
+							Company name <span className="text-wale-800 font-bold">*</span>
+						</label>
+						<input
+							id="companyName"
+							name="companyName"
 							type="text"
 							required
-							placeholder="e.g. Elena Novak"
+							placeholder="e.g. Green Studio"
 							className={inputClass}
 						/>
 					</div>
-					<div className="flex flex-1 flex-col gap-2">
-						<label htmlFor="workEmail" className={labelClass}>
-							Work email <span className="text-wale-800 font-bold">*</span>
-						</label>
-						<input
-							id="workEmail"
-							name="workEmail"
-							type="email"
-							required
-							placeholder="you@company.com"
-							className={inputClass}
-						/>
+					<div className="flex flex-col gap-4 sm:flex-row">
+						<div className="flex flex-1 flex-col gap-2">
+							<label htmlFor="teamSize" className={labelClass}>
+								Team size <span className="text-wale-800 font-bold">*</span>
+							</label>
+							<input
+								id="teamSize"
+								name="teamSize"
+								type="number"
+								min={1}
+								required
+								placeholder="Write number"
+								className={inputClass}
+							/>
+						</div>
+						<div className="flex flex-1 flex-col gap-2">
+							<label htmlFor="country" className={labelClass}>
+								Country <span className="text-wale-800 font-bold">*</span>
+							</label>
+							<input
+								id="country"
+								name="country"
+								type="text"
+
+								required
+								placeholder="e.g. Poland"
+								className={inputClass}
+							/>
+						</div>
 					</div>
 				</div>
-				<div className="flex flex-col gap-2">
-					<label htmlFor="phoneNumber" className={labelClass}>
-						Phone Number
-					</label>
-					<div className="flex gap-1">
-						<select
-							id="phoneCode"
-							name="phoneCode"
-							defaultValue="+48"
-							aria-label="Country calling code"
-							className="text-wale-800 focus:ring-wale-700/30 rounded-lg border border-wale-700/15 bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
-						>
-							{PHONE_CODES.map((entry) => (
-								<option key={entry.code} value={entry.code}>
-									{entry.label}
-								</option>
-							))}
-						</select>
-						<input
-							id="phoneNumber"
-							name="phoneNumber"
-							type="tel"
-							placeholder="600 123 456"
-							className={`${inputClass} flex-1`}
-						/>
+
+				<div className="flex flex-col gap-4">
+					<SectionHeader number={3} title="What brings you here?" subtext="Choose one or more." />
+					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+						{INTENTS.map((intent) => (
+							<label
+								key={intent.id}
+								className="has-checked:bg-wale-700 has-checked:border-wale-700 border-wale-700/15 flex cursor-pointer flex-col gap-2 rounded-xl border bg-white p-5 transition-colors duration-200"
+							>
+								<input type="checkbox" name="intents" value={intent.id} className="peer sr-only" />
+								<span className="bg-wale-50 peer-checked:bg-wale-peach flex size-10 items-center justify-center rounded-full transition-colors duration-200">
+									<img src={intent.icon} alt="" className="size-7 rounded-full" />
+								</span>
+								<span className="font-display text-wale-800 text-sm font-bold transition-colors duration-200 peer-checked:text-white">
+									{intent.title}
+								</span>
+								<span className="text-wale-800/60 peer-checked:text-wale-peach text-xs leading-relaxed transition-colors duration-200">
+									{intent.description}
+								</span>
+							</label>
+						))}
 					</div>
 				</div>
-				<div className="flex flex-col gap-2">
-					<label htmlFor="jobTitle" className={labelClass}>
-						Job title
-					</label>
-					<input
-						id="jobTitle"
-						name="jobTitle"
-						type="text"
-						placeholder="e.g. Head of People, Founder, HR Manager"
-						className={inputClass}
+
+				<div className="flex flex-col gap-4">
+					<SectionHeader
+						number={4}
+						title="Anything else we should know?"
+						subtext="Optional but helpful for our first call."
+					/>
+					<textarea
+						name="message"
+						rows={5}
+						placeholder="Tell us what you're hoping HelloWale can do for your team, any specific stays you have in mind, or questions you'd like answered..."
+						className={textareaClass}
 					/>
 				</div>
-			</div>
 
-			<div className="flex flex-col gap-6">
-				<SectionHeader number={2} title="About your company" />
-				<div className="flex flex-col gap-2">
-					<label htmlFor="companyName" className={labelClass}>
-						Company name <span className="text-wale-800 font-bold">*</span>
-					</label>
-					<input
-						id="companyName"
-						name="companyName"
-						type="text"
-						required
-						placeholder="e.g. Green Studio"
-						className={inputClass}
-					/>
-				</div>
-				<div className="flex flex-col gap-4 sm:flex-row">
-					<div className="flex flex-1 flex-col gap-2">
-						<label htmlFor="teamSize" className={labelClass}>
-							Team size <span className="text-wale-800 font-bold">*</span>
-						</label>
-						<input
-							id="teamSize"
-							name="teamSize"
-							type="number"
-							min={1}
-							required
-							placeholder="Write number"
-							className={inputClass}
-						/>
-					</div>
-					<div className="flex flex-1 flex-col gap-2">
-						<label htmlFor="country" className={labelClass}>
-							Country <span className="text-wale-800 font-bold">*</span>
-						</label>
-						<input
-							id="country"
-							name="country"
-							type="text"
-							
-							required
-							placeholder="e.g. Poland"
-							className={inputClass}
-						/>
-					</div>
-				</div>
-			</div>
+				<div className="flex flex-col gap-5">
+					<ConsentCheckbox label="Privacy Policy" />
 
-			<div className="flex flex-col gap-4">
-				<SectionHeader number={3} title="What brings you here?" subtext="Choose one or more." />
-				<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-					{INTENTS.map((intent) => (
-						<label
-							key={intent.id}
-							className="has-checked:bg-wale-700 has-checked:border-wale-700 flex cursor-pointer flex-col gap-2 rounded-xl border border-wale-700/15 bg-white p-5 transition-colors duration-200"
-						>
-							<input type="checkbox" name="intents" value={intent.id} className="peer sr-only" />
-							<span className="bg-wale-50 peer-checked:bg-wale-peach flex size-10 items-center justify-center rounded-full transition-colors duration-200">
-								<img src={intent.icon} alt="" className="size-7 rounded-full" />
-							</span>
-							<span className="font-display text-wale-800 text-sm font-bold transition-colors duration-200 peer-checked:text-white">
-								{intent.title}
-							</span>
-							<span className="text-wale-800/60 peer-checked:text-wale-peach text-xs leading-relaxed transition-colors duration-200">
-								{intent.description}
-							</span>
-						</label>
-					))}
-				</div>
-			</div>
+					{status === "error" && (
+						<p className="text-sm text-red-600">
+							Something went wrong sending your enquiry. Please try again, or email us directly.
+						</p>
+					)}
 
-			<div className="flex flex-col gap-4">
-				<SectionHeader
-					number={4}
-					title="Anything else we should know?"
-					subtext="Optional but helpful for our first call."
-				/>
-				<textarea
-					name="message"
-					rows={5}
-					placeholder="Tell us what you're hoping HelloWale can do for your team, any specific stays you have in mind, or questions you'd like answered..."
-					className={textareaClass}
-				/>
-			</div>
-
-			<div className="flex flex-col gap-5">
-				<ConsentCheckbox label="Privacy Policy" />
-
-				{status === "error" && (
-					<p className="text-sm text-red-600">
-						Something went wrong sending your enquiry. Please try again, or email us directly.
+					<button
+						type="submit"
+						disabled={status === "sending"}
+						className="bg-wale-700 font-display hover:bg-wale-800 inline-flex w-fit items-center gap-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl px-12 py-5 text-base font-medium tracking-[0.08px] text-white disabled:opacity-50"
+					>
+						{status === "sending" ? "Sending…" : "Partner with us"}
+						<span aria-hidden="true">→</span>
+					</button>
+					<p className="text-wale-800/55 text-sm">
+						We'll respond within 48 hours. No sales pressure promise.
 					</p>
-				)}
-
-				<button
-					type="submit"
-					disabled={status === "sending"}
-					className="bg-wale-700 font-display hover:bg-wale-800 inline-flex w-fit items-center gap-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl px-12 py-5 text-base font-medium tracking-[0.08px] text-white disabled:opacity-50"
-				>
-					{status === "sending" ? "Sending…" : "Partner with us"}
-					<span aria-hidden="true">→</span>
-				</button>
-				<p className="text-wale-800/55 text-sm">
-					We'll respond within 48 hours. No sales pressure promise.
-				</p>
-			</div>
-		</form>
+				</div>
+			</form>
 		</>
 	);
 }

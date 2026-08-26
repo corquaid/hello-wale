@@ -71,10 +71,10 @@ export default function SentModal({
 					</svg>
 				</button>
 				<img src={icon} alt="" className="size-37" />
-				<p id="sent-modal-title" className="font-display text-2xl font-bold text-wale-700">
+				<p id="sent-modal-title" className="font-display text-wale-700 text-2xl font-bold">
 					{title}
 				</p>
-				<p className="text-sm leading-relaxed text-wale-800/70">{body}</p>
+				<p className="text-wale-800/70 text-sm leading-relaxed">{body}</p>
 				<button
 					ref={closeButtonRef}
 					type="button"
@@ -85,7 +85,7 @@ export default function SentModal({
 				</button>
 				<a
 					href={secondaryHref}
-					className="font-display text-wale-800/75 text-sm font-bold hover:text-wale-800"
+					className="font-display text-wale-800/75 hover:text-wale-800 text-sm font-bold"
 				>
 					{secondaryLabel}
 				</a>
