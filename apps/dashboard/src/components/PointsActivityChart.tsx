@@ -11,7 +11,7 @@ import {
 	YAxis,
 } from "recharts";
 import type { TooltipContentProps } from "recharts";
-import type { DailyActivity } from "@/lib/customers";
+import type { DailyActivity } from "@/lib/company";
 
 function formatDate(date: string) {
 	return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {

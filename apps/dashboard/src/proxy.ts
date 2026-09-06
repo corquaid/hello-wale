@@ -4,17 +4,25 @@ import { verifySession } from "@/lib/session";
 // Next.js 16 renamed the `middleware` file convention to `proxy` — this is
 // that file, not a leftover. See: https://nextjs.org/docs/app/api-reference/file-conventions/proxy
 //
-// Demo-mode auth: a single shared-password session cookie (see
-// lib/session.ts + app/login/actions.ts), not per-user accounts. This is an
-// optimistic check — every Server Action / data request also calls
-// requireSession() (see src/lib/auth.ts), so protection doesn't depend on
-// this matcher config being correct forever.
+// Auth is the backend API's session, held inside this app's own encrypted
+// cookie (see lib/session.ts + app/login/actions.ts). This is an optimistic
+// check on that cookie alone — it cannot know whether the upstream session is
+// still alive, so every Server Action / data request also calls requireUser()
+// (see src/lib/auth.ts), which asks the API. Protection doesn't depend on this
+// matcher config being correct forever.
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
 	// Public API, called cross-origin from the marketing site — no session
 	// cookie to check. See src/app/api/contact/route.ts.
 	if (pathname.startsWith("/api/contact")) {
+		return NextResponse.next();
+	}
+
+	// Clears a stale cookie and bounces to /login. It must be reachable while
+	// still holding a session cookie, which is exactly what the rule below
+	// would otherwise redirect away. See app/session/expired/route.ts.
+	if (pathname === "/session/expired") {
 		return NextResponse.next();
 	}
 

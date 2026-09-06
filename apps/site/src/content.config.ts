@@ -10,7 +10,7 @@ const blog = defineCollection({
 			description: z.string(),
 			pubDate: z.coerce.date(),
 			heroImage: image(),
-			images: z.array(image()).max(5).optional(),
+			images: z.array(image()).max(6).optional(),
 			categories: z.array(z.enum(BLOG_TOPIC_SLUGS)).min(1),
 			lang: z.enum(["en", "pl"]).default("en"),
 			translationKey: z.string().optional(),
