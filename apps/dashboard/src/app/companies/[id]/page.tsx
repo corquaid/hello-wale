@@ -38,12 +38,10 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
 					<Link href="/companies" className="text-sm text-gray-500 hover:underline">
 						← Companies
 					</Link>
-					<h1 className="font-display mt-1 text-2xl font-semibold text-gray-900">
-						{company.name}
-					</h1>
+					<h1 className="font-display mt-1 text-2xl font-semibold text-gray-900">{company.name}</h1>
 					<p className="text-sm text-gray-500 capitalize">
-						{company.status} · {company.point_conversion_rate_minor_units} minor units per
-						point · {company.discount_limit_percent}% discount limit
+						{company.status} · {company.point_conversion_rate_minor_units} minor units per point ·{" "}
+						{company.discount_limit_percent}% discount limit
 					</p>
 				</div>
 				<div className="flex gap-4">

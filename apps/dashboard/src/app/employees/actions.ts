@@ -20,9 +20,7 @@ export type ActionState = { error: string } | { ok: true } | undefined;
  * grant.
  */
 export type GrantState =
-	| { ok: true; nextKey: string }
-	| { error: string; nextKey: string }
-	| undefined;
+	{ ok: true; nextKey: string } | { error: string; nextKey: string } | undefined;
 
 /**
  * Turns an ApiError into something worth showing a person. Only the `code` is
@@ -75,8 +73,10 @@ export async function createEmployee(
 	const lastName = formData.get("last_name");
 	const email = formData.get("email");
 
-	if (typeof firstName !== "string" || !firstName.trim()) return { error: "A first name is required." };
-	if (typeof lastName !== "string" || !lastName.trim()) return { error: "A last name is required." };
+	if (typeof firstName !== "string" || !firstName.trim())
+		return { error: "A first name is required." };
+	if (typeof lastName !== "string" || !lastName.trim())
+		return { error: "A last name is required." };
 	if (typeof email !== "string" || !email.trim()) return { error: "An email address is required." };
 
 	let employee: Employee;
@@ -106,10 +106,7 @@ export async function createEmployee(
  * double-submit of the same form must reuse it (and be collapsed into one
  * grant), while a corrected resubmit needs a fresh one. See GrantPointsForm.
  */
-export async function grantPoints(
-	_prevState: GrantState,
-	formData: FormData,
-): Promise<GrantState> {
+export async function grantPoints(_prevState: GrantState, formData: FormData): Promise<GrantState> {
 	await requireCompanyAdministrator();
 
 	const nextKey = crypto.randomUUID();

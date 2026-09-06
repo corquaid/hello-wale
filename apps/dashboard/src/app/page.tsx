@@ -62,7 +62,10 @@ async function CompanyHome({
 				{report.active_employees.toLocaleString()} active
 				{report.inactive_employees > 0 &&
 					`, ${report.inactive_employees.toLocaleString()} inactive`}{" "}
-				· <Link href="/employees" className="text-wale-700 hover:underline">View employees</Link>
+				·{" "}
+				<Link href="/employees" className="text-wale-700 hover:underline">
+					View employees
+				</Link>
 			</p>
 
 			<form className="flex flex-wrap items-end gap-3">
@@ -129,9 +132,7 @@ async function OperatorHome() {
 		<div className="space-y-8">
 			<div>
 				<h1 className="font-display text-2xl font-semibold text-gray-900">Platform</h1>
-				<p className="text-sm text-gray-500">
-					Signed in as a platform operator. {OPERATOR_CANNOT}
-				</p>
+				<p className="text-sm text-gray-500">Signed in as a platform operator. {OPERATOR_CANNOT}</p>
 			</div>
 
 			<div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -175,10 +176,7 @@ async function OperatorHome() {
 								{companies.map((company) => (
 									<tr key={company.id} className="hover:bg-gray-50">
 										<td className="px-4 py-3">
-											<Link
-												href={`/companies/${company.id}`}
-												className="font-medium text-gray-900"
-											>
+											<Link href={`/companies/${company.id}`} className="font-medium text-gray-900">
 												{company.name}
 											</Link>
 										</td>
@@ -186,9 +184,7 @@ async function OperatorHome() {
 										<td className="px-4 py-3 text-gray-900">
 											{company.point_conversion_rate_minor_units}
 										</td>
-										<td className="px-4 py-3 text-gray-900">
-											{company.discount_limit_percent}%
-										</td>
+										<td className="px-4 py-3 text-gray-900">{company.discount_limit_percent}%</td>
 									</tr>
 								))}
 							</tbody>

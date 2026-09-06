@@ -73,13 +73,8 @@ export default async function AuditLogsPage({ params }: { params: Promise<{ id: 
 																<span>{renderValue(after)}</span>
 															) : (
 																<>
-																	<span className="text-red-600">
-																		{renderValue(before)}
-																	</span>{" "}
-																	→{" "}
-																	<span className="text-green-700">
-																		{renderValue(after)}
-																	</span>
+																	<span className="text-red-600">{renderValue(before)}</span> →{" "}
+																	<span className="text-green-700">{renderValue(after)}</span>
 																</>
 															)}
 														</li>

@@ -40,7 +40,7 @@ Uses Next.js 16's `proxy.ts` file convention (renamed from `middleware.ts` — s
 
 Everything goes through `src/lib/api/client.ts`. Three things about that API drive the design:
 
-- **Cookie sessions, not tokens.** Bearer tokens are only issued on the server (`php artisan token:issue`) and no route hands one out, so a login form must use the cookie flow. The browser never calls the API directly — every call is server-side (Server Components and Server Actions), and the upstream cookies are held in this app's own *encrypted* cookie (`src/lib/session.ts`). That cookie carries a live credential, which is why it is encrypted rather than merely signed.
+- **Cookie sessions, not tokens.** Bearer tokens are only issued on the server (`php artisan token:issue`) and no route hands one out, so a login form must use the cookie flow. The browser never calls the API directly — every call is server-side (Server Components and Server Actions), and the upstream cookies are held in this app's own _encrypted_ cookie (`src/lib/session.ts`). That cookie carries a live credential, which is why it is encrypted rather than merely signed.
 - **The origin matters.** Sanctum only grants a session to requests whose Origin is in its stateful list, and refuses sign-in otherwise with `SESSION_UNAVAILABLE`. `API_ORIGIN` must appear in the backend's `SANCTUM_STATEFUL_DOMAINS` and `FRONTEND_URL`.
 - **Writes need CSRF, and point movements need idempotency.** `/sanctum/csrf-cookie` first, then `X-XSRF-TOKEN` on every write. Every endpoint that moves points, plus both deactivates, requires an `Idempotency-Key` that covers the request body — see the comments in `src/app/employees/actions.ts` for how keys are minted and rotated.
 

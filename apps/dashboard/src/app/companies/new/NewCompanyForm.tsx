@@ -12,14 +12,24 @@ export function NewCompanyForm() {
 				<label htmlFor="name" className="block text-sm font-medium text-gray-700">
 					Name
 				</label>
-				<input id="name" name="name" required className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none" />
+				<input
+					id="name"
+					name="name"
+					required
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+				/>
 			</div>
 
 			<div className="space-y-1">
 				<label htmlFor="status" className="block text-sm font-medium text-gray-700">
 					Status
 				</label>
-				<select id="status" name="status" defaultValue="trial" className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none">
+				<select
+					id="status"
+					name="status"
+					defaultValue="trial"
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+				>
 					<option value="trial">Trial</option>
 					<option value="active">Active</option>
 					<option value="suspended">Suspended</option>

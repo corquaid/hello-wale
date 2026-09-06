@@ -1,12 +1,7 @@
 import "server-only";
 import { ApiError } from "@/lib/api/errors";
 import { verifySession } from "@/lib/session";
-import {
-	parseSetCookies,
-	serialiseJar,
-	xsrfTokenFrom,
-	type CookieJar,
-} from "@/lib/api/cookies";
+import { parseSetCookies, serialiseJar, xsrfTokenFrom, type CookieJar } from "@/lib/api/cookies";
 
 /**
  * Every call to the benefit-points API goes through here.

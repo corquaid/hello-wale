@@ -39,10 +39,7 @@ export default async function CompaniesPage() {
 							{companies.map((company) => (
 								<tr key={company.id} className="hover:bg-gray-50">
 									<td className="px-4 py-3">
-										<Link
-											href={`/companies/${company.id}`}
-											className="font-medium text-gray-900"
-										>
+										<Link href={`/companies/${company.id}`} className="font-medium text-gray-900">
 											{company.name}
 										</Link>
 									</td>
@@ -55,9 +52,7 @@ export default async function CompaniesPage() {
 										{company.point_conversion_rate_minor_units}
 										<span className="text-gray-400"> minor units / point</span>
 									</td>
-									<td className="px-4 py-3 text-gray-900">
-										{company.discount_limit_percent}%
-									</td>
+									<td className="px-4 py-3 text-gray-900">{company.discount_limit_percent}%</td>
 								</tr>
 							))}
 						</tbody>

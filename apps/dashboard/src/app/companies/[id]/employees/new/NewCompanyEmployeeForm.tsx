@@ -15,22 +15,40 @@ export function NewCompanyEmployeeForm({ companyId }: { companyId: number }) {
 				<label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
 					First name
 				</label>
-				<input id="first_name" name="first_name" required className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none" />
+				<input
+					id="first_name"
+					name="first_name"
+					required
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+				/>
 			</div>
 
 			<div className="space-y-1">
 				<label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
 					Last name
 				</label>
-				<input id="last_name" name="last_name" required className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none" />
+				<input
+					id="last_name"
+					name="last_name"
+					required
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+				/>
 			</div>
 
 			<div className="space-y-1">
 				<label htmlFor="email" className="block text-sm font-medium text-gray-700">
 					Email
 				</label>
-				<input id="email" name="email" type="email" required className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none" />
-				<p className="text-xs text-gray-500">Unique within this company, not across the platform.</p>
+				<input
+					id="email"
+					name="email"
+					type="email"
+					required
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+				/>
+				<p className="text-xs text-gray-500">
+					Unique within this company, not across the platform.
+				</p>
 			</div>
 
 			{state?.error && <p className="text-sm text-red-600">{state.error}</p>}

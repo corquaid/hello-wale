@@ -18,7 +18,13 @@ export function InviteAdministratorForm({ companyId }: { companyId: number }) {
 				<label htmlFor="email" className="block text-sm font-medium text-gray-700">
 					Invite an administrator
 				</label>
-				<input id="email" name="email" type="email" required className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none" />
+				<input
+					id="email"
+					name="email"
+					type="email"
+					required
+					className="focus:border-wale-700 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+				/>
 			</div>
 
 			<button

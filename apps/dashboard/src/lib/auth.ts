@@ -74,4 +74,3 @@ export const getUser = cache(async (): Promise<AuthenticatedUser | null> => {
 		return null;
 	}
 });
-

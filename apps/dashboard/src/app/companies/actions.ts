@@ -172,8 +172,10 @@ export async function createCompanyEmployee(
 	const lastName = formData.get("last_name");
 	const email = formData.get("email");
 
-	if (typeof firstName !== "string" || !firstName.trim()) return { error: "A first name is required." };
-	if (typeof lastName !== "string" || !lastName.trim()) return { error: "A last name is required." };
+	if (typeof firstName !== "string" || !firstName.trim())
+		return { error: "A first name is required." };
+	if (typeof lastName !== "string" || !lastName.trim())
+		return { error: "A last name is required." };
 	if (typeof email !== "string" || !email.trim()) return { error: "An email address is required." };
 
 	let employee: Employee;
@@ -210,10 +212,10 @@ export async function deactivateCompanyEmployee(
 		throw new Error("Missing idempotency key for deactivation.");
 	}
 
-	await requestWithSession(
-		`/operator/companies/${companyId}/employees/${employeeId}/deactivate`,
-		{ method: "POST", idempotencyKey },
-	);
+	await requestWithSession(`/operator/companies/${companyId}/employees/${employeeId}/deactivate`, {
+		method: "POST",
+		idempotencyKey,
+	});
 
 	revalidateCompany(companyId);
 	redirect(`/companies/${companyId}`);
