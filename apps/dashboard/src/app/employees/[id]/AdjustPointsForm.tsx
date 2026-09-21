@@ -29,11 +29,13 @@ export interface CorrectableTransfer {
 export function AdjustPointsForm({
 	employeeId,
 	transfers,
+	poolBalance,
 	initialIdempotencyKey,
 	disabled,
 }: {
 	employeeId: number;
 	transfers: CorrectableTransfer[];
+	poolBalance: number;
 	initialIdempotencyKey: string;
 	disabled?: boolean;
 }) {
@@ -55,6 +57,7 @@ export function AdjustPointsForm({
 			key={state && "ok" in state ? state.nextKey : "pristine"}
 			employeeId={employeeId}
 			transfers={transfers}
+			poolBalance={poolBalance}
 			// Derived, not stored: the action hands back the key the next
 			// submission should carry, so there is nothing to synchronise.
 			idempotencyKey={state?.nextKey ?? initialIdempotencyKey}
@@ -68,6 +71,7 @@ export function AdjustPointsForm({
 function AdjustPointsFields({
 	employeeId,
 	transfers,
+	poolBalance,
 	idempotencyKey,
 	state,
 	formAction,
@@ -75,6 +79,7 @@ function AdjustPointsFields({
 }: {
 	employeeId: number;
 	transfers: CorrectableTransfer[];
+	poolBalance: number;
 	idempotencyKey: string;
 	state: GrantState;
 	formAction: (formData: FormData) => void;
@@ -84,6 +89,10 @@ function AdjustPointsFields({
 	const [transferId, setTransferId] = useState("");
 
 	const takingBack = Number(points) < 0;
+	// A grant comes out of the pool, so it can ask for more than there is. A
+	// take-back returns points to the pool and never can.
+	const requested = Number(points);
+	const overdrawn = Number.isFinite(requested) && requested > poolBalance;
 
 	// Only a take-back corrects anything: anything else is a plain grant, which
 	// names no transfer. Derived rather than cleared on change, so going back to
@@ -121,6 +130,15 @@ function AdjustPointsFields({
 					A positive number comes out of the company pool. A negative one takes points back into it,
 					which the API can only do as a correction to an earlier transfer.
 				</p>
+				<p className="text-xs text-gray-500">
+					The pool holds{" "}
+					<span className="font-medium text-gray-900">{poolBalance.toLocaleString()}</span> points.
+				</p>
+				{overdrawn && (
+					<p className="text-xs text-red-600">
+						That is more than the pool holds, so the grant would be refused.
+					</p>
+				)}
 			</div>
 
 			<div className="space-y-1">

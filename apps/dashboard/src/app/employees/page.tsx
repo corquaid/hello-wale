@@ -8,12 +8,20 @@ export default async function EmployeesPage() {
 		<div className="space-y-6">
 			<div className="flex items-center justify-between">
 				<h1 className="font-display text-2xl font-semibold text-gray-900">Employees</h1>
-				<Link
-					href="/employees/new"
-					className="bg-wale-700 hover:bg-wale-800 rounded-md px-3 py-2 text-sm font-medium text-white"
-				>
-					Add employee
-				</Link>
+				<div className="flex items-center gap-3">
+					<Link
+						href="/employees/grant"
+						className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+					>
+						Grant points
+					</Link>
+					<Link
+						href="/employees/new"
+						className="bg-wale-700 hover:bg-wale-800 rounded-md px-3 py-2 text-sm font-medium text-white"
+					>
+						Add employee
+					</Link>
+				</div>
 			</div>
 
 			{employees.length === 0 ? (

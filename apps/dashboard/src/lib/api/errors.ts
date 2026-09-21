@@ -29,6 +29,7 @@ export type ApiErrorCode =
 	| "INSUFFICIENT_POINTS"
 	| "COMPANY_NOT_ACTIVE"
 	| "EMPLOYEE_NOT_ACTIVE"
+	| "INVALID_TRANSFER"
 	| "TENANT_CONTEXT_MISSING";
 
 export class ApiError extends Error {

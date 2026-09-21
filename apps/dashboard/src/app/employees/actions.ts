@@ -41,6 +41,8 @@ function describe(error: unknown, fallback: string): string {
 			return "This company is not active, so its points cannot be moved.";
 		case "EMPLOYEE_NOT_ACTIVE":
 			return "This employee is not active, so their points cannot be moved.";
+		case "INVALID_TRANSFER":
+			return "The API refused that as an invalid transfer. Check the amounts and try again.";
 		case "IDEMPOTENCY_KEY_CONFLICT":
 			return "This form was already submitted with different details. Reload and try again.";
 		case "IDEMPOTENCY_REQUEST_IN_PROGRESS":
@@ -178,6 +180,73 @@ export async function adjustPoints(
 	}
 
 	revalidateEmployee(employeeId);
+	return { ok: true, nextKey };
+}
+
+/**
+ * Grants points to several employees at once.
+ *
+ * One operation, not a loop: the API debits the pool once for the whole sum
+ * and either everybody receives points or nobody does. Granting in a loop
+ * from here would give up that guarantee — a pool that ran dry halfway would
+ * leave some people paid and some not, with no record of which.
+ *
+ * Allocations arrive as one form field per employee (`points_{id}`), so the
+ * form needs no JSON and no hidden bookkeeping. Employees left blank or at
+ * zero are simply not in the grant.
+ */
+export async function grantPointsInBulk(
+	_prevState: GrantState,
+	formData: FormData,
+): Promise<GrantState> {
+	await requireCompanyAdministrator();
+
+	const nextKey = crypto.randomUUID();
+	const reason = formData.get("reason_note");
+	const idempotencyKey = formData.get("idempotency_key");
+
+	const allocations: Array<{ employee_id: number; points: number }> = [];
+
+	for (const [field, raw] of formData.entries()) {
+		const match = /^points_(\d+)$/.exec(field);
+		if (!match || typeof raw !== "string" || !raw.trim()) continue;
+
+		const employeeId = Number(match[1]);
+		const points = Number(raw);
+
+		if (!Number.isInteger(points) || points === 0) {
+			return { error: "Every amount must be a whole number.", nextKey };
+		}
+		// The API takes positive amounts only here: a group grant hands points
+		// out. Taking any back is a correction against the transfer it creates.
+		if (points < 0) {
+			return { error: "A group grant cannot take points back.", nextKey };
+		}
+
+		allocations.push({ employee_id: employeeId, points });
+	}
+
+	if (allocations.length === 0) {
+		return { error: "Enter an amount for at least one employee.", nextKey };
+	}
+	if (typeof idempotencyKey !== "string" || !idempotencyKey) {
+		return { error: "This form is stale. Reload the page and try again.", nextKey };
+	}
+
+	try {
+		await requestWithSession("/company/point-grants", {
+			method: "POST",
+			idempotencyKey,
+			body: {
+				allocations,
+				reason_note: typeof reason === "string" && reason.trim() ? reason.trim() : null,
+			},
+		});
+	} catch (error) {
+		return { error: describe(error, "Could not grant the points."), nextKey };
+	}
+
+	revalidateEmployee();
 	return { ok: true, nextKey };
 }
 

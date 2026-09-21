@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getEmployee, getEmployeePointHistory, REASON_LABELS } from "@/lib/company";
+import {
+	getCompanyReport,
+	getEmployee,
+	getEmployeePointHistory,
+	REASON_LABELS,
+} from "@/lib/company";
 import { AdjustPointsForm, type CorrectableTransfer } from "./AdjustPointsForm";
 import { DeactivateEmployeeButton } from "./DeactivateEmployeeButton";
 
@@ -13,7 +18,10 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 	const employee = await getEmployee(employeeId);
 	if (!employee) notFound();
 
-	const history = await getEmployeePointHistory(employeeId);
+	const [history, report] = await Promise.all([
+		getEmployeePointHistory(employeeId),
+		getCompanyReport(),
+	]);
 	const isActive = employee.status === "active";
 
 	// Minted here rather than in the client components so the value is stable
@@ -83,6 +91,7 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 				<AdjustPointsForm
 					employeeId={employee.id}
 					transfers={correctableTransfers}
+					poolBalance={report.pool_balance}
 					initialIdempotencyKey={adjustKey}
 					disabled={!isActive}
 				/>
