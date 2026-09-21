@@ -8,6 +8,7 @@ import {
 } from "@/lib/company";
 import { AdjustPointsForm, type CorrectableTransfer } from "./AdjustPointsForm";
 import { DeactivateEmployeeButton } from "./DeactivateEmployeeButton";
+import { EditEmployeeDetails } from "./EditEmployeeDetails";
 import { ReverseTransferButton } from "./ReverseTransferButton";
 
 export default async function EmployeeDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -74,12 +75,15 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 					)}
 				</div>
 				{isActive && (
-					<DeactivateEmployeeButton
-						employeeId={employee.id}
-						name={`${employee.first_name} ${employee.last_name}`}
-						balance={employee.points_balance}
-						idempotencyKey={deactivateKey}
-					/>
+					<div className="flex items-center gap-4">
+						<EditEmployeeDetails employeeId={employee.id} employee={employee} />
+						<DeactivateEmployeeButton
+							employeeId={employee.id}
+							name={`${employee.first_name} ${employee.last_name}`}
+							balance={employee.points_balance}
+							idempotencyKey={deactivateKey}
+						/>
+					</div>
 				)}
 			</div>
 

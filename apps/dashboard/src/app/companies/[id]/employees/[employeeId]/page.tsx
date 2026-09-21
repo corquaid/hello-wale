@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCompany, getCompanyEmployee, OPERATOR_CANNOT } from "@/lib/operator";
 import { DeactivateButton } from "./DeactivateButton";
+import { EditEmployeeDetails } from "./EditEmployeeDetails";
 
 export default async function OperatorEmployeePage({
 	params,
@@ -42,13 +43,20 @@ export default async function OperatorEmployeePage({
 					)}
 				</div>
 				{isActive && (
-					<DeactivateButton
-						companyId={companyId}
-						employeeId={employee.id}
-						name={`${employee.first_name} ${employee.last_name}`}
-						balance={employee.points_balance}
-						idempotencyKey={crypto.randomUUID()}
-					/>
+					<div className="flex items-center gap-4">
+						<EditEmployeeDetails
+							companyId={companyId}
+							employeeId={employee.id}
+							employee={employee}
+						/>
+						<DeactivateButton
+							companyId={companyId}
+							employeeId={employee.id}
+							name={`${employee.first_name} ${employee.last_name}`}
+							balance={employee.points_balance}
+							idempotencyKey={crypto.randomUUID()}
+						/>
+					</div>
 				)}
 			</div>
 

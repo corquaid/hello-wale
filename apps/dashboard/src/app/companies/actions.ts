@@ -44,6 +44,55 @@ function revalidateCompany(companyId: number) {
 }
 
 /**
+ * Corrects an employee's details.
+ *
+ * Every field is optional upstream — what the request leaves out stays as it
+ * was — but the form always sends all three, so a cleared box is a validation
+ * error rather than a silent no-op.
+ *
+ * No idempotency key: this moves no points. Repeating it writes the same
+ * values a second time, which is where the first one left them.
+ */
+export async function updateCompanyEmployee(
+	companyId: number,
+	employeeId: number,
+	_prevState: ConfirmState,
+	formData: FormData,
+): Promise<ConfirmState> {
+	await requireOperator();
+
+	const firstName = formData.get("first_name");
+	const lastName = formData.get("last_name");
+	const email = formData.get("email");
+
+	if (typeof firstName !== "string" || !firstName.trim())
+		return { error: "A first name is required." };
+	if (typeof lastName !== "string" || !lastName.trim())
+		return { error: "A last name is required." };
+	if (typeof email !== "string" || !email.trim()) return { error: "An email address is required." };
+
+	const payload = {
+		first_name: firstName.trim(),
+		last_name: lastName.trim(),
+		email: email.trim(),
+	};
+
+	try {
+		await requestWithSession(`/operator/companies/${companyId}/employees/${employeeId}`, {
+			method: "PATCH",
+			body: payload,
+		});
+	} catch (error) {
+		return { error: describe(error, "Could not update the employee.") };
+	}
+
+	revalidateCompany(companyId);
+	// Nothing to report: the dialog closes and the corrected name is already in
+	// the heading behind it.
+	return undefined;
+}
+
+/**
  * Brings points into a company's pool from outside the platform. This is the
  * operator's only way to move points, and it stops at the pool — handing them
  * to a named employee is the company administrator's job.
