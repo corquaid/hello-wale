@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requestWithSession } from "@/lib/api/client";
 import { isApiError, type ApiError } from "@/lib/api/errors";
 import { requireOperator } from "@/lib/auth";
+import type { ConfirmState } from "@/components/ConfirmButton";
 import type { Company, Employee, Envelope } from "@/lib/api/types";
 
 export type ActionState = { error: string } | undefined;
@@ -203,21 +204,30 @@ export async function createCompanyEmployee(
 export async function deactivateCompanyEmployee(
 	companyId: number,
 	employeeId: number,
+	_prevState: ConfirmState,
 	formData: FormData,
-) {
+): Promise<ConfirmState> {
 	await requireOperator();
 
 	const idempotencyKey = formData.get("idempotency_key");
 	if (typeof idempotencyKey !== "string" || !idempotencyKey) {
-		throw new Error("Missing idempotency key for deactivation.");
+		return { error: "This form is stale. Reload the page and try again." };
 	}
 
-	await requestWithSession(`/operator/companies/${companyId}/employees/${employeeId}/deactivate`, {
-		method: "POST",
-		idempotencyKey,
-	});
+	try {
+		await requestWithSession(
+			`/operator/companies/${companyId}/employees/${employeeId}/deactivate`,
+			{
+				method: "POST",
+				idempotencyKey,
+			},
+		);
+	} catch (error) {
+		return { error: describe(error, "Could not deactivate the employee.") };
+	}
 
 	revalidateCompany(companyId);
+	// Outside the try: redirect() reports itself by throwing.
 	redirect(`/companies/${companyId}`);
 }
 
@@ -229,15 +239,23 @@ export async function deactivateCompanyEmployee(
  * repeated request lands exactly where the first one did. The row is kept so
  * that everything the account did stays attributed to it.
  */
-export async function deactivateAdministrator(companyId: number, administratorId: number) {
+export async function deactivateAdministrator(
+	companyId: number,
+	administratorId: number,
+): Promise<ConfirmState> {
 	await requireOperator();
 
-	await requestWithSession(
-		`/operator/companies/${companyId}/administrators/${administratorId}/deactivate`,
-		{ method: "POST" },
-	);
+	try {
+		await requestWithSession(
+			`/operator/companies/${companyId}/administrators/${administratorId}/deactivate`,
+			{ method: "POST" },
+		);
+	} catch (error) {
+		return { error: describe(error, "Could not deactivate the administrator.") };
+	}
 
 	revalidateCompany(companyId);
+	// Outside the try: redirect() reports itself by throwing.
 	redirect(`/companies/${companyId}`);
 }
 

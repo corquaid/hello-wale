@@ -8,6 +8,7 @@ import {
 } from "@/lib/company";
 import { AdjustPointsForm, type CorrectableTransfer } from "./AdjustPointsForm";
 import { DeactivateEmployeeButton } from "./DeactivateEmployeeButton";
+import { ReverseTransferButton } from "./ReverseTransferButton";
 
 export default async function EmployeeDetailPage({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
@@ -28,6 +29,11 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 	// across hydration. See AdjustPointsForm for why the key matters.
 	const adjustKey = crypto.randomUUID();
 	const deactivateKey = crypto.randomUUID();
+
+	// What can be undone whole. Reversing a reversal would be undoing an undo,
+	// and a deactivation's return belongs to a record that is already closed —
+	// the API would refuse both, so neither is offered.
+	const REVERSIBLE = new Set(["GRANT", "BULK_GRANT", "CORRECTION"]);
 
 	// What a take-back can be booked against. One transfer touches this account
 	// once, but dedupe anyway: the picker must not offer the same one twice.
@@ -111,6 +117,9 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 									<th className="px-4 py-3 font-medium">Balance after</th>
 									<th className="px-4 py-3 font-medium">Reason</th>
 									<th className="px-4 py-3 font-medium">Note</th>
+									<th className="px-4 py-3 font-medium">
+										<span className="sr-only">Actions</span>
+									</th>
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-100">
@@ -131,6 +140,18 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 											{REASON_LABELS[entry.reason_code] ?? entry.reason_code}
 										</td>
 										<td className="px-4 py-3 text-gray-500">{entry.reason_note ?? "—"}</td>
+										<td className="px-4 py-3 text-right whitespace-nowrap">
+											{isActive && REVERSIBLE.has(entry.reason_code) && (
+												<ReverseTransferButton
+													transferId={entry.transfer_id}
+													employeeId={employee.id}
+													amount={entry.amount}
+													reasonLabel={REASON_LABELS[entry.reason_code] ?? entry.reason_code}
+													isGroupGrant={entry.reason_code === "BULK_GRANT"}
+													idempotencyKey={crypto.randomUUID()}
+												/>
+											)}
+										</td>
 									</tr>
 								))}
 							</tbody>

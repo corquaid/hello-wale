@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requestWithSession } from "@/lib/api/client";
 import { isApiError, type ApiError } from "@/lib/api/errors";
 import { requireCompanyAdministrator } from "@/lib/auth";
+import type { ConfirmState } from "@/components/ConfirmButton";
 import type { Employee, Envelope } from "@/lib/api/types";
 
 export type ActionState = { error: string } | { ok: true } | undefined;
@@ -251,23 +252,83 @@ export async function grantPointsInBulk(
 }
 
 /**
+ * Undoes a whole transfer by posting its mirror image.
+ *
+ * Distinct from a correction, which adjusts one employee's share of a
+ * transfer by a signed amount. A reversal takes back everything that transfer
+ * moved, for everybody it touched — reversing a group grant from one
+ * employee's history undoes it for every recipient. The screen has to say so,
+ * because the API will not ask twice.
+ *
+ * The transfer being reversed is not edited: the reversal is its own entry,
+ * pointing back at the original through source_transfer_id.
+ */
+export async function reverseTransfer(
+	transferId: number,
+	employeeId: number,
+	_prevState: ConfirmState,
+	formData: FormData,
+): Promise<ConfirmState> {
+	await requireCompanyAdministrator();
+
+	const reason = formData.get("reason_note");
+	const idempotencyKey = formData.get("idempotency_key");
+
+	if (typeof reason !== "string" || !reason.trim()) {
+		return { error: "A reversal needs a reason." };
+	}
+	if (typeof idempotencyKey !== "string" || !idempotencyKey) {
+		return { error: "This form is stale. Reload the page and try again." };
+	}
+
+	try {
+		await requestWithSession(`/company/point-transfers/${transferId}/reversals`, {
+			method: "POST",
+			idempotencyKey,
+			body: { reason_note: reason.trim() },
+		});
+	} catch (error) {
+		// The commonest refusal by far: nothing in the point history says which
+		// transfer a reversal undid, so the dashboard cannot hide the action on
+		// one that has already been reversed. The API knows, and says so.
+		if (isApiError(error) && error.code === "INVALID_TRANSFER") {
+			return { error: error.message || "That transfer cannot be reversed." };
+		}
+		return { error: describe(error, "Could not reverse the transfer.") };
+	}
+
+	revalidateEmployee(employeeId);
+	return undefined;
+}
+
+/**
  * Closes an employee record. Their remaining balance returns to the company
  * pool — this is the API's equivalent of the old delete, and nothing is
  * destroyed: the record and its history stay readable.
  */
-export async function deactivateEmployee(employeeId: number, formData: FormData) {
+export async function deactivateEmployee(
+	employeeId: number,
+	_prevState: ConfirmState,
+	formData: FormData,
+): Promise<ConfirmState> {
 	await requireCompanyAdministrator();
 
 	const idempotencyKey = formData.get("idempotency_key");
 	if (typeof idempotencyKey !== "string" || !idempotencyKey) {
-		throw new Error("Missing idempotency key for deactivation.");
+		return { error: "This form is stale. Reload the page and try again." };
 	}
 
-	await requestWithSession(`/company/employees/${employeeId}/deactivate`, {
-		method: "POST",
-		idempotencyKey,
-	});
+	try {
+		await requestWithSession(`/company/employees/${employeeId}/deactivate`, {
+			method: "POST",
+			idempotencyKey,
+		});
+	} catch (error) {
+		return { error: describe(error, "Could not deactivate the employee.") };
+	}
 
 	revalidateEmployee(employeeId);
+	// Outside the try: redirect() reports itself by throwing, and catching it
+	// would turn a successful deactivation into an error message.
 	redirect("/employees");
 }
