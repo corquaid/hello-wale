@@ -70,21 +70,29 @@ export function AccountMenu() {
 				</svg>
 			</button>
 
-			{open && (
-				<div
-					role="menu"
-					className="absolute right-0 z-10 mt-2 w-44 overflow-hidden rounded-md border border-gray-200 bg-white py-1 shadow-lg"
-				>
-					<Link role="menuitem" href="/account" onClick={() => setOpen(false)} className={item}>
-						Account
-					</Link>
-					<form action={signOut}>
-						<button role="menuitem" type="submit" className={item}>
-							Sign out
-						</button>
-					</form>
-				</div>
-			)}
+			{/*
+			 * Always mounted, hidden by class rather than by unmounting: React
+			 * removes the element the instant `open` goes false, which leaves a
+			 * transition nothing to animate on the way out. `inert` keeps the
+			 * hidden menu out of the tab order and away from the pointer, which
+			 * opacity alone would not.
+			 */}
+			<div
+				role="menu"
+				inert={!open}
+				className={`absolute right-0 z-10 mt-2 w-44 origin-top-right overflow-hidden rounded-md border border-gray-200 bg-white py-1 shadow-lg transition duration-150 ease-out motion-reduce:transition-none ${
+					open ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"
+				}`}
+			>
+				<Link role="menuitem" href="/account" onClick={() => setOpen(false)} className={item}>
+					Account
+				</Link>
+				<form action={signOut}>
+					<button role="menuitem" type="submit" className={item}>
+						Sign out
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 }

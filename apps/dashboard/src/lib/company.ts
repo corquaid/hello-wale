@@ -106,6 +106,58 @@ export const getCompanyActivity = cache(async (): Promise<ActivityEntry[]> => {
 		.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 });
 
+/** One transfer, with every movement it made that the caller can see. */
+export interface TransferGroup {
+	transferId: number;
+	created_at: string;
+	reason_code: string;
+	reason_note: string | null;
+	entries: ActivityEntry[];
+	/** The sum of those movements — what the transfer did on balance. */
+	total: number;
+}
+
+/**
+ * Collapses movements into the transfers that caused them.
+ *
+ * A group grant reaches many people as one operation, and the per-employee
+ * feed scatters it into a row each, which hides both the shape of what
+ * happened and the fact that one reversal would undo all of it.
+ *
+ * Grouping happens after filtering, so a group holds only the movements still
+ * on screen. That is the honest reading of a filtered feed, but it does mean
+ * the count describes what is shown rather than everyone the transfer touched.
+ */
+export function groupByTransfer(entries: ActivityEntry[]): TransferGroup[] {
+	const groups = new Map<number, TransferGroup>();
+
+	for (const entry of entries) {
+		const group = groups.get(entry.transfer_id);
+
+		if (group) {
+			group.entries.push(entry);
+			group.total += entry.amount;
+			// Keep the earliest timestamp: the entries of one transfer can
+			// straddle a second, and the transfer happened once.
+			if (entry.created_at < group.created_at) group.created_at = entry.created_at;
+			continue;
+		}
+
+		groups.set(entry.transfer_id, {
+			transferId: entry.transfer_id,
+			created_at: entry.created_at,
+			reason_code: entry.reason_code,
+			reason_note: entry.reason_note,
+			entries: [entry],
+			total: entry.amount,
+		});
+	}
+
+	return [...groups.values()].sort(
+		(a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+	);
+}
+
 export interface DailyActivity {
 	date: string;
 	awarded: number;

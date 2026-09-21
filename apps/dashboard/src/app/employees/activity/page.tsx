@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCompanyActivity, REASON_LABELS } from "@/lib/company";
+import { getCompanyActivity, groupByTransfer, REASON_LABELS } from "@/lib/company";
 
 export default async function ActivityPage({
 	searchParams,
@@ -10,9 +10,12 @@ export default async function ActivityPage({
 		reason?: string;
 		from?: string;
 		to?: string;
+		view?: string;
 	}>;
 }) {
-	const { name = "", type = "", reason = "", from = "", to = "" } = await searchParams;
+	const { name = "", type = "", reason = "", from = "", to = "", view = "" } = await searchParams;
+
+	const byTransfer = view === "transfers";
 
 	// Filtered here rather than upstream: the API exposes point history per
 	// employee only, so this page already holds the whole set in memory. See
@@ -38,7 +41,25 @@ export default async function ActivityPage({
 		.map((code) => ({ code, label: REASON_LABELS[code] ?? code }))
 		.sort((a, b) => a.label.localeCompare(b.label));
 
+	const groups = byTransfer ? groupByTransfer(activity) : [];
+
 	const hasFilters = name || type || reason || from || to;
+
+	// Toggling the view keeps the filters: they describe what is being looked
+	// at, not how it is arranged.
+	const viewLink = (target: "" | "transfers") => {
+		const query = new URLSearchParams();
+		if (name) query.set("name", name);
+		if (type) query.set("type", type);
+		if (reason) query.set("reason", reason);
+		if (from) query.set("from", from);
+		if (to) query.set("to", to);
+		if (target) query.set("view", target);
+		const search = query.toString();
+		return search ? `/employees/activity?${search}` : "/employees/activity";
+	};
+
+	const tab = "rounded-md px-3 py-1.5 text-sm font-medium";
 	const field =
 		"focus:border-wale-700 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none";
 
@@ -119,8 +140,92 @@ export default async function ActivityPage({
 				</div>
 			</form>
 
+			<div className="flex items-center gap-2">
+				<Link
+					href={viewLink("")}
+					className={
+						byTransfer ? `${tab} text-gray-500 hover:bg-gray-100` : `${tab} bg-wale-700 text-white`
+					}
+				>
+					Movements
+				</Link>
+				<Link
+					href={viewLink("transfers")}
+					className={
+						byTransfer ? `${tab} bg-wale-700 text-white` : `${tab} text-gray-500 hover:bg-gray-100`
+					}
+				>
+					By transfer
+				</Link>
+			</div>
+
 			{activity.length === 0 ? (
 				<p className="text-sm text-gray-500">No points activity matches those filters.</p>
+			) : byTransfer ? (
+				<div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+					<table className="w-full text-left text-sm">
+						<thead className="bg-gray-50 text-gray-500">
+							<tr>
+								<th className="px-4 py-3 font-medium">Date</th>
+								<th className="px-4 py-3 font-medium">Reason</th>
+								<th className="px-4 py-3 font-medium">Employees</th>
+								<th className="px-4 py-3 font-medium">Total</th>
+								<th className="px-4 py-3 font-medium">Note</th>
+							</tr>
+						</thead>
+						<tbody className="divide-y divide-gray-100">
+							{groups.map((group) => (
+								<tr key={group.transferId} className="align-top hover:bg-gray-50">
+									<td className="px-4 py-3 whitespace-nowrap text-gray-500">
+										{new Date(group.created_at).toLocaleString()}
+									</td>
+									<td className="px-4 py-3 text-gray-700">
+										{REASON_LABELS[group.reason_code] ?? group.reason_code}
+									</td>
+									<td className="px-4 py-3">
+										{group.entries.length === 1 ? (
+											<Link
+												href={`/employees/${group.entries[0].employee_id}`}
+												className="hover:text-wale-700 font-medium text-gray-900"
+											>
+												{group.entries[0].employee_name}
+											</Link>
+										) : (
+											<details>
+												<summary className="hover:text-wale-700 cursor-pointer font-medium text-gray-900">
+													{group.entries.length} employees
+												</summary>
+												<ul className="mt-2 space-y-1">
+													{group.entries.map((entry) => (
+														<li key={entry.id} className="text-xs text-gray-600">
+															<Link
+																href={`/employees/${entry.employee_id}`}
+																className="hover:text-wale-700"
+															>
+																{entry.employee_name}
+															</Link>{" "}
+															<span
+																className={entry.amount > 0 ? "text-green-600" : "text-red-600"}
+															>
+																{entry.amount > 0 ? `+${entry.amount}` : entry.amount}
+															</span>
+														</li>
+													))}
+												</ul>
+											</details>
+										)}
+									</td>
+									<td
+										className={`px-4 py-3 font-medium whitespace-nowrap ${group.total > 0 ? "text-green-600" : "text-red-600"}`}
+									>
+										{group.total > 0 ? `+${group.total}` : group.total}
+									</td>
+									<td className="px-4 py-3 text-gray-500">{group.reason_note ?? "—"}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			) : (
 				<div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
 					<table className="w-full text-left text-sm">
