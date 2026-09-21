@@ -26,6 +26,14 @@ export async function proxy(request: NextRequest) {
 		return NextResponse.next();
 	}
 
+	// Accepting an invitation is public on purpose: whoever holds the token has
+	// no account yet, and the token in the path is the credential. Anyone
+	// already signed in is left alone rather than bounced home — accepting
+	// replaces their session with the new account's.
+	if (pathname.startsWith("/invitations/")) {
+		return NextResponse.next();
+	}
+
 	const session = await verifySession();
 	const isPublicRoute = pathname === "/login";
 
