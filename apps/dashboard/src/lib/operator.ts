@@ -4,6 +4,7 @@ import { requestWithSession } from "@/lib/api/client";
 import { isApiError } from "@/lib/api/errors";
 import { requireOperator } from "@/lib/auth";
 import type {
+	Administrator,
 	AuditLog,
 	Company,
 	Employee,
@@ -98,6 +99,37 @@ export const getAuditLogs = cache(async (companyId: number): Promise<AuditLog[]>
 	);
 	return response.data;
 });
+
+/**
+ * The administrators of one company — the people who actually hold the
+ * account, as opposed to the invitations that may or may not have been taken
+ * up. Both are worth showing: an invitation says somebody was asked, this says
+ * somebody arrived.
+ */
+export const getCompanyAdministrators = cache(
+	async (companyId: number): Promise<Administrator[]> => {
+		await requireOperator();
+		const response = await requestWithSession<PaginatedEnvelope<Administrator>>(
+			`/operator/companies/${companyId}/administrators`,
+			{ query: { per_page: PAGE_LIMIT } },
+		);
+		return response.data;
+	},
+);
+
+/**
+ * One administrator of a company.
+ *
+ * The API has no route for a single administrator — only the collection — so
+ * this narrows the list rather than fetching. getCompanyAdministrators is
+ * memoized per request, so a screen that needs both pays for one call.
+ */
+export const getCompanyAdministrator = cache(
+	async (companyId: number, administratorId: number): Promise<Administrator | null> => {
+		const administrators = await getCompanyAdministrators(companyId);
+		return administrators.find((administrator) => administrator.id === administratorId) ?? null;
+	},
+);
 
 export const getInvitations = cache(async (companyId: number): Promise<Invitation[]> => {
 	await requireOperator();

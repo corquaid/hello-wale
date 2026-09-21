@@ -16,10 +16,22 @@ export interface AuthenticatedUser {
 	role: Role;
 	/** Null for platform operators, who belong to no company by definition. */
 	company_id: number | null;
+	/**
+	 * Named here because nothing else hands it to a company administrator: the
+	 * company-space routes never return it, and /operator/companies answers a
+	 * company administrator 403. Null for platform operators.
+	 */
+	company: { id: number; name: string } | null;
 }
 
 export type CompanyStatus = "active" | "suspended" | "trial";
 export type EmployeeStatus = "active" | "inactive";
+/**
+ * Whether an administrative account may be used at all. An inactive one keeps
+ * its row so its past actions stay attributed, but cannot sign in or go on
+ * using a session it already held.
+ */
+export type UserStatus = "active" | "inactive";
 export type EntryMovement = "credit" | "debit";
 
 export type ReasonCode =
@@ -110,6 +122,16 @@ export interface AuditLog {
 	after: Record<string, unknown> | null;
 	actor_id: number | null;
 	ip: string | null;
+	created_at: string;
+}
+
+/** An administrator of a company, as the operator routes report them. */
+export interface Administrator {
+	id: number;
+	first_name: string;
+	last_name: string;
+	email: string;
+	status: UserStatus;
 	created_at: string;
 }
 

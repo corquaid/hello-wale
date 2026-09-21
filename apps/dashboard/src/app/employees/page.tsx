@@ -31,9 +31,15 @@ export default async function EmployeesPage() {
 						</thead>
 						<tbody className="divide-y divide-gray-100">
 							{employees.map((employee) => (
-								<tr key={employee.id} className="hover:bg-gray-50">
+								<tr key={employee.id} className="relative focus-within:bg-gray-50 hover:bg-gray-50">
 									<td className="px-4 py-3">
-										<Link href={`/employees/${employee.id}`} className="font-medium text-gray-900">
+										{/* The ::after overlay stretches this link across the whole row, so the
+										    row is clickable while staying a real anchor: keyboard focus, middle
+										    click and open-in-new-tab all keep working. */}
+										<Link
+											href={`/employees/${employee.id}`}
+											className="font-medium text-gray-900 after:absolute after:inset-0 after:content-['']"
+										>
 											{employee.first_name} {employee.last_name}
 										</Link>
 									</td>

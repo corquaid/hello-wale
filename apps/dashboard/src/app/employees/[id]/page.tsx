@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEmployee, getEmployeePointHistory, REASON_LABELS } from "@/lib/company";
+import { AdjustPointsForm, type CorrectableTransfer } from "./AdjustPointsForm";
 import { DeactivateEmployeeButton } from "./DeactivateEmployeeButton";
-import { GrantPointsForm } from "./GrantPointsForm";
 
 export default async function EmployeeDetailPage({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
@@ -16,15 +17,36 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 	const isActive = employee.status === "active";
 
 	// Minted here rather than in the client components so the value is stable
-	// across hydration. See GrantPointsForm for why the key matters.
-	const grantKey = crypto.randomUUID();
+	// across hydration. See AdjustPointsForm for why the key matters.
+	const adjustKey = crypto.randomUUID();
 	const deactivateKey = crypto.randomUUID();
+
+	// What a take-back can be booked against. One transfer touches this account
+	// once, but dedupe anyway: the picker must not offer the same one twice.
+	const correctableTransfers: CorrectableTransfer[] = [
+		...new Map(
+			history.map((entry) => [
+				entry.transfer_id,
+				{
+					transferId: entry.transfer_id,
+					label: [
+						new Date(entry.created_at).toLocaleDateString(),
+						entry.amount > 0 ? `+${entry.amount}` : `${entry.amount}`,
+						REASON_LABELS[entry.reason_code] ?? entry.reason_code,
+					].join(" · "),
+				},
+			]),
+		).values(),
+	];
 
 	return (
 		<div className="space-y-8">
 			<div className="flex items-start justify-between">
 				<div>
-					<h1 className="font-display text-2xl font-semibold text-gray-900">
+					<Link href="/employees" className="text-sm text-gray-500 hover:underline">
+						← Employees
+					</Link>
+					<h1 className="font-display mt-1 text-2xl font-semibold text-gray-900">
 						{employee.first_name} {employee.last_name}
 					</h1>
 					<p className="text-sm text-gray-500">{employee.email}</p>
@@ -55,10 +77,13 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
 			</div>
 
 			<div>
-				<h2 className="font-display mb-3 text-lg font-medium text-gray-900">Grant points</h2>
-				<GrantPointsForm
+				<h2 className="font-display mb-3 text-lg font-medium text-gray-900">
+					Adjust Points Balance
+				</h2>
+				<AdjustPointsForm
 					employeeId={employee.id}
-					initialIdempotencyKey={grantKey}
+					transfers={correctableTransfers}
+					initialIdempotencyKey={adjustKey}
 					disabled={!isActive}
 				/>
 			</div>

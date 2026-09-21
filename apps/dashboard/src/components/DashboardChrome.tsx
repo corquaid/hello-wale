@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
-import { signOut } from "@/app/login/actions";
+import { AccountMenu } from "@/components/AccountMenu";
 import { getUser } from "@/lib/auth";
 
 /**
@@ -47,11 +47,14 @@ export async function DashboardChrome({ children }: { children: React.ReactNode 
 							))}
 						</nav>
 					</div>
-					<form action={signOut}>
-						<button type="submit" className="hover:text-wale-700 text-sm text-gray-500">
-							Sign out
-						</button>
-					</form>
+					<div className="flex items-center gap-5">
+						{/* Company administrators are scoped to one company, so naming it says
+						    whose data is on screen. Operators have no company and get nothing. */}
+						{user?.company && (
+							<span className="text-sm font-medium text-gray-900">{user.company.name}</span>
+						)}
+						<AccountMenu />
+					</div>
 				</div>
 			</header>
 			<main className="mx-auto max-w-4xl px-6 py-10">{children}</main>

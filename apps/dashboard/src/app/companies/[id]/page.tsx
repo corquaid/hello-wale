@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
 	getCompany,
+	getCompanyAdministrators,
 	getCompanyEmployees,
 	getCompanyReport,
 	getInvitations,
@@ -18,9 +19,10 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
 	const company = await getCompany(companyId);
 	if (!company) notFound();
 
-	const [report, employees, invitations] = await Promise.all([
+	const [report, employees, administrators, invitations] = await Promise.all([
 		getCompanyReport(companyId),
 		getCompanyEmployees(companyId),
+		getCompanyAdministrators(companyId),
 		getInvitations(companyId),
 	]);
 
@@ -100,11 +102,17 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
 							</thead>
 							<tbody className="divide-y divide-gray-100">
 								{employees.map((employee) => (
-									<tr key={employee.id} className="hover:bg-gray-50">
+									<tr
+										key={employee.id}
+										className="relative focus-within:bg-gray-50 hover:bg-gray-50"
+									>
 										<td className="px-4 py-3">
+											{/* The ::after overlay stretches this link across the whole row, so the
+											    row is clickable while staying a real anchor: keyboard focus, middle
+											    click and open-in-new-tab all keep working. */}
 											<Link
 												href={`/companies/${companyId}/employees/${employee.id}`}
-												className="font-medium text-gray-900"
+												className="font-medium text-gray-900 after:absolute after:inset-0 after:content-['']"
 											>
 												{employee.first_name} {employee.last_name}
 											</Link>
@@ -132,6 +140,58 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
 
 			<div>
 				<h2 className="font-display mb-3 text-lg font-medium text-gray-900">Administrators</h2>
+
+				{administrators.length === 0 ? (
+					<p className="mb-4 text-sm text-gray-500">
+						Nobody administers this company yet — an invitation has to be taken up first.
+					</p>
+				) : (
+					<div className="mb-6 overflow-x-auto rounded-lg border border-gray-200 bg-white">
+						<table className="w-full text-left text-sm">
+							<thead className="bg-gray-50 text-gray-500">
+								<tr>
+									<th className="px-4 py-3 font-medium">Name</th>
+									<th className="px-4 py-3 font-medium">Email</th>
+									<th className="px-4 py-3 font-medium">Status</th>
+									<th className="px-4 py-3 font-medium">Since</th>
+								</tr>
+							</thead>
+							<tbody className="divide-y divide-gray-100">
+								{administrators.map((administrator) => (
+									<tr
+										key={administrator.id}
+										className="relative focus-within:bg-gray-50 hover:bg-gray-50"
+									>
+										<td className="px-4 py-3">
+											<Link
+												href={`/companies/${companyId}/administrators/${administrator.id}`}
+												className="font-medium text-gray-900 after:absolute after:inset-0 after:content-['']"
+											>
+												{administrator.first_name} {administrator.last_name}
+											</Link>
+										</td>
+										<td className="px-4 py-3 text-gray-600">{administrator.email}</td>
+										<td className="px-4 py-3">
+											{administrator.status === "active" ? (
+												<span className="text-gray-600">Active</span>
+											) : (
+												<span className="text-gray-400">Inactive</span>
+											)}
+										</td>
+										<td className="px-4 py-3 whitespace-nowrap text-gray-500">
+											{new Date(administrator.created_at).toLocaleDateString()}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				)}
+
+				{/* Invitations are a separate record: one says somebody was asked, the
+				    table above says somebody arrived. An invitation that was taken up
+				    stays listed here as accepted. */}
+				<h3 className="mb-2 text-sm font-medium text-gray-700">Invitations</h3>
 
 				{invitations.length === 0 ? (
 					<p className="mb-4 text-sm text-gray-500">No invitations sent yet.</p>

@@ -4,24 +4,41 @@ import { getCompanyActivity, REASON_LABELS } from "@/lib/company";
 export default async function ActivityPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ name?: string; type?: string; from?: string; to?: string }>;
+	searchParams: Promise<{
+		name?: string;
+		type?: string;
+		reason?: string;
+		from?: string;
+		to?: string;
+	}>;
 }) {
-	const { name = "", type = "", from = "", to = "" } = await searchParams;
+	const { name = "", type = "", reason = "", from = "", to = "" } = await searchParams;
 
 	// Filtered here rather than upstream: the API exposes point history per
 	// employee only, so this page already holds the whole set in memory. See
 	// getCompanyActivity for why, and what would replace it.
-	const activity = (await getCompanyActivity()).filter((entry) => {
+	const all = await getCompanyActivity();
+
+	const activity = all.filter((entry) => {
 		if (name && !entry.employee_name.toLowerCase().includes(name.toLowerCase())) return false;
 		if (type === "credit" && entry.amount <= 0) return false;
 		if (type === "debit" && entry.amount >= 0) return false;
+		if (reason && entry.reason_code !== reason) return false;
 		const date = entry.created_at.slice(0, 10);
 		if (from && date < from) return false;
 		if (to && date > to) return false;
 		return true;
 	});
 
-	const hasFilters = name || type || from || to;
+	// Built from everything this company has, not from what survived the other
+	// filters: options that come and go as you narrow the list are worse than
+	// useless. Reason codes the company has never produced are left out
+	// entirely — COMPANY_TOPUP, for one, never reaches an employee's account.
+	const reasonOptions = [...new Set(all.map((entry) => entry.reason_code))]
+		.map((code) => ({ code, label: REASON_LABELS[code] ?? code }))
+		.sort((a, b) => a.label.localeCompare(b.label));
+
+	const hasFilters = name || type || reason || from || to;
 	const field =
 		"focus:border-wale-700 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none";
 
@@ -65,6 +82,25 @@ export default async function ActivityPage({
 						<option value="debit">Debit</option>
 					</select>
 				</div>
+				<div className="space-y-1">
+					<label htmlFor="reason" className="block text-sm font-medium text-gray-700">
+						Reason
+					</label>
+					<select
+						id="reason"
+						name="reason"
+						defaultValue={reason}
+						disabled={reasonOptions.length === 0}
+						className={`${field} bg-white disabled:bg-gray-50 disabled:text-gray-400`}
+					>
+						<option value="">All</option>
+						{reasonOptions.map((option) => (
+							<option key={option.code} value={option.code}>
+								{option.label}
+							</option>
+						))}
+					</select>
+				</div>
 				<div className="flex gap-3">
 					<button
 						type="submit"
@@ -100,14 +136,20 @@ export default async function ActivityPage({
 						</thead>
 						<tbody className="divide-y divide-gray-100">
 							{activity.map((entry) => (
-								<tr key={`${entry.employee_id}-${entry.id}`} className="hover:bg-gray-50">
+								<tr
+									key={`${entry.employee_id}-${entry.id}`}
+									className="relative focus-within:bg-gray-50 hover:bg-gray-50"
+								>
 									<td className="px-4 py-3 whitespace-nowrap text-gray-500">
 										{new Date(entry.created_at).toLocaleString()}
 									</td>
 									<td className="px-4 py-3">
+										{/* The ::after overlay stretches this link across the whole row, so the
+										    row is clickable while staying a real anchor: keyboard focus, middle
+										    click and open-in-new-tab all keep working. */}
 										<Link
 											href={`/employees/${entry.employee_id}`}
-											className="font-medium text-gray-900"
+											className="font-medium text-gray-900 after:absolute after:inset-0 after:content-['']"
 										>
 											{entry.employee_name}
 										</Link>

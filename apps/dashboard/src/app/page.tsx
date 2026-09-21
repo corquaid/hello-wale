@@ -154,7 +154,10 @@ async function OperatorHome() {
 			<div>
 				<div className="mb-3 flex items-center justify-between">
 					<h2 className="font-display text-lg font-medium text-gray-900">Companies</h2>
-					<Link href="/companies" className="text-wale-700 text-sm font-medium hover:underline">
+					<Link
+						href="/companies"
+						className="bg-wale-700 hover:bg-wale-800 rounded-md px-3 py-2 text-sm font-medium text-white"
+					>
 						Manage companies
 					</Link>
 				</div>
@@ -174,9 +177,18 @@ async function OperatorHome() {
 							</thead>
 							<tbody className="divide-y divide-gray-100">
 								{companies.map((company) => (
-									<tr key={company.id} className="hover:bg-gray-50">
+									<tr
+										key={company.id}
+										className="relative focus-within:bg-gray-50 hover:bg-gray-50"
+									>
 										<td className="px-4 py-3">
-											<Link href={`/companies/${company.id}`} className="font-medium text-gray-900">
+											{/* The ::after overlay stretches this link across the whole row, so the
+											    row is clickable while staying a real anchor: keyboard focus, middle
+											    click and open-in-new-tab all keep working. */}
+											<Link
+												href={`/companies/${company.id}`}
+												className="font-medium text-gray-900 after:absolute after:inset-0 after:content-['']"
+											>
 												{company.name}
 											</Link>
 										</td>

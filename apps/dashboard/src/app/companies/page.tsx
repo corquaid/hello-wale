@@ -37,9 +37,12 @@ export default async function CompaniesPage() {
 						</thead>
 						<tbody className="divide-y divide-gray-100">
 							{companies.map((company) => (
-								<tr key={company.id} className="hover:bg-gray-50">
+								<tr key={company.id} className="relative focus-within:bg-gray-50 hover:bg-gray-50">
 									<td className="px-4 py-3">
-										<Link href={`/companies/${company.id}`} className="font-medium text-gray-900">
+										<Link
+											href={`/companies/${company.id}`}
+											className="font-medium text-gray-900 after:absolute after:inset-0 after:content-['']"
+										>
 											{company.name}
 										</Link>
 									</td>

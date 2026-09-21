@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfirmButton } from "@/components/ConfirmButton";
 import { deactivateEmployee } from "../actions";
 
 /**
@@ -19,22 +20,29 @@ export function DeactivateEmployeeButton({
 	idempotencyKey: string;
 }) {
 	return (
-		<form
+		<ConfirmButton
 			action={deactivateEmployee.bind(null, employeeId)}
-			onSubmit={(event) => {
-				const returning =
-					balance > 0
-						? ` Their remaining ${balance.toLocaleString()} points return to the company pool.`
-						: "";
-				if (!confirm(`Deactivate ${name}?${returning}`)) {
-					event.preventDefault();
-				}
-			}}
+			label="Deactivate employee"
+			title={`Deactivate ${name}?`}
+			confirmLabel="Deactivate"
+			pendingLabel="Deactivating…"
+			description={
+				<>
+					<p>
+						Their record is closed, not deleted — it stays readable, and so does everything that
+						ever moved on their account.
+					</p>
+					{balance > 0 && (
+						<p className="mt-2">
+							Their remaining{" "}
+							<span className="font-medium text-gray-900">{balance.toLocaleString()}</span> points
+							return to the company pool.
+						</p>
+					)}
+				</>
+			}
 		>
 			<input type="hidden" name="idempotency_key" value={idempotencyKey} />
-			<button type="submit" className="text-sm text-red-600 hover:text-red-800">
-				Deactivate employee
-			</button>
-		</form>
+		</ConfirmButton>
 	);
 }

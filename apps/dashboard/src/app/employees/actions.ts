@@ -99,14 +99,25 @@ export async function createEmployee(
 }
 
 /**
- * Grants points to one employee out of the company pool.
+ * Moves one employee's balance, in either direction.
  *
- * The API requires an Idempotency-Key here and covers the body with it, so the
- * key has to come from the form rather than being minted per attempt: a
- * double-submit of the same form must reuse it (and be collapsed into one
- * grant), while a corrected resubmit needs a fresh one. See GrantPointsForm.
+ * The API splits this across two endpoints, because a grant is one-way: its
+ * `points` must be at least 1. Taking points back is a correction against the
+ * transfer that handed them over, carrying a signed amount. So the route is
+ * chosen by what the form says, not by a separate button:
+ *
+ *   - a transfer named  → a correction against it (signed, reason required)
+ *   - nothing named     → a grant out of the pool (positive only)
+ *
+ * The API requires an Idempotency-Key on both and covers the body with it, so
+ * the key has to come from the form rather than being minted per attempt: a
+ * double-submit of the same form must reuse it and collapse into one movement,
+ * while a corrected resubmit needs a fresh one. See AdjustPointsForm.
  */
-export async function grantPoints(_prevState: GrantState, formData: FormData): Promise<GrantState> {
+export async function adjustPoints(
+	_prevState: GrantState,
+	formData: FormData,
+): Promise<GrantState> {
 	await requireCompanyAdministrator();
 
 	const nextKey = crypto.randomUUID();
@@ -115,29 +126,55 @@ export async function grantPoints(_prevState: GrantState, formData: FormData): P
 	const reason = formData.get("reason_note");
 	const idempotencyKey = formData.get("idempotency_key");
 
+	const rawTransfer = formData.get("transfer_id");
+	const transferId = typeof rawTransfer === "string" && rawTransfer ? Number(rawTransfer) : null;
+
 	if (!Number.isInteger(employeeId) || employeeId <= 0) {
 		return { error: "Missing employee.", nextKey };
 	}
-	if (!Number.isInteger(points) || points <= 0) {
-		// Unlike the old Supabase delta, a grant only moves points outward.
-		// Taking them back is a correction against the original transfer.
-		return { error: "Points must be a whole number above zero.", nextKey };
+	if (!Number.isInteger(points) || points === 0) {
+		// Zero would be a movement that says nothing and cannot itself be undone.
+		return { error: "Points must be a whole number, and not zero.", nextKey };
+	}
+	if (transferId !== null && (!Number.isInteger(transferId) || transferId <= 0)) {
+		return { error: "That transfer is not one we can correct.", nextKey };
+	}
+	if (points < 0 && transferId === null) {
+		return {
+			error: "Taking points back means correcting the transfer that handed them over. Choose one.",
+			nextKey,
+		};
+	}
+	if (transferId !== null && (typeof reason !== "string" || !reason.trim())) {
+		return { error: "A correction needs a reason.", nextKey };
 	}
 	if (typeof idempotencyKey !== "string" || !idempotencyKey) {
 		return { error: "This form is stale. Reload the page and try again.", nextKey };
 	}
 
+	const note = typeof reason === "string" && reason.trim() ? reason.trim() : null;
+
 	try {
-		await requestWithSession(`/company/employees/${employeeId}/points`, {
-			method: "POST",
-			idempotencyKey,
-			body: {
-				points,
-				reason_note: typeof reason === "string" && reason.trim() ? reason.trim() : null,
-			},
-		});
+		if (transferId !== null) {
+			await requestWithSession(`/company/point-transfers/${transferId}/corrections`, {
+				method: "POST",
+				idempotencyKey,
+				body: { employee_id: employeeId, points, reason_note: note },
+			});
+		} else {
+			await requestWithSession(`/company/employees/${employeeId}/points`, {
+				method: "POST",
+				idempotencyKey,
+				body: { points, reason_note: note },
+			});
+		}
 	} catch (error) {
-		return { error: describe(error, "Could not grant the points."), nextKey };
+		// INSUFFICIENT_POINTS is the pool on a grant, but on a take-back it is
+		// the employee who is short — describe() cannot tell the two apart.
+		if (points < 0 && isApiError(error) && error.code === "INSUFFICIENT_POINTS") {
+			return { error: "This employee does not hold enough points for that.", nextKey };
+		}
+		return { error: describe(error, "Could not adjust the balance."), nextKey };
 	}
 
 	revalidateEmployee(employeeId);

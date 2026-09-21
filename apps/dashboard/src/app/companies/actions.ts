@@ -221,6 +221,26 @@ export async function deactivateCompanyEmployee(
 	redirect(`/companies/${companyId}`);
 }
 
+/**
+ * Closes an administrator's account.
+ *
+ * No idempotency key, unlike every employee deactivation: the API asks for
+ * none here, because this sets a state rather than moving points, so a
+ * repeated request lands exactly where the first one did. The row is kept so
+ * that everything the account did stays attributed to it.
+ */
+export async function deactivateAdministrator(companyId: number, administratorId: number) {
+	await requireOperator();
+
+	await requestWithSession(
+		`/operator/companies/${companyId}/administrators/${administratorId}/deactivate`,
+		{ method: "POST" },
+	);
+
+	revalidateCompany(companyId);
+	redirect(`/companies/${companyId}`);
+}
+
 export async function inviteAdministrator(
 	companyId: number,
 	_prevState: ActionState,

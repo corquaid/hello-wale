@@ -32,3 +32,96 @@ body {
 	background: var(--background);
 	color: var(--foreground);
 }
+
+/*
+ * Tailwind v4's Preflight no longer gives buttons a pointer cursor the way v3
+ * did, so every button in the app renders with the default arrow. Restoring it
+ * here rather than as a utility on each button keeps new ones consistent by
+ * default. Disabled buttons keep the arrow: they are not clickable.
+ */
+@layer base {
+	button:not(:disabled),
+	[role="button"]:not(:disabled) {
+		cursor: pointer;
+	}
+
+	/*
+	 * Hover states here are colour changes — background on the primary buttons,
+	 * text on the quieter ones — so easing colour alone covers them. Anchors are
+	 * included because several buttons in this app are links wearing button
+	 * styles, and the nav links hover the same way.
+	 */
+	button,
+	[role="button"],
+	a {
+		transition:
+			color 150ms ease,
+			background-color 150ms ease,
+			border-color 150ms ease;
+	}
+}
+
+/*
+ * A modal <dialog> toggles `display`, so fading one in takes more than a
+ * transition: `allow-discrete` lets the discrete properties animate at all,
+ * `@starting-style` supplies the state to animate *from* on open, and `overlay`
+ * keeps the element painted in the top layer while it fades out. Browsers
+ * without these simply show and hide the dialog, which is the old behaviour.
+ */
+dialog {
+	opacity: 0;
+	transform: scale(0.97);
+	transition:
+		opacity 150ms ease,
+		transform 150ms ease,
+		overlay 150ms ease allow-discrete,
+		display 150ms ease allow-discrete;
+}
+
+dialog[open] {
+	opacity: 1;
+	transform: scale(1);
+}
+
+@starting-style {
+	dialog[open] {
+		opacity: 0;
+		transform: scale(0.97);
+	}
+}
+
+dialog::backdrop {
+	background-color: rgb(17 24 39 / 0);
+	transition:
+		background-color 150ms ease,
+		overlay 150ms ease allow-discrete,
+		display 150ms ease allow-discrete;
+}
+
+dialog[open]::backdrop {
+	background-color: rgb(17 24 39 / 0.4);
+}
+
+@starting-style {
+	dialog[open]::backdrop {
+		background-color: rgb(17 24 39 / 0);
+	}
+}
+
+/* Honour a stated preference for less movement, even for something this small. */
+@media (prefers-reduced-motion: reduce) {
+	button,
+	[role="button"],
+	a {
+		transition: none;
+	}
+
+	dialog,
+	dialog::backdrop {
+		transition: none;
+	}
+
+	dialog {
+		transform: none;
+	}
+}
