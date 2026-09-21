@@ -281,6 +281,35 @@ export async function deactivateCompanyEmployee(
 }
 
 /**
+ * Turns a closed administrator account back on.
+ *
+ * They sign in afresh with the password they had — nothing is reissued, and
+ * activating an account that is already active changes nothing. The mirror of
+ * deactivateAdministrator, and like it, no idempotency key: this sets a state
+ * rather than moving points.
+ */
+export async function activateAdministrator(
+	companyId: number,
+	administratorId: number,
+): Promise<ConfirmState> {
+	await requireOperator();
+
+	try {
+		await requestWithSession(
+			`/operator/companies/${companyId}/administrators/${administratorId}/activate`,
+			{ method: "POST" },
+		);
+	} catch (error) {
+		return { error: describe(error, "Could not activate the administrator.") };
+	}
+
+	revalidateCompany(companyId);
+	// Stays on the page, unlike deactivation: the record is worth looking at
+	// now that it works again.
+	return undefined;
+}
+
+/**
  * Closes an administrator's account.
  *
  * No idempotency key, unlike every employee deactivation: the API asks for

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCompany, getCompanyAdministrator } from "@/lib/operator";
+import { ActivateAdministratorButton } from "./ActivateAdministratorButton";
 import { DeactivateAdministratorButton } from "./DeactivateAdministratorButton";
 
 export default async function OperatorAdministratorPage({
@@ -45,8 +46,14 @@ export default async function OperatorAdministratorPage({
 					<p className="text-sm text-gray-500">{administrator.email}</p>
 					{!isActive && <p className="mt-1 text-sm text-gray-400">Inactive</p>}
 				</div>
-				{isActive && (
+				{isActive ? (
 					<DeactivateAdministratorButton
+						companyId={companyId}
+						administratorId={administrator.id}
+						name={`${administrator.first_name} ${administrator.last_name}`}
+					/>
+				) : (
+					<ActivateAdministratorButton
 						companyId={companyId}
 						administratorId={administrator.id}
 						name={`${administrator.first_name} ${administrator.last_name}`}
@@ -69,15 +76,11 @@ export default async function OperatorAdministratorPage({
 				</table>
 			</div>
 
-			{/*
-			 * An inactive account keeps its row so its past actions stay attributed
-			 * to it. The API can turn one back on, but this screen only closes them
-			 * — reactivating is not wired up.
-			 */}
 			{!isActive && (
 				<p className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-sm text-gray-500">
 					This account is inactive. It can neither sign in nor go on using a session it already
-					held, and its past actions stay attributed to it.
+					held, and its past actions stay attributed to it. Activating it restores the password it
+					had.
 				</p>
 			)}
 		</div>
