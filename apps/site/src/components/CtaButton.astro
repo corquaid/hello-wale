@@ -1,4 +1,6 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
+
 interface Props {
 	label: string;
 	href?: string;
@@ -22,6 +24,10 @@ const {
 	fullWidth = false,
 	class: className,
 } = Astro.props;
+
+// Most CTAs don't pass an href and fall back to the contact page — in the
+// locale of the page they're rendered on.
+const defaultHref = getRelativeLocaleUrl(Astro.currentLocale ?? "en", "contact");
 
 const variantClass: Record<NonNullable<Props["variant"]>, string> = {
 	primary: "bg-wale-700 text-white",
@@ -49,7 +55,7 @@ const Tag = as;
 ---
 
 <Tag
-	{...as === "a" ? { href: href ?? `${import.meta.env.BASE_URL}contact` } : {}}
+	{...as === "a" ? { href: href ?? defaultHref } : {}}
 	class:list={[
 		fullWidth ? "block w-full" : "inline-block",
 		"px-6 py-3.5 text-center",

@@ -8,6 +8,7 @@ interface Props {
 	closeButtonVariant?: "primary" | "peach";
 	secondaryLabel: string;
 	secondaryHref: string;
+	closeAriaLabel: string;
 	onClose: () => void;
 }
 
@@ -24,6 +25,7 @@ export default function SentModal({
 	closeButtonVariant = "primary",
 	secondaryLabel,
 	secondaryHref,
+	closeAriaLabel,
 	onClose,
 }: Props) {
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -55,7 +57,7 @@ export default function SentModal({
 				<button
 					type="button"
 					onClick={onClose}
-					aria-label="Close"
+					aria-label={closeAriaLabel}
 					className="text-wale-800/50 hover:text-wale-800 absolute top-5 right-5"
 				>
 					<svg

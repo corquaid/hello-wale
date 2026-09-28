@@ -1,4 +1,5 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
 import Hero from "../Hero.astro";
 import ForHosts from "../ForHosts.astro";
@@ -14,7 +15,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang).hostsPage;
-const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
@@ -30,8 +30,11 @@ const base = import.meta.env.BASE_URL;
 		afterText={t.hero.afterText}
 		subtext={t.hero.subtext}
 		ctas={[
-			{ label: t.hero.ctaPartner, href: `${base}partner-with-us`, variant: "ghost" },
-			{ label: t.hero.ctaListing, href: `${base}become-a-host`, variant: "cream" },
+			{
+				label: t.hero.ctaListing,
+				href: getRelativeLocaleUrl(lang, "become-a-host"),
+				variant: "cream",
+			},
 		]}
 		photo={hostsHeroDoor}
 		mobilePhoto={hostsHeroMobile}
@@ -55,7 +58,7 @@ const base = import.meta.env.BASE_URL;
 			{t.biggerPicture}
 		</p>
 	</section>
-	<AntiSeasonality blocks={t.antiSeasonality.blocks} cta={null} />
+	<AntiSeasonality lang={lang} blocks={t.antiSeasonality.blocks} cta={null} />
 	<HowItWorks
 		eyebrow={t.howItWorks.eyebrow}
 		headline={t.howItWorks.headline}

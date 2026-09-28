@@ -25,7 +25,7 @@ const dict = useTranslations(lang);
 const { common } = dict;
 const t = dict.homePage;
 
-const contactHref = `${import.meta.env.BASE_URL}contact`;
+const contactHref = getRelativeLocaleUrl(lang, "contact");
 const whatWeDoHrefs = [contactHref, contactHref, getRelativeLocaleUrl(lang, "professionals")];
 
 const useCaseImages = [usecaseMarketing, usecaseTechteam];
@@ -91,6 +91,7 @@ const useCases = t.useCases.items.map((item, index) => ({
 		cards={common.scienceOfChange.cards}
 	/>
 	<AntiSeasonality
+		lang={lang}
 		eyebrow={t.antiSeasonality.eyebrow}
 		blocks={[t.antiSeasonality.block]}
 		cta={{ label: t.antiSeasonality.ctaLabel }}

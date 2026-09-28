@@ -1,0 +1,88 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Nav from "../Nav.astro";
+import HostApplicationForm from "../HostApplicationForm.tsx";
+import zeroRatesIcon from "@/assets/images/benefit-icon-hosts-zero-rates.png";
+import featuredIcon from "@/assets/images/benefit-icon-hosts-featured.png";
+import coCreateIcon from "@/assets/images/benefit-icon-hosts-co-create.png";
+import lowerFeesIcon from "@/assets/images/benefit-icon-lower-cost.png";
+import { useTranslations, type Locale } from "@/i18n/utils";
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).becomeAHostPage;
+const blogHref = `${import.meta.env.BASE_URL}${lang === "pl" ? "pl/" : ""}blog`;
+
+// Icons follow the order of `t.benefits` (see the Dictionary type).
+const icons = [zeroRatesIcon, featuredIcon, coCreateIcon, lowerFeesIcon];
+const benefits = t.benefits.map((benefit, index) => ({ ...benefit, icon: icons[index] }));
+---
+
+<Layout
+	title={t.meta.title}
+	description={t.meta.description}
+	showNav={false}
+	lang={lang}
+	currentPath="become-a-host"
+>
+	<div class="bg-wale-50 min-h-screen">
+		<div class="px-4 pt-6 sm:px-10 lg:px-20">
+			<Nav variant="floating" lang={lang} currentPath="become-a-host" />
+		</div>
+
+		<section class="mx-auto max-w-7xl px-4 py-10 sm:px-10 lg:px-20 lg:py-14">
+			<div class="flex flex-col gap-10 lg:flex-row lg:gap-20">
+				<div
+					class="w-full shrink-0 overflow-hidden rounded-t-4xl rounded-bl-4xl bg-linear-to-t from-[#914d61] to-[#380121] px-8 py-12 text-white lg:w-[42%] lg:self-start lg:px-14 lg:py-16"
+				>
+					<h1 class="font-display text-4xl leading-[1.2] font-bold tracking-[-0.8px] text-white">
+						{t.headline}
+					</h1>
+					<p class="font-display text-wale-peach/90 mt-6 text-base leading-[1.6]">
+						{t.intro}
+					</p>
+					<div class="mt-8 rounded-xl border border-white/12 bg-white/6 px-6 py-8">
+						<p class="font-display text-wale-peach/85 text-xs font-bold tracking-[0.36px]">
+							{t.benefitsHeading}
+						</p>
+						<ul class="mt-5 flex flex-col gap-5">
+							{
+								benefits.map((benefit) => (
+									<li class="flex items-center gap-4">
+										<img src={benefit.icon.src} alt="" class="size-9 shrink-0" />
+										<span class="flex flex-col gap-0.5">
+											<span class="font-display text-sm leading-[1.3] font-bold text-white">
+												{benefit.title}
+											</span>
+											<span class="font-display text-xs leading-[1.4] text-white/70">
+												{benefit.description}
+											</span>
+										</span>
+									</li>
+								))
+							}
+						</ul>
+					</div>
+					<p class="font-display text-wale-peach/80 mt-6 text-xs">
+						{t.footnote}
+					</p>
+				</div>
+
+				<div class="flex-1">
+					<div class="pb-6">
+						<h2 class="font-display text-wale-800 text-[28px] font-bold tracking-[-0.224px]">
+							{t.formTitle}
+						</h2>
+						<p class="text-wale-800/65 mt-2 text-base">
+							{t.formSubtext}
+						</p>
+					</div>
+					<HostApplicationForm client:load copy={t.form} blogHref={blogHref} />
+				</div>
+			</div>
+		</section>
+	</div>
+</Layout>

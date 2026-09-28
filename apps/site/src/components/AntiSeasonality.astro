@@ -1,5 +1,6 @@
 ---
 import CtaButton from "./CtaButton.astro";
+import { useTranslations, type Locale } from "../i18n/utils";
 
 interface Block {
 	title: string;
@@ -12,12 +13,14 @@ interface Cta {
 }
 
 interface Props {
+	lang?: Locale;
 	eyebrow?: string;
 	blocks?: Block[];
 	cta?: Cta | null;
 }
 
 const {
+	lang = "en",
 	eyebrow = "The problem with tourism",
 	blocks = [
 		{
@@ -30,21 +33,22 @@ const {
 } = Astro.props;
 
 const isMultiBlock = blocks.length > 1;
+const chart = useTranslations(lang).common.bookingsChart;
 
 const months = [
-	{ label: "J", height: 24, peak: false },
-	{ label: "F", height: 32, peak: false },
-	{ label: "M", height: 40, peak: false },
-	{ label: "A", height: 56, peak: false },
-	{ label: "M", height: 96, peak: true },
-	{ label: "J", height: 120, peak: true },
-	{ label: "J", height: 120, peak: true },
-	{ label: "A", height: 104, peak: true },
-	{ label: "S", height: 64, peak: false },
-	{ label: "O", height: 40, peak: false },
-	{ label: "N", height: 28, peak: false },
-	{ label: "D", height: 24, peak: false },
-] as const;
+	{ height: 24, peak: false },
+	{ height: 32, peak: false },
+	{ height: 40, peak: false },
+	{ height: 56, peak: false },
+	{ height: 96, peak: true },
+	{ height: 120, peak: true },
+	{ height: 120, peak: true },
+	{ height: 104, peak: true },
+	{ height: 64, peak: false },
+	{ height: 40, peak: false },
+	{ height: 28, peak: false },
+	{ height: 24, peak: false },
+].map((month, index) => ({ ...month, label: chart.monthInitials[index] }));
 ---
 
 <section class="bg-white px-6 py-20 sm:px-10 lg:px-20 lg:py-30">
@@ -95,7 +99,7 @@ const months = [
 					80%
 				</p>
 				<p class="font-display text-[15px] leading-5.5 text-white/55">
-					of bookings happen in just 4 months of the year.
+					{chart.statCaption}
 				</p>
 			</div>
 
@@ -104,7 +108,7 @@ const months = [
 			<p
 				class="font-display w-full text-[11px] font-semibold tracking-[0.22px] text-white/45 uppercase"
 			>
-				Bookings by month (typical Airbnb host)
+				{chart.title}
 			</p>
 
 			<div class="flex w-full items-end justify-between gap-1">
@@ -124,11 +128,11 @@ const months = [
 			<div class="flex flex-wrap items-center gap-4">
 				<div class="flex items-center gap-2">
 					<div class="bg-wale-peach size-2.5 rounded-sm"></div>
-					<p class="font-display text-[11px] text-white/60">Peak season (May–Aug)</p>
+					<p class="font-display text-[11px] text-white/60">{chart.peakLegend}</p>
 				</div>
 				<div class="flex items-center gap-2">
 					<div class="size-2.5 rounded-sm bg-white/20"></div>
-					<p class="font-display text-[11px] text-white/60">Off-season — empty calendar</p>
+					<p class="font-display text-[11px] text-white/60">{chart.offSeasonLegend}</p>
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,23 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ContactForm from "../ContactForm.tsx";
+import { useTranslations, type Locale } from "@/i18n/utils";
+
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).contactPage;
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={lang} currentPath="contact">
+	<section class="mx-auto max-w-lg px-6 py-16">
+		<h1 class="font-display text-wale-800 text-3xl font-bold sm:text-4xl">{t.headline}</h1>
+		<p class="mt-3 text-slate-600">{t.subtext}</p>
+
+		<div class="mt-10">
+			<ContactForm client:load copy={t.form} />
+		</div>
+	</section>
+</Layout>

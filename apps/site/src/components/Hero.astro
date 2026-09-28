@@ -11,6 +11,8 @@ interface Cta {
 	label: string;
 	href?: string;
 	variant: "ghost" | "cream" | "maroon" | "peach";
+	// Defaults to "full" for the first of two buttons, "notch" otherwise.
+	shape?: "full" | "notch";
 }
 
 interface Props {
@@ -18,7 +20,7 @@ interface Props {
 	bubbleText?: string;
 	afterText?: string;
 	subtext?: string;
-	ctas?: [Cta, Cta];
+	ctas?: [Cta] | [Cta, Cta];
 	showCtas?: boolean;
 	showPhoto?: boolean;
 	photo?: ImageMetadata;
@@ -148,23 +150,22 @@ const {
 
 		{
 			showCtas && (
-				<div class="flex w-full max-w-md flex-col gap-2 sm:flex-row">
-					<CtaButton
-						label={ctas[0].label}
-						href={ctas[0].href}
-						variant={ctas[0].variant}
-						shape="full"
-						radius="2xl"
-						class="flex-1"
-					/>
-					<CtaButton
-						label={ctas[1].label}
-						href={ctas[1].href}
-						variant={ctas[1].variant}
-						shape="notch"
-						radius="2xl"
-						class="flex-1"
-					/>
+				<div
+					class:list={[
+						"flex w-full max-w-md flex-col gap-2 sm:flex-row",
+						ctas.length === 1 && "items-center justify-center",
+					]}
+				>
+					{ctas.map((cta, index) => (
+						<CtaButton
+							label={cta.label}
+							href={cta.href}
+							variant={cta.variant}
+							shape={cta.shape ?? (index === 0 && ctas.length > 1 ? "full" : "notch")}
+							radius="2xl"
+							class={ctas.length > 1 ? "flex-1" : undefined}
+						/>
+					))}
 				</div>
 			)
 		}

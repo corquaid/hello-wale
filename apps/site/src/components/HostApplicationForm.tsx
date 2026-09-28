@@ -1,8 +1,29 @@
 import { useState } from "react";
 import applicationSentIcon from "../assets/images/partner-application-sent.png";
 import SentModal from "./SentModal";
+import type {
+	AvailabilityKey,
+	HostApplicationFormCopy,
+	PropertyTypeKey,
+	WorkReadyKey,
+} from "../i18n/types";
+import {
+	checkEmail,
+	checkFreeText,
+	checkName,
+	checkPhone,
+	checkText,
+	checkUrl,
+	collectErrors,
+	focusFirstError,
+	LIMITS,
+	type FieldErrors,
+} from "./formValidation";
 import {
 	ConsentCheckbox,
+	consentText,
+	errorProps,
+	FieldError,
 	inputClass,
 	labelClass,
 	SectionHeader,
@@ -29,21 +50,28 @@ const PHONE_CODES = [
 	{ code: "+1", label: "🇺🇸 +1" },
 ];
 
-const PROPERTY_TYPES = ["Apartment", "House / Villa", "Cabin / Cottage", "Studio", "Other"];
-const GUEST_CAPACITIES = ["1-2", "3-4", "5-6", "7-10", "10+"];
-const BEDROOM_COUNTS = ["Studio", "1", "2", "3", "4+"];
-
-const WORK_READY_OPTIONS = [
-	{ value: "wifi", label: "Fast Wi-Fi (100+ Mbps)" },
-	{ value: "desk", label: "Dedicated desk / workspace" },
-	{ value: "quiet", label: "Quiet during working hours" },
-	{ value: "kitchen", label: "Full kitchen" },
-	{ value: "nature", label: "Nature / outdoor access" },
-	{ value: "coffee", label: "Coffee, tea, water included" },
+// The `value`s below are what HubSpot stores, and must match the option lists
+// on the HubSpot properties — they stay in English whatever the page locale.
+// Only the visible labels come from `copy`.
+const PROPERTY_TYPES: { key: PropertyTypeKey; value: string }[] = [
+	{ key: "apartment", value: "Apartment" },
+	{ key: "house", value: "House / Villa" },
+	{ key: "cabin", value: "Cabin / Cottage" },
+	{ key: "studio", value: "Studio" },
+	{ key: "other", value: "Other" },
 ];
+const GUEST_CAPACITIES = ["1-2", "3-4", "5-6", "7-10", "10+"];
+const BEDROOM_STUDIO = "Studio";
+const BEDROOM_COUNTS = [BEDROOM_STUDIO, "1", "2", "3", "4+"];
 
-const AVAILABILITY_OPTIONS = ["Year-round", "Mostly off-season (Oct—Apr)", "Specific months only"];
-const SPECIFIC_MONTHS_OPTION = "Specific months only";
+const WORK_READY_OPTIONS: WorkReadyKey[] = ["wifi", "desk", "quiet", "kitchen", "nature", "coffee"];
+
+const AVAILABILITY_OPTIONS: { key: AvailabilityKey; value: string }[] = [
+	{ key: "yearRound", value: "Year-round" },
+	{ key: "offSeason", value: "Mostly off-season (Oct—Apr)" },
+	{ key: "specificMonths", value: "Specific months only" },
+];
+const SPECIFIC_MONTHS_OPTION = AVAILABILITY_OPTIONS[2].value;
 
 const MONTHS = [
 	"January",
@@ -60,14 +88,24 @@ const MONTHS = [
 	"December",
 ];
 
-export default function HostApplicationForm() {
+interface Props {
+	copy: HostApplicationFormCopy;
+	blogHref: string;
+}
+
+export default function HostApplicationForm({ copy, blogHref }: Props) {
 	const [status, setStatus] = useState<"idle" | "sending" | "submitted" | "error">("idle");
 	const [showModal, setShowModal] = useState(false);
-	const [availability, setAvailability] = useState(AVAILABILITY_OPTIONS[0]);
+	const [availability, setAvailability] = useState(AVAILABILITY_OPTIONS[0].value);
+	const [errors, setErrors] = useState<FieldErrors>({});
+
+	function clearError(event: React.FormEvent<HTMLFormElement>) {
+		const name = (event.target as HTMLInputElement).name;
+		if (errors[name]) setErrors(({ [name]: _cleared, ...rest }) => rest);
+	}
 
 	async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
-		setStatus("sending");
 
 		const form = event.currentTarget;
 		const data = new FormData(form);
@@ -96,6 +134,31 @@ export default function HostApplicationForm() {
 		const bookingUrl = String(data.get("bookingUrl") ?? "").trim();
 		const spaceStory = String(data.get("spaceStory") ?? "").trim();
 		const consented = data.get("consent") === "on";
+
+		const { validation, required } = copy;
+		const fieldErrors = collectErrors({
+			fullName: checkName(fullName, validation, required.fullName),
+			email: checkEmail(email, validation, required.email),
+			phoneNumber: checkPhone(phoneCode, phoneNumber, validation),
+			propertyName: checkText(propertyName, LIMITS.propertyName, validation, required.propertyName),
+			city: checkText(city, LIMITS.shortText, validation, required.city),
+			country: checkText(country, LIMITS.shortText, validation, required.country),
+			propertyType: propertyType ? undefined : required.propertyType,
+			guestCapacity: guestCapacity ? undefined : required.guestCapacity,
+			bedrooms: bedrooms ? undefined : required.bedrooms,
+			workReadyOther: checkFreeText(workReadyOther, validation),
+			airbnbUrl: checkUrl(airbnbUrl, validation),
+			bookingUrl: checkUrl(bookingUrl, validation),
+			spaceStory: checkFreeText(spaceStory, validation),
+			consent: consented ? undefined : validation.consentRequired,
+		});
+		setErrors(fieldErrors);
+		if (Object.keys(fieldErrors).length > 0) {
+			focusFirstError(form, fieldErrors);
+			return;
+		}
+
+		setStatus("sending");
 
 		const hubspotFields = [
 			{ objectTypeId: "0-1", name: "email", value: email },
@@ -137,7 +200,7 @@ export default function HostApplicationForm() {
 						legalConsentOptions: {
 							consent: {
 								consentToProcess: consented,
-								text: "I've read and agree to the Privacy Policy.",
+								text: consentText(copy),
 							},
 						},
 					}),
@@ -162,54 +225,64 @@ export default function HostApplicationForm() {
 			{showModal && (
 				<SentModal
 					icon={applicationSentIcon.src}
-					title="Your space is on our radar!"
-					body="Thanks for applying as a founding host. We'll reply within 48 hours — a real person will walk you through the next steps. A confirmation is already in your inbox."
-					closeLabel="Done"
+					title={copy.modal.title}
+					body={copy.modal.body}
+					closeLabel={copy.modal.closeLabel}
 					closeButtonVariant="peach"
-					secondaryLabel="See what makes a great workation stay →"
-					secondaryHref={`${import.meta.env.BASE_URL}blog`}
+					secondaryLabel={copy.modal.secondaryLabel}
+					secondaryHref={blogHref}
+					closeAriaLabel={copy.closeAriaLabel}
 					onClose={() => setShowModal(false)}
 				/>
 			)}
-			<form onSubmit={handleSubmit} className="flex flex-col gap-10">
+			<form
+				onSubmit={handleSubmit}
+				onInput={clearError}
+				noValidate
+				className="flex flex-col gap-10"
+			>
 				<div className="flex flex-col gap-4">
-					<SectionHeader number={1} title="About you" />
+					<SectionHeader number={1} title={copy.sections.aboutYou} />
 					<div className="flex flex-col gap-2">
 						<label htmlFor="fullName" className={labelClass}>
-							Full name <span className="text-wale-800 font-bold">*</span>
+							{copy.fields.fullName.label} <span className="text-wale-800 font-bold">*</span>
 						</label>
 						<input
 							id="fullName"
 							name="fullName"
+							{...errorProps(errors, "fullName")}
 							type="text"
 							required
-							placeholder="e.g. Elena Novak"
+							placeholder={copy.fields.fullName.placeholder}
 							className={inputClass}
 						/>
+						<FieldError errors={errors} name="fullName" />
 					</div>
 					<div className="flex flex-col gap-2">
 						<label htmlFor="email" className={labelClass}>
-							Email <span className="text-wale-800 font-bold">*</span>
+							{copy.fields.email.label} <span className="text-wale-800 font-bold">*</span>
 						</label>
 						<input
 							id="email"
 							name="email"
+							{...errorProps(errors, "email")}
 							type="email"
 							required
-							placeholder="you@company.com"
+							placeholder={copy.fields.email.placeholder}
 							className={inputClass}
 						/>
+						<FieldError errors={errors} name="email" />
 					</div>
 					<div className="flex flex-col gap-2">
 						<label htmlFor="phoneNumber" className={labelClass}>
-							Phone Number
+							{copy.phoneNumber}
 						</label>
 						<div className="flex gap-1">
 							<select
 								id="phoneCode"
 								name="phoneCode"
 								defaultValue="+48"
-								aria-label="Country calling code"
+								aria-label={copy.phoneCodeAriaLabel}
 								className="text-wale-800 focus:ring-wale-700/30 border-wale-700/15 rounded-lg border bg-white px-3 py-5 text-sm focus:ring-2 focus:outline-none"
 							>
 								{PHONE_CODES.map((entry) => (
@@ -221,92 +294,103 @@ export default function HostApplicationForm() {
 							<input
 								id="phoneNumber"
 								name="phoneNumber"
+								{...errorProps(errors, "phoneNumber")}
 								type="tel"
 								placeholder="600 123 456"
 								className={`${inputClass} flex-1`}
 							/>
 						</div>
+						<FieldError errors={errors} name="phoneNumber" />
 					</div>
 				</div>
 
 				<div className="flex flex-col gap-4">
-					<SectionHeader number={2} title="About your space" />
+					<SectionHeader number={2} title={copy.sections.aboutSpace} />
 					<div className="flex flex-col gap-2">
 						<label htmlFor="propertyName" className={labelClass}>
-							Property name <span className="text-wale-800 font-bold">*</span>
+							{copy.fields.propertyName.label} <span className="text-wale-800 font-bold">*</span>
 						</label>
 						<input
 							id="propertyName"
 							name="propertyName"
+							{...errorProps(errors, "propertyName")}
 							type="text"
 							required
-							placeholder="e.g. Casa Amelia, Mountain Cabin, Studio 42"
+							placeholder={copy.fields.propertyName.placeholder}
 							className={inputClass}
 						/>
+						<FieldError errors={errors} name="propertyName" />
 					</div>
 					<div className="flex flex-col gap-4 sm:flex-row">
 						<div className="flex flex-1 flex-col gap-2">
 							<label htmlFor="city" className={labelClass}>
-								City <span className="text-wale-800 font-bold">*</span>
+								{copy.fields.city.label} <span className="text-wale-800 font-bold">*</span>
 							</label>
 							<input
 								id="city"
 								name="city"
+								{...errorProps(errors, "city")}
 								type="text"
 								required
-								placeholder="e.g. Zakopane"
+								placeholder={copy.fields.city.placeholder}
 								className={inputClass}
 							/>
+							<FieldError errors={errors} name="city" />
 						</div>
 						<div className="flex flex-1 flex-col gap-2">
 							<label htmlFor="country" className={labelClass}>
-								Country <span className="text-wale-800 font-bold">*</span>
+								{copy.fields.country.label} <span className="text-wale-800 font-bold">*</span>
 							</label>
 							<input
 								id="country"
 								name="country"
+								{...errorProps(errors, "country")}
 								type="text"
 								required
-								placeholder="e.g. Poland"
+								placeholder={copy.fields.country.placeholder}
 								className={inputClass}
 							/>
+							<FieldError errors={errors} name="country" />
 						</div>
 					</div>
 					<div className="flex flex-col gap-4 sm:flex-row">
 						<div className="flex flex-1 flex-col gap-2">
 							<label htmlFor="propertyType" className={labelClass}>
-								Property type <span className="text-wale-800 font-bold">*</span>
+								{copy.fields.propertyType.label} <span className="text-wale-800 font-bold">*</span>
 							</label>
 							<select
 								id="propertyType"
 								name="propertyType"
+								{...errorProps(errors, "propertyType")}
 								required
 								defaultValue=""
 								className={inputClass}
 							>
 								<option value="" disabled>
-									Choose type
+									{copy.fields.propertyType.placeholder}
 								</option>
 								{PROPERTY_TYPES.map((type) => (
-									<option key={type} value={type}>
-										{type}
+									<option key={type.key} value={type.value}>
+										{copy.propertyTypes[type.key]}
 									</option>
 								))}
 							</select>
+							<FieldError errors={errors} name="propertyType" />
 						</div>
 						<div className="flex flex-1 flex-col gap-2">
 							<label htmlFor="guestCapacity" className={labelClass}>
-								Fits how many guests? <span className="text-wale-800 font-bold">*</span>
+								{copy.fields.guestCapacity.label} <span className="text-wale-800 font-bold">*</span>
 							</label>
 							<select
 								id="guestCapacity"
 								name="guestCapacity"
+								{...errorProps(errors, "guestCapacity")}
 								required
 								defaultValue=""
 								className={inputClass}
 							>
 								<option value="" disabled>
-									Choose capacity
+									{copy.fields.guestCapacity.placeholder}
 								</option>
 								{GUEST_CAPACITIES.map((capacity) => (
 									<option key={capacity} value={capacity}>
@@ -314,21 +398,30 @@ export default function HostApplicationForm() {
 									</option>
 								))}
 							</select>
+							<FieldError errors={errors} name="guestCapacity" />
 						</div>
 						<div className="flex flex-1 flex-col gap-2">
 							<label htmlFor="bedrooms" className={labelClass}>
-								Bedrooms <span className="text-wale-800 font-bold">*</span>
+								{copy.fields.bedrooms.label} <span className="text-wale-800 font-bold">*</span>
 							</label>
-							<select id="bedrooms" name="bedrooms" required defaultValue="" className={inputClass}>
+							<select
+								id="bedrooms"
+								name="bedrooms"
+								{...errorProps(errors, "bedrooms")}
+								required
+								defaultValue=""
+								className={inputClass}
+							>
 								<option value="" disabled>
-									Choose
+									{copy.fields.bedrooms.placeholder}
 								</option>
 								{BEDROOM_COUNTS.map((count) => (
 									<option key={count} value={count}>
-										{count}
+										{count === BEDROOM_STUDIO ? copy.bedroomStudio : count}
 									</option>
 								))}
 							</select>
+							<FieldError errors={errors} name="bedrooms" />
 						</div>
 					</div>
 				</div>
@@ -336,63 +429,60 @@ export default function HostApplicationForm() {
 				<div className="flex flex-col gap-4">
 					<SectionHeader
 						number={3}
-						title="Is it work-ready?"
-						subtext="Check all that apply — this helps us understand fit."
+						title={copy.sections.workReady}
+						subtext={copy.sections.workReadySubtext}
 					/>
 					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 						{WORK_READY_OPTIONS.map((option) => (
-							<label key={option.value} className="flex cursor-pointer items-center gap-3">
-								<input
-									type="checkbox"
-									name="workReady"
-									value={option.value}
-									className="peer sr-only"
-								/>
+							<label key={option} className="flex cursor-pointer items-center gap-3">
+								<input type="checkbox" name="workReady" value={option} className="peer sr-only" />
 								<span className="border-wale-700/30 peer-checked:border-wale-700 peer-checked:bg-wale-700 flex size-5 shrink-0 items-center justify-center rounded border bg-white text-transparent peer-checked:text-white">
 									✓
 								</span>
-								<span className="text-wale-800 text-sm">{option.label}</span>
+								<span className="text-wale-800 text-sm">{copy.workReadyOptions[option]}</span>
 							</label>
 						))}
 					</div>
 					<div className="flex flex-col gap-2">
 						<label htmlFor="workReadyOther" className={labelClass}>
-							Anything else? (optional)
+							{copy.fields.workReadyOther.label}
 						</label>
 						<input
 							id="workReadyOther"
 							name="workReadyOther"
+							{...errorProps(errors, "workReadyOther")}
 							type="text"
-							placeholder="e.g. Standing desk, outdoor covered workspace, second monitor available"
+							placeholder={copy.fields.workReadyOther.placeholder}
 							className={inputClass}
 						/>
+						<FieldError errors={errors} name="workReadyOther" />
 					</div>
 				</div>
 
 				<div className="flex flex-col gap-4">
-					<SectionHeader number={4} title="When is it available?" />
+					<SectionHeader number={4} title={copy.sections.availability} />
 					<div className="flex flex-wrap gap-2">
 						{AVAILABILITY_OPTIONS.map((option) => (
-							<label key={option} className="cursor-pointer">
+							<label key={option.key} className="cursor-pointer">
 								<input
 									type="radio"
 									name="availability"
-									value={option}
-									checked={availability === option}
-									onChange={() => setAvailability(option)}
+									value={option.value}
+									checked={availability === option.value}
+									onChange={() => setAvailability(option.value)}
 									className="peer sr-only"
 								/>
 								<span className="peer-checked:bg-wale-700 border-wale-700/15 text-wale-800 inline-flex items-center rounded-full border bg-white px-5 py-2.5 text-sm font-medium transition-colors peer-checked:text-white">
-									{option}
+									{copy.availabilityOptions[option.key]}
 								</span>
 							</label>
 						))}
 					</div>
 					{availability === SPECIFIC_MONTHS_OPTION && (
 						<div className="flex flex-col gap-2">
-							<span className={labelClass}>Which months? Select all that apply.</span>
+							<span className={labelClass}>{copy.fields.months}</span>
 							<div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-								{MONTHS.map((month) => (
+								{MONTHS.map((month, index) => (
 									<label key={month} className="cursor-pointer">
 										<input
 											type="checkbox"
@@ -401,7 +491,7 @@ export default function HostApplicationForm() {
 											className="peer sr-only"
 										/>
 										<span className="peer-checked:bg-wale-700 peer-checked:border-wale-700 border-wale-700/15 text-wale-800 flex items-center justify-center rounded-lg border bg-white px-3 py-2.5 text-sm font-medium transition-colors peer-checked:text-white">
-											{month}
+											{copy.monthNames[index]}
 										</span>
 									</label>
 								))}
@@ -413,69 +503,69 @@ export default function HostApplicationForm() {
 				<div className="flex flex-col gap-4">
 					<SectionHeader
 						number={5}
-						title="Currently listed elsewhere?"
-						subtext="Optional — helps us understand your setup."
+						title={copy.sections.listedElsewhere}
+						subtext={copy.sections.listedElsewhereSubtext}
 					/>
 					<div className="flex flex-col gap-2">
 						<label htmlFor="airbnbUrl" className={labelClass}>
-							Airbnb URL
+							{copy.fields.airbnbUrl}
 						</label>
 						<input
 							id="airbnbUrl"
 							name="airbnbUrl"
+							{...errorProps(errors, "airbnbUrl")}
 							type="url"
 							placeholder="https://airbnb.com/..."
 							className={inputClass}
 						/>
+						<FieldError errors={errors} name="airbnbUrl" />
 					</div>
 					<div className="flex flex-col gap-2">
 						<label htmlFor="bookingUrl" className={labelClass}>
-							Booking.com URL
+							{copy.fields.bookingUrl}
 						</label>
 						<input
 							id="bookingUrl"
 							name="bookingUrl"
+							{...errorProps(errors, "bookingUrl")}
 							type="url"
 							placeholder="https://booking.com/..."
 							className={inputClass}
 						/>
+						<FieldError errors={errors} name="bookingUrl" />
 					</div>
 				</div>
 
 				<div className="flex flex-col gap-4">
 					<SectionHeader
 						number={6}
-						title="What makes your space special?"
-						subtext="Optional but it's your chance to tell your story."
+						title={copy.sections.story}
+						subtext={copy.sections.storySubtext}
 					/>
 					<textarea
 						name="spaceStory"
+						{...errorProps(errors, "spaceStory")}
 						rows={4}
-						placeholder="Share what makes your property unique — the view, the community, the vibe, the history, why remote workers would love it here..."
+						placeholder={copy.fields.storyPlaceholder}
 						className={textareaClass}
 					/>
+					<FieldError errors={errors} name="spaceStory" />
 				</div>
 
 				<div className="flex flex-col gap-5">
-					<ConsentCheckbox label="Privacy Policy" />
+					<ConsentCheckbox copy={copy} errors={errors} />
 
-					{status === "error" && (
-						<p className="text-sm text-red-600">
-							Something went wrong sending your application. Please try again, or email us directly.
-						</p>
-					)}
+					{status === "error" && <p className="text-sm text-red-600">{copy.error}</p>}
 
 					<button
 						type="submit"
 						disabled={status === "sending"}
 						className="bg-wale-700 font-display hover:bg-wale-800 inline-flex w-fit items-center gap-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl px-12 py-5 text-base font-medium tracking-[0.08px] text-white disabled:opacity-50"
 					>
-						{status === "sending" ? "Sending…" : "Apply as founding host"}
+						{status === "sending" ? copy.sending : copy.submit}
 						<span aria-hidden="true">→</span>
 					</button>
-					<p className="text-wale-800/55 text-sm">
-						Founding host applications are reviewed personally. Response within a few days.
-					</p>
+					<p className="text-wale-800/55 text-sm">{copy.footnote}</p>
 				</div>
 			</form>
 		</>

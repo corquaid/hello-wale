@@ -1,58 +1,99 @@
 import type { Dictionary } from "./types";
 
-// First-pass machine-assisted translation — needs a native/professional
-// review pass before this locale ships to real users.
+// Visible copy comes from the final Polish copy docs (HW *_final.docx). Page
+// meta, image alt text, and strings the docs don't cover are still the
+// first-pass machine-assisted translation and want a native review.
 
 const howItWorksSteps = [
 	{
 		number: "01",
-		title: "Odzywasz się do nas",
-		description: "Poprzez tę stronę lub e-mail. Odpowiadamy w ciągu 48 godzin.",
+		title: "Kontaktujesz się z nami",
+		description: "Przez formularz na stronie lub mejla. Odpowiemy w ciągu 48 godzin.",
 	},
 	{
 		number: "02",
-		title: "Poznajemy Cię",
+		title: "Poznajemy Twoje potrzeby",
 		description:
-			"Krótka rozmowa, by zrozumieć potrzeby Twojego zespołu lub ofertę Twojej nieruchomości.",
+			"Krótka rozmowa, w trakcie której dowiemy się, czego potrzebuje Twój zespół lub co oferuje Twój obiekt.",
 	},
 	{
 		number: "03",
-		title: "Partnerstwo",
-		description:
-			"Poziom subskrypcji, stawki rezerwacji i korzyści founderskie dopasowane do Ciebie.",
+		title: "Ustalamy warunki współpracy",
+		description: "Dopasujemy nasz model współpracy, stawki oraz pakiet korzyści.",
 	},
 	{
 		number: "04",
-		title: "Jesteś z nami. Na zawsze.",
+		title: "Dołączasz do grona partnerów",
 		description:
-			"Partnerzy założyciele pozostają partnerami założycielami. Stała cena, dożywotnio.",
+			"Zyskujesz status partnera-założyciela, a wraz z nim preferencyjne warunki współpracy.",
 	},
 ];
 
-const forHostsBenefits = [
+const coCreateBenefit = {
+	icon: "co-create",
+	title: "Twórz platformę razem z nami",
+	description: "Twoje opinie pomogą rozwijać HelloWale.",
+};
+
+const featuredBenefit = {
+	icon: "featured",
+	title: "Zwiększ widoczność od pierwszego dnia",
+	description: "Pokażemy Twój obiekt na stronie głównej i w materiałach promocyjnych.",
+};
+
+// The home and hosts pages word the 0% benefit differently.
+const homeForHostsBenefits = [
 	{
 		icon: "zero-rates",
-		title: "0% stawki",
-		description: "Stawki 0% przez pierwsze darmowe miesiące.",
+		title: "0% prowizji na start",
+		description: "Zyskujesz preferencyjne warunki przez pierwsze 3 miesiące współpracy.",
 	},
-	{
-		icon: "co-create",
-		title: "Współtwórz platformę razem z nami",
-		description: "Twoja opinia kształtuje produkt.",
-	},
-	{
-		icon: "featured",
-		title: "Wyróżniona oferta widoczna dla wszystkich",
-		description: "Na naszej stronie głównej i w materiałach promujących nasz start.",
-	},
+	coCreateBenefit,
+	featuredBenefit,
 ];
+
+const hostsPageForHostsBenefits = [
+	{
+		icon: "zero-rates",
+		title: "0% prowizji na start",
+		description: "Zyskujesz preferencyjne warunki.",
+	},
+	coCreateBenefit,
+	featuredBenefit,
+];
+
+const validation = {
+	lettersOnly: "Użyj jedynie liter z polskiego alfabetu",
+	tooShort: "Minimalna liczba znaków: {min}",
+	tooLong: "Maksymalna liczba znaków: {max}",
+	emailChars: "Możesz użyć znaków @ - _ .",
+	emailInvalid: "Wpisz prawidłowy adres e-mail",
+	digitsOnly: "Użyj jedynie cyfr",
+	tooManyDigits: "Maksymalna liczba cyfr: {max}",
+	phoneDigits: "Wpisz {digits} cyfr",
+	phoneDigitsRange: "Wpisz od {min} do {max} cyfr",
+	freeTextChars: "Usuń znaki specjalne, takie jak < > { } [ ]",
+	urlInvalid: "Wpisz prawidłowy link, zaczynający się od https://",
+	consentRequired: "Zaznacz zgodę",
+};
+
+const formShared = {
+	phoneNumber: "Numer telefonu",
+	phoneCodeAriaLabel: "Numer kierunkowy kraju",
+	consentBefore: "Znam i akceptuję ",
+	consentLink: "Politykę prywatności",
+	consentAfter: "",
+	sending: "Wysyłanie…",
+	closeAriaLabel: "Zamknij",
+	validation,
+};
 
 export const pl: Dictionary = {
 	nav: {
 		forCompanies: "Dla firm",
 		forHosts: "Dla gospodarzy",
 		forProfessionals: "Dla profesjonalistów",
-		story: "Historia HelloWale",
+		story: "O nas",
 		blog: "Blog",
 		faq: "FAQ",
 		partnerWithUs: "Zostań partnerem",
@@ -63,37 +104,37 @@ export const pl: Dictionary = {
 			columns: {
 				companies: {
 					heading: "Dla firm",
-					links: ["Poznaj workation", "Zostań partnerem", "Cennik", "Case studies"],
+					links: ["Czym jest workation", "Zostań partnerem", "Cennik", "Studia przypadków"],
 				},
 				hosts: {
 					heading: "Dla gospodarzy",
 					links: [
 						"Zostań gospodarzem",
-						"Korzyści dla pierwszych gospodarzy",
-						"Materiały dla gospodarzy",
+						"Korzyści dla gospodarzy-założycieli",
+						"Co musisz zapewnić",
 					],
 				},
 				company: {
-					heading: "Firma",
-					links: ["Historia HelloWale", "Blog", "Skontaktuj się z nami"],
+					heading: "O nas",
+					links: ["Nasza historia", "Blog", "Skontaktuj się"],
 				},
 				legal: {
 					heading: "Informacje prawne",
-					links: ["Regulamin", "Polityka prywatności", "Polityka cookies"],
+					links: ["Regulamin serwisu", "Polityka prywatności", "Polityka cookie"],
 				},
 			},
 			ctaCards: {
 				companies: {
 					title: "Dla firm",
-					description: "Kompletny pakiet workation dla Twojego zespołu",
+					description: "Gotowe rozwiązania workation dla Twojego zespołu",
 				},
 				hosts: {
 					title: "Dla gospodarzy",
-					description: "Proste zarządzanie ofertą przez cały rok",
+					description: "Więcej rezerwacji — przez cały rok",
 				},
 				guests: {
 					title: "Dla gości",
-					description: "Odkryj miejsca gotowe do pracy na całym świecie",
+					description: "Podróżuj, pracuj zdalnie, odkrywaj więcej",
 				},
 			},
 			copyright: "© HelloWale {year} · Wszelkie prawa zastrzeżone.",
@@ -103,38 +144,40 @@ export const pl: Dictionary = {
 		},
 		forCompanies: {
 			eyebrow: "Dla firm",
-			headline: "Benefit wellbeingowy,\nz którego Twój zespół naprawdę skorzysta.",
+			headline: "Benefit wellbeing,\nz którego Twój zespół naprawdę będzie korzystać.",
 			subtext:
-				"Workation to już nie dodatek — to sposób, w jaki najlepsze zespoły utrzymują koncentrację, kreatywność i zaangażowanie. HelloWale sprawia, że łatwo go zaoferować.",
+				"Workation to już nie chwilowy trend ani pusty dodatek. To sprawdzony sposób, dzięki któremu najlepsze zespoły pozostają kreatywne, efektywne i trwale związane z firmą. Z HelloWale możesz łatwo zaoferować taki benefit swoim pracownikom.",
 			imageAlt:
 				"Zawieszka drzwiowa w stylu hotelowym z napisem „Gdzie praca nie przypomina już pracy” na ciemnych drewnianych drzwiach otoczonych zielenią dżungli",
 			benefits: [
-				"Niższy koszt, niż myślisz",
-				"Employer branding",
-				"Większa kreatywność",
-				"Lepsza retencja",
+				"Koszt niższy, niż myślisz",
+				"Silniejsza marka pracodawcy (employer branding)",
+				"Wyższa kreatywność zespołów",
+				"Niższy współczynnik odejść",
 			],
-			ctaLabel: "Zostań partnerem firmowym",
+			ctaLabel: "Zostań partnerem",
 		},
 		whyWellbeing: {
 			eyebrow: "Dlaczego wellbeing ma znaczenie",
-			headline: "Liczby stojące za lepszą pracą.",
+			headline: "Liczby, które mówią same za siebie.",
 			subtext:
-				"Wellbeing to różnica między zespołami, które się rozwijają, a tymi, które się wypalają.",
+				"Dobrostan pracowników często decyduje o tym, czy zespół działa skutecznie, czy zmaga się z wypaleniem zawodowym.",
 			stats: [
 				{
 					value: "77%",
-					description: "pracowników doświadcza wypalenia zawodowego w obecnej pracy",
+					description: "pracowników doświadcza wypalenia zawodowego",
 					source: "Deloitte",
 				},
 				{
 					value: "+13%",
-					description: "wzrost produktywności w zespołach z silnymi programami wellbeingowymi",
-					source: "Oxford University",
+					description:
+						"wzrost produktywności w zespołach objętych programami wspierającymi dobrostan pracowników",
+					source: "Uniwersytet Oksfordzki",
 				},
 				{
 					value: "3,3×",
-					description: "większa szansa na zaangażowanie przy elastyczności typu workation",
+					description:
+						"większe zaangażowanie pracowników, którzy mają możliwość korzystania z workation i elastycznych form pracy",
 					source: "Gallup",
 				},
 			],
@@ -142,34 +185,41 @@ export const pl: Dictionary = {
 		},
 		scienceOfChange: {
 			eyebrow: "Nauka o zmianie",
-			headline: "Miejsce, w którym pracujesz,\nzmienia sposób, w jaki myślisz.",
+			headline: "To, gdzie pracujesz,\nwpływa na sposób, w jaki myślisz.",
 			subtext:
-				"To nie romantyzm — to neuronauka. Otoczenie to jeden z najsilniejszych czynników wpływających na kreatywność, koncentrację i regenerację. I najłatwiej je zmienić.",
+				"To nie romantyczna wizja, lecz potwierdzony naukowo fakt. Otoczenie jest jednym z najważniejszych czynników wpływających na kreatywność, koncentrację i regenerację. A jednocześnie jest jednym z najłatwiejszych elementów do zmiany.",
 			cards: [
 				{
-					title: "Tam, gdzie pogłębia się koncentracja",
+					title: "Głębsze skupienie",
 					description:
-						"To samo biurko, ten sam widok, te same myśli — mózg filtruje znajome otoczenie, w tym pomysły, które z niego płyną.",
+						"To samo biurko. Ten sam widok. Ten sam schemat myślenia. Mózg pomija to, co zna. Gdy zmieniasz otoczenie, zyskujesz nowe spojrzenie.",
 					alt: "Przytulne domowe stanowisko pracy z podstawką na laptopa, monitorem i drzewkiem oliwnym przy słonecznym oknie",
 				},
 				{
-					title: "Tam, gdzie rodzą się pomysły",
+					title: "Tam, gdzie łączą się pomysły",
 					description:
-						"Dlaczego najlepsze pomysły przychodzą na wakacjach, a rzadko przy biurku. Nowe otoczenie aktywuje tryb domyślny mózgu — źródło wglądu.",
+						"Najlepsze pomysły przychodzą podczas podróży, a nie przy tym samym biurku. Zmiana otoczenia sprawia, że mózg przestaje działać rutynowo — dostrzega nowe połączenia i rozwiązania, które wcześniej umykały.",
 					alt: "Mężczyzna pracujący przy biurku z regulacją wysokości, za oknem widać plażę i ocean",
 				},
 				{
-					title: "Tam, gdzie wraca energia",
+					title: "Miejsca, które przywracają energię",
 					description:
-						"Dlaczego tydzień z dala od biurka daje więcej niż miesiąc urlopu przy nim. Natura i nowe przestrzenie szybciej regenerują zdolności poznawcze niż sam odpoczynek.",
+						"Tydzień pracy w nowym miejscu często jest bardziej efektywny niż miesiąc spędzony przy biurku. Natura i nowe otoczenie pomagają zregenerować umysł szybciej niż zwykły odpoczynek.",
 					alt: "Mężczyzna oddychający świeżym powietrzem na pomoście nad jeziorem, otoczony górami",
 				},
 			],
 		},
 		useCases: {
 			eyebrow: "Prawdziwe zespoły. Prawdziwe workation.",
-			headline: "Stworzone dla zespołów każdej wielkości.",
-			subtext: "Trzy podejścia do workation. Jedna platforma, która to wszystko łączy.",
+			headline: "Rozwiązanie dla zespołów każdej wielkości.",
+			subtext: "Trzy sposoby na workation. Jedna platforma, która sprawia, że wszystko działa.",
+		},
+		bookingsChart: {
+			statCaption: "rezerwacji przypada na 4 miesiące w roku.",
+			title: "Rezerwacje miesięcznie (dla przeciętnej oferty)",
+			monthInitials: ["S", "L", "M", "K", "M", "C", "L", "S", "W", "P", "L", "G"],
+			peakLegend: "Wysoki sezon (maj–sierpień)",
+			offSeasonLegend: "Poza sezonem — pusty kalendarz",
 		},
 	},
 	homePage: {
@@ -178,34 +228,34 @@ export const pl: Dictionary = {
 			description: "HelloWale — platforma dla pobytów łączących pracę zdalną z podróżą.",
 		},
 		hero: {
-			beforeText: "Twoje",
-			bubbleText: "biuro,",
-			afterText: "na nowo wymyślone.",
+			beforeText: "Zmień",
+			bubbleText: "biurko",
+			afterText: "na widok, który inspiruje",
 			subtext:
-				"Budujemy platformę dla pobytów łączących pracę zdalną z podróżą. To nie tylko miejsce do spania — to miejsce, gdzie naprawdę coś się dzieje. Bądź jednym z pierwszych.",
-			ctaGhost: "Zostań partnerem",
-			ctaCream: "Dodaj ofertę — za darmo",
+				"Budujemy platformę dla osób, które chcą pracować zdalnie w dobrych warunkach z dowolnego miejsca. Budujemy coś więcej niż serwis z noclegami. Tworzymy przestrzeń, w której praca i podróżowanie idą w parze.",
+			ctaGhost: "Sprawdź ofertę",
+			ctaCream: "Dodaj obiekt za darmo",
 		},
 		whatWeDo: {
-			eyebrow: "Łączymy ludzi i miejsca, które działają",
+			eyebrow: "Łączymy ludzi i miejsca",
 			headlineBefore: "Wypalone zespoły.",
-			headlineAfter: "Puste zimowe kalendarze.",
-			headlineLine2: "My łączymy jedno z drugim.",
+			headlineAfter: "Puste kalendarze rezerwacji poza sezonem.",
+			headlineLine2: "Mamy na to rozwiązanie.",
 			pillars: [
 				{
-					heading: "Firmy zmagające się z retencją",
-					body: "Pomóż swojemu zespołowi przełamać rutynę, zwiększyć dobrostan i zbudować kulturę, dla której warto zostać.",
-					cta: "Zostań partnerem firmowym",
+					heading: "Firmy zmagające się z odejściami",
+					body: "Przełam rutynę w pracy zespołu. Postaw na wellbeing i zbuduj kulturę organizacyjną, dla której warto zostać i pracować.",
+					cta: "Zostań partnerem",
 				},
 				{
-					heading: "Gospodarze zmagający się z sezonowością",
-					body: "Pomóż swojemu zespołowi przełamać rutynę, zwiększyć dobrostan i zbudować kulturę, dla której warto zostać.",
-					cta: "Dodaj swoją nieruchomość",
+					heading: "Obiekty, które miesiącami czekają na rezerwację",
+					body: "Zaproś nową grupę gości — pracowników zdalnych. To dłuższe pobyty, stabilny dochód, rezerwacje przez cały rok.",
+					cta: "Dodaj swój obiekt",
 				},
 				{
-					heading: "Specjaliści zdalni zmęczeni pracą w pojedynkę",
-					body: "Pomóż swojemu zespołowi przełamać rutynę, zwiększyć dobrostan i zbudować kulturę, dla której warto zostać.",
-					cta: "Uzyskaj wczesny dostęp",
+					heading: "Dla wszystkich, którzy szukają inspirujących miejsc do pracy",
+					body: "Samodzielnie lub w grupach. Na kilka dni, a być może na miesiąc. Odnajdź miejsce, które przyniesie inspiracje.",
+					cta: "Dołącz już teraz",
 				},
 			],
 		},
@@ -215,54 +265,55 @@ export const pl: Dictionary = {
 					company: "Agencja marketingowa",
 					badge: "25 pracowników",
 					description:
-						"Kwartalne workation zespołowe na reset i burzę mózgów przed kolejnymi kampaniami.",
-					outcome: "Trzy kampanie. Jedna willa w Toskanii. Zero zmęczenia spotkaniami.",
+						"Kwartalne wyjazdy workation dla całego zespołu, aby złapać nową energię i wspólnie wypracować pomysły na kolejne kampanie.",
+					outcome:
+						"Trzy kampanie. Jedna willa w Toskanii. Zamiast zmęczenia spotkaniami — świeże pomysły.",
 					imageAlt:
 						"Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
 					reverse: false,
 				},
 				{
-					company: "Scale-up technologiczny",
+					company: "Firma technologiczna w fazie wzrostu",
 					badge: "25 pracowników",
 					description:
 						"Każdy członek zespołu otrzymuje 2 tygodnie workation rocznie w ramach pakietu wellbeingowego.",
-					outcome: "Historia retencji, którą opowiadamy na każdej rozmowie rekrutacyjnej.",
+					outcome: "To benefit, o którym mówimy podczas każdej rozmowy kwalifikacyjnej.",
 					imageAlt: "Zespół techniczny współpracujący przy stole z kawą i notatkami",
 					reverse: true,
 				},
 			],
 		},
 		antiSeasonality: {
-			eyebrow: "Problem turystyki",
+			eyebrow: "Możesz zyskać",
 			block: {
-				title: "Turystyka jest sezonowa. Praca nie.",
+				title: "Turystyka jest sezonowa. Praca nigdy.",
 				description:
-					"Gospodarze notują 80% rezerwacji w ciągu zaledwie 4 miesięcy. A pozostałe 8? Puste kalendarze. HelloWale wypełnia tę lukę firmami wysyłającymi zespoły na workation przez cały rok.",
+					"80% rezerwacji przypada na 4 miesiące w roku. A pozostałe 8? Puste kalendarze. HelloWale pomoże Ci wypełnić luki dłuższymi rezerwacjami zdalnych specjalistów i zespołów firmowych — niezależnie od sezonu.",
 			},
-			ctaLabel: "Dodaj swoją nieruchomość",
+			ctaLabel: "Dodaj swój obiekt",
 		},
 		forHosts: {
 			eyebrow: "Dla gospodarzy",
-			headline: "Zostań jednym z pierwszych\ngospodarzy w Polsce.",
+			headline: "Dołącz do grona pierwszych\ngospodarzy HelloWale w Polsce",
 			paragraph:
-				"Współpracujemy z niewielką grupą pierwszych gospodarzy, aby wspólnie kształtować HelloWale. Dołącz już teraz, pomóż nam to zaprojektować i zyskaj ekskluzywne korzyści startowe na zawsze.",
-			benefits: forHostsBenefits,
-			ctaLabel: "Dodaj swoją nieruchomość — za darmo",
+				"Budujemy wąskie grono pierwszych partnerów, którzy wspólnie z nami rozwiną HelloWale w Polsce. Dołącz już teraz, miej realny wpływ na nasz sposób działania w kraju i skorzystaj z preferencyjnych warunków współpracy.",
+			benefits: homeForHostsBenefits,
+			ctaLabel: "Dodaj obiekt — za darmo",
 		},
 		howItWorks: {
 			eyebrow: "Jak to działa",
-			headline: "Od rozmowy do workation.",
+			headline: "Od pierwszej rozmowy do workation.",
 			subtext:
-				"HelloWale startuje w 2026 roku. Oto jak wygląda współpraca już teraz — zanim platforma zostanie uruchomiona.",
+				"HelloWale startuje w 2026 roku. Już dziś zobacz, jak wygląda współpraca — jeszcze przed startem platformy.",
 			steps: howItWorksSteps,
-			ctaLabel: "Porozmawiajmy",
+			ctaLabel: "Umów rozmowę",
 		},
 		emailCapture: {
-			eyebrow: "Dla freelancerów i pracowników zdalnych",
-			headline: "Podróżujesz solo? Dowiedz się pierwszy",
+			eyebrow: "Dla pracujących zdalnie i freelancerów",
+			headline: "Pracuj z miejsc, w których inni odpoczywają.",
 			subtext:
-				"Workation to nie tylko dla firm. Jeśli jesteś freelancerem lub pracujesz zdalnie, zostaw swój e-mail, a damy Ci znać, gdy tylko HelloWale otworzy się dla osób indywidualnych.",
-			placeholder: "Wpisz swój adres e-mail",
+				"Zostaw swojego mejla, a damy Ci znać, kiedy HelloWale będzie dostępne dla osób podróżujących solo.",
+			placeholder: "Wpisz adres e-mail",
 			emailAriaLabel: "Adres e-mail",
 			submitAriaLabel: "Wyślij",
 			successMessage: "Dzięki — odezwiemy się, gdy przyjdzie Twoja kolej.",
@@ -275,40 +326,40 @@ export const pl: Dictionary = {
 				"Zapewnij swojemu zespołowi benefit wellbeingowy, z którego naprawdę skorzysta — partnerstwa workation z HelloWale.",
 		},
 		hero: {
-			beforeText: "Poza",
-			bubbleText: "biurem,",
-			afterText: "nie poza ambicjami.",
-			subtext: "Stworzone dla firm, gospodarzy i profesjonalistów pracujących zdalnie",
-			ctaMaroon: "Rozpocznij workation",
-			ctaPeach: "Zacznij hostować",
+			beforeText: "Adres IP:",
+			bubbleText: "inny.",
+			afterText: "Kierunek kariery: ten sam.",
+			subtext: "Jesteśmy stworzeni dla firm, gospodarzy i pracowników zdalnych.",
+			ctaMaroon: "Zostań naszym partnerem",
 		},
 		howItWorks: {
-			eyebrow: "Jak to działa",
-			headline: "Zostań partnerem założycielskim",
+			eyebrow: "Jak to działa?",
+			headline: "Szukamy partnerów, którzy zostaną z nami na lata",
 			subtext:
-				"HelloWale startuje w drugiej połowie 2026 roku. Oto jak wygląda współpraca już teraz, zanim platforma będzie dostępna dla wszystkich.",
+				"HelloWale startuje w 2026 roku. Zostań jednym z naszych pierwszych partnerów, przed oficjalnym otwarciem platformy.",
 			steps: howItWorksSteps,
-			ctaLabel: "Porozmawiajmy",
+			ctaLabel: "Umów rozmowę",
 		},
-		biggerPicture: "Szerszy obraz",
+		biggerPicture: "Spójrz w przyszłość",
 		useCases: {
 			items: [
 				{
 					company: "Agencja marketingowa",
 					badge: "25 pracowników",
 					description:
-						"Kwartalne workation zespołowe na reset i burzę mózgów przed kolejnymi kampaniami.",
-					outcome: "Trzy kampanie. Jedna willa w Toskanii. Zero zmęczenia spotkaniami.",
+						"Kwartalne wyjazdy workation dla całego zespołu, aby złapać nową energię i wspólnie wypracować pomysły na kolejne kampanie.",
+					outcome:
+						"Trzy kampanie. Jedna willa w Toskanii. Zamiast zmęczenia spotkaniami — świeże pomysły.",
 					imageAlt:
 						"Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
 					reverse: false,
 				},
 				{
-					company: "Scale-up technologiczny",
+					company: "Firma technologiczna w fazie wzrostu",
 					badge: "100+ pracowników",
 					description:
 						"Każdy członek zespołu otrzymuje 2 tygodnie workation rocznie w ramach pakietu wellbeingowego.",
-					outcome: "Historia retencji, którą opowiadamy na każdej rozmowie rekrutacyjnej.",
+					outcome: "To benefit, o którym mówimy podczas każdej rozmowy kwalifikacyjnej.",
 					imageAlt: "Zespół techniczny współpracujący przy stole z kawą i notatkami",
 					reverse: true,
 				},
@@ -322,49 +373,48 @@ export const pl: Dictionary = {
 				"Otwórz swoje drzwi na rosnącą społeczność — zostań partnerem założycielem HelloWale.",
 		},
 		hero: {
-			beforeText: "Otwórz",
-			bubbleText: "swoje drzwi",
-			afterText: "na rosnącą społeczność",
+			beforeText: "Dołącz do",
+			bubbleText: "rosnącej",
+			afterText: "społeczności",
 			subtext:
-				"Przyjmuj firmy i specjalistów pracujących zdalnie, którzy łączą pracę z podróżą, tworząc nowe możliwości dla Twojej działalności.",
-			ctaPartner: "Zostań partnerem",
-			ctaListing: "Dodaj ofertę — za darmo",
+				"Zapełnij kalendarz rezerwacjami i zapewnij sobie stały dochód przez cały rok. Otwórz drzwi dla cyfrowych nomadów i przyciągnij klientów biznesowych.",
+			ctaListing: "Dołącz za darmo",
 		},
 		forHosts: {
 			eyebrow: "Dla gospodarzy",
-			headline: "Zostań jednym z pierwszych gospodarzy w Polsce.",
+			headline: "Dołącz do pierwszych gospodarzy HelloWale w Polsce",
 			paragraph:
-				"Współpracujemy z niewielką grupą pierwszych gospodarzy, aby wspólnie kształtować HelloWale. Dołącz już teraz, pomóż nam to zaprojektować i zyskaj ekskluzywne korzyści startowe na zawsze.",
-			benefits: forHostsBenefits,
-			ctaLabel: "Porozmawiajmy",
+				"Budujemy małą grupę pierwszych partnerów, którzy wspólnie z nami rozwiną HelloWale w Polsce. Dołącz już teraz, miej realny wpływ na nasze warunki działania w kraju. Otrzymasz pakiet dodatkowych korzyści dla pierwszych partnerów.",
+			benefits: hostsPageForHostsBenefits,
+			ctaLabel: "Umów rozmowę",
 		},
-		biggerPicture: "Szerszy obraz",
+		biggerPicture: "Rynek, który dopiero rośnie",
 		antiSeasonality: {
 			blocks: [
 				{
-					title: "Turystyka jest sezonowa. Praca nie.",
+					title: "Turystyka jest sezonowa. Praca nigdy.",
 					description:
-						"Większość gospodarzy notuje 80% rezerwacji w ciągu zaledwie 4 miesięcy. Co z resztą roku? Puste kalendarze. HelloWale wypełnia tę lukę firmami wysyłającymi zespoły na workacje przez cały rok.",
+						"80% rezerwacji przypada na 4 miesiące w roku. A pozostałe 8? Puste kalendarze. HelloWale pomoże Ci wypełnić luki dłuższymi rezerwacjami zdalnych specjalistów i zespołów firmowych — niezależnie od sezonu.",
 				},
 				{
-					title: "Tacy goście, o jakich marzysz",
+					title: "Goście, których chcesz mieć u siebie",
 					description:
-						"Zostają trochę dłużej, dbają o Twoją przestrzeń i chętnie polecają ją innym. Efekt? Bardziej przewidywalny dochód, mniej rotacji i lepsze opinie.",
+						"Zostają na dłużej, szanują miejsce, w którym mieszkają, i chętnie polecają je innym. Efekt? Bardziej przewidywalne przychody, mniej pustych terminów i lepsze opinie.",
 				},
 				{
-					title: "Dlaczego workation ma sens",
+					title: "Dlaczego „workation” jest warte Twojej uwagi?",
 					description:
-						"Najlepsze pomysły nie zawsze rodzą się w salach konferencyjnych. Workation łączy zespoły, by współpracowały, odpoczywały i budowały więzi — wzmacniając kulturę firmy i satysfakcję pracowników.",
+						"Firmy coraz chętniej wprowadzają „workation” jako nową formę pracy. Szukają miejsc, w których zespoły będą współpracować, budować relacje i odzyskają energię do pracy.",
 				},
 			],
 		},
 		howItWorks: {
-			eyebrow: "Jak to działa",
-			headline: "Zostań partnerem założycielskim",
+			eyebrow: "Jak to działa?",
+			headline: "Szukamy pierwszych partnerów, którzy zostaną z nami na lata",
 			subtext:
-				"HelloWale startuje w drugiej połowie 2026 roku. Oto jak wygląda współpraca już teraz — zanim platforma będzie dostępna dla wszystkich.",
+				"HelloWale startuje w 2026 roku. Zostań jednym z naszych pierwszych partnerów, przed oficjalnym otwarciem platformy.",
 			steps: howItWorksSteps,
-			ctaLabel: "Porozmawiajmy",
+			ctaLabel: "Umów rozmowę",
 		},
 	},
 	professionalsPage: {
@@ -375,20 +425,239 @@ export const pl: Dictionary = {
 		},
 		hero: {
 			beforeText: "",
-			bubbleText: "Zdalna praca",
-			afterText: "nie musi oznaczać samotności",
+			bubbleText: "Miejsca,",
+			afterText: "w których praca przychodzi naturalnie",
 			subtext:
-				"Znajdź miejsca dopasowane do Twojego stylu pracy i poznaj podobnie myślących profesjonalistów, gdziekolwiek jesteś.",
+				"Znajdź miejsca przygotowane z myślą o pracy zdalnej, a nie zwyczajne noclegi. Zarezerwuj pobyt, który pomoże Ci utrzymać rytm pracy podczas podróży.",
 		},
 		emailCapture: {
-			eyebrow: "Dla freelancerów i pracowników zdalnych",
-			headline: "Podróżujesz solo? Dowiedz się pierwszy.",
+			eyebrow: "Dla pracujących zdalnie i freelancerów",
+			headline: "Bądź wśród pierwszych osób, które powiadomimy",
 			subtext:
-				"Najlepsze okazje rodzą się z ludzi, których poznajesz. Dotyczy to wszystkiego — od przyjaźni po kontakty zawodowe. Zostaw swój e-mail, a damy Ci znać, gdy tylko HelloWale otworzy się dla osób, które wierzą, że workation lepiej przeżywać z innymi.",
-			placeholder: "Wpisz swój adres e-mail",
+				"Otwórz się na nowe możliwości, miejsca i ludzi. Czasami nowe możliwości pojawiają się wraz z ludźmi, których spotykasz. Zostaw swój e-mail i dołącz do listy zainteresowanych. Damy Ci znać, kiedy HelloWale będzie dostępne dla osób, które wierzą, że workation jest lepsze, gdy można dzielić je z innymi.",
+			placeholder: "Wpisz adres e-mail",
 			emailAriaLabel: "Adres e-mail",
 			submitAriaLabel: "Wyślij",
 			successMessage: "Dzięki — odezwiemy się, gdy przyjdzie Twoja kolej.",
+		},
+	},
+	becomeAHostPage: {
+		meta: {
+			title: "Zostań gospodarzem",
+			description:
+				"Dołącz do grona pierwszych gospodarzy HelloWale w Polsce — opowiedz nam o swoim obiekcie.",
+		},
+		headline: "Opowiedz nam o swoim obiekcie.",
+		intro: "Skontaktujemy się osobiście. Zostaw swoje dane, a my odezwiemy się w ciągu kilku dni.",
+		benefitsHeading: "✳ KORZYŚCI DLA GOSPODARZY-ZAŁOŻYCIELI",
+		// From "PDF - For Hosts - Print", which lists the same four benefits.
+		benefits: [
+			{ title: "0% prowizji", description: "Przez pierwsze miesiące nie zapłacisz prowizji." },
+			{
+				title: "Wyróżnimy Twój obiekt",
+				description: "Pokażemy go na stronie głównej i w materiałach promocyjnych.",
+			},
+			{
+				title: "Twórz HelloWale razem z nami",
+				description: "Twoje opinie pomogą nam się rozwijać.",
+			},
+			{
+				title: "Niższe opłaty na stałe",
+				description: "Pierwsi gospodarze skorzystają z preferencyjnych warunków współpracy.",
+			},
+		],
+		footnote: "✳ Dodanie obiektu jest bezpłatne. Odpowiadamy w ciągu 48 godzin.",
+		formTitle: "Formularz kontaktowy dla gospodarzy",
+		formSubtext:
+			"Podaj kilka informacji o sobie i swoim obiekcie — odezwiemy się i wprowadzimy Cię w szczegóły programu dla gospodarzy-założycieli.",
+		form: {
+			...formShared,
+			sections: {
+				aboutYou: "O Tobie",
+				aboutSpace: "O Twoim obiekcie",
+				workReady: "Czy obiekt jest przygotowany do pracy?",
+				workReadySubtext: "Zaznacz wszystko, co pasuje — to pomoże nam ocenić dopasowanie.",
+				availability: "Kiedy obiekt jest dostępny?",
+				listedElsewhere: "Czy obiekt jest już dostępny na innych platformach?",
+				listedElsewhereSubtext: "Opcjonalnie — pomoże nam to lepiej poznać Twoją ofertę.",
+				story: "Dodaj krótki opis obiektu (opcjonalnie)",
+				storySubtext: "Co sprawia, że Twój obiekt świetnie nadaje się do pracy?",
+			},
+			fields: {
+				fullName: { label: "Imię i nazwisko", placeholder: "np. Anna Kowalska" },
+				email: { label: "E-mail", placeholder: "ty@firma.pl" },
+				propertyName: {
+					label: "Nazwa obiektu",
+					placeholder: "np. Casa Amelia, Chata w górach, Studio 42",
+				},
+				city: { label: "Miasto", placeholder: "np. Zakopane" },
+				country: { label: "Kraj", placeholder: "np. Polska" },
+				propertyType: { label: "Typ obiektu", placeholder: "Wybierz typ" },
+				guestCapacity: { label: "Ilu gości może przyjąć?", placeholder: "Wybierz liczbę" },
+				bedrooms: { label: "Sypialnie", placeholder: "Wybierz" },
+				workReadyOther: {
+					label: "Coś jeszcze? (opcjonalnie)",
+					placeholder:
+						"np. biurko do pracy na stojąco, zadaszone miejsce do pracy na zewnątrz, drugi monitor",
+				},
+				airbnbUrl: "Link do Airbnb",
+				bookingUrl: "Link do Booking.com",
+				months: "Które miesiące? Zaznacz wszystkie, które pasują.",
+				storyPlaceholder:
+					"Wifi, ergonomiczne biurko, widoki — wszystko, co warto powiedzieć gościom.",
+			},
+			propertyTypes: {
+				apartment: "Apartament",
+				house: "Dom / Willa",
+				cabin: "Domek / Chata",
+				studio: "Studio",
+				other: "Inny",
+			},
+			bedroomStudio: "Studio",
+			workReadyOptions: {
+				wifi: "Szybkie Wi-Fi (100+ Mb/s)",
+				desk: "Osobne biurko / miejsce do pracy",
+				quiet: "Cisza w godzinach pracy",
+				kitchen: "W pełni wyposażona kuchnia",
+				nature: "Bliskość natury / dostęp do terenu na zewnątrz",
+				coffee: "Kawa, herbata i woda w cenie",
+			},
+			availabilityOptions: {
+				yearRound: "Przez cały rok",
+				offSeason: "Głównie poza sezonem (paź—kwi)",
+				specificMonths: "Tylko w wybrane miesiące",
+			},
+			monthNames: [
+				"Styczeń",
+				"Luty",
+				"Marzec",
+				"Kwiecień",
+				"Maj",
+				"Czerwiec",
+				"Lipiec",
+				"Sierpień",
+				"Wrzesień",
+				"Październik",
+				"Listopad",
+				"Grudzień",
+			],
+			required: {
+				fullName: "Wpisz imię i nazwisko",
+				email: "Wpisz adres e-mail",
+				propertyName: "Wpisz nazwę obiektu",
+				city: "Wpisz miasto",
+				country: "Wpisz kraj",
+				propertyType: "Wybierz typ obiektu",
+				guestCapacity: "Wybierz liczbę gości",
+				bedrooms: "Wybierz liczbę sypialni",
+			},
+			error: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do nas bezpośrednio.",
+			submit: "Wyślij zgłoszenie",
+			footnote:
+				"Na tym etapie nie zobowiązujesz się do niczego. Twoje dane wykorzystamy tylko, żeby odpowiedzieć — żadnego spamu, nigdy.",
+			modal: {
+				title: "Twój obiekt jest na naszym radarze!",
+				body: "Dziękujemy za zgłoszenie. Odpowiemy w ciągu 48 godzin — osoba z naszego zespołu przeprowadzi Cię przez kolejne kroki. Potwierdzenie wysłaliśmy też na Twój adres e-mail.",
+				closeLabel: "Gotowe",
+				secondaryLabel: "Zobacz, co wyróżnia dobre miejsce na workation →",
+			},
+		},
+	},
+	partnerWithUsPage: {
+		meta: {
+			title: "Zostań partnerem",
+			description:
+				"Stwórzmy razem program workation dla Twojego zespołu — zostań partnerem HelloWale.",
+		},
+		headline: "Stwórzmy razem program workation dla Twojego zespołu",
+		intro:
+			"Współpracujemy z firmami, które myślą o przyszłości pracy i chcą oferować swoim pracownikom więcej niż standardowe benefity. Dołącz teraz i zyskaj pakiet korzyści.",
+		benefitsHeading: "PAKIET KORZYŚCI DLA PIERWSZYCH PARTNERÓW",
+		benefits: [
+			"Niższa, gwarantowana cena subskrypcji — na zawsze",
+			"Preferencyjne stawki rezerwacji dla pracowników",
+			"Możliwość współtworzenia platformy HelloWale",
+			"Wyróżnienie jako partner",
+		],
+		formTitle: "Zapytaj o współpracę",
+		formSubtext: "Wypełnienie formularza zajmie Ci około 2 minut.",
+		form: {
+			...formShared,
+			sections: {
+				aboutYou: "O Tobie",
+				aboutCompany: "O Twojej firmie",
+				intents: "Co Cię do nas sprowadza?",
+				intentsSubtext: "Wybierz 1 lub więcej odpowiedzi.",
+				message: "Chcesz dodać coś jeszcze?",
+				messageSubtext: "To opcjonalne, ale dzięki temu lepiej zrozumiemy Twoje potrzeby.",
+			},
+			fields: {
+				fullName: { label: "Imię i nazwisko", placeholder: "np. Anna Kowalska" },
+				workEmail: { label: "Firmowy adres e-mail", placeholder: "ty@firma.pl" },
+				jobTitle: { label: "Stanowisko", placeholder: "np. Dyrektor HR, Założyciel, HR Manager" },
+				companyName: { label: "Nazwa", placeholder: "np. Green Studio" },
+				teamSize: { label: "Liczba osób w zespole", placeholder: "Wpisz liczbę" },
+				country: { label: "Kraj", placeholder: "np. Polska" },
+				messagePlaceholder:
+					"Napisz, czego oczekujesz od współpracy z HelloWale, jakie wyjazdy rozważasz lub jakie masz pytania...",
+			},
+			intents: {
+				wellbeing: {
+					title: "Benefit wellbeingowy",
+					description: "Wsparcie dobrostanu pracowników, przez cały rok.",
+				},
+				retreats: {
+					title: "Wyjazdy zespołowe",
+					description: "Offsite-y, tygodnie planowania i integracje.",
+				},
+				individual: {
+					title: "Benefit indywidualny",
+					description: "Indywidualny benefit dla osób pracujących zdalnie.",
+				},
+				curious: { title: "Chcę dowiedzieć się więcej", description: "Sprawdzam możliwości." },
+			},
+			required: {
+				fullName: "Wpisz imię i nazwisko",
+				workEmail: "Wpisz firmowy adres e-mail",
+				phone: "Wpisz numer telefonu",
+				companyName: "Wpisz nazwę firmy",
+				teamSize: "Wpisz, z ilu osób składa się Twój zespół",
+				country: "Wpisz, z jakiego kraju jest Twoja firma",
+				intents: "Wybierz co najmniej jedną opcję",
+			},
+			error: "Nie udało się wysłać zapytania. Spróbuj ponownie lub napisz do nas bezpośrednio.",
+			submit: "Wyślij",
+			footnote: "Odezwiemy się w ciągu 48 godzin. Bez nachalnej sprzedaży.",
+			modal: {
+				title: "Zgłoszenie przyjęte!",
+				body: "Dziękujemy. W ciągu 48 godzin skontaktuje się z Tobą osoba z naszego zespołu. Potwierdzenie wysłaliśmy też na Twój adres e-mail.",
+				closeLabel: "Zamknij",
+				secondaryLabel: "Sprawdź naszego bloga →",
+			},
+		},
+	},
+	contactPage: {
+		meta: {
+			title: "Kontakt",
+			description: "Skontaktuj się z nami.",
+		},
+		headline: "Skontaktuj się z nami",
+		subtext: "Masz pytanie? Napisz do nas poniżej.",
+		form: {
+			name: "Imię i nazwisko",
+			email: "E-mail",
+			message: "Wiadomość",
+			error: "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+			sending: "Wysyłanie…",
+			submit: "Wyślij wiadomość",
+			successTitle: "Dziękujemy za wiadomość!",
+			successBody: "Odezwiemy się wkrótce.",
+			validation,
+			required: {
+				name: "Wpisz imię i nazwisko",
+				email: "Wpisz adres e-mail",
+				message: "Wpisz wiadomość",
+			},
 		},
 	},
 };

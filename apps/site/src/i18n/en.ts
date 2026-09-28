@@ -41,6 +41,32 @@ const forHostsBenefits = [
 	},
 ];
 
+const validation = {
+	lettersOnly: "Use letters only",
+	tooShort: "Enter at least {min} characters",
+	tooLong: "Enter no more than {max} characters",
+	emailChars: "Use only letters, numbers and @ - _ .",
+	emailInvalid: "Enter a valid email address",
+	digitsOnly: "Use numbers only",
+	tooManyDigits: "Enter no more than {max} digits",
+	phoneDigits: "Enter {digits} digits",
+	phoneDigitsRange: "Enter between {min} and {max} digits",
+	freeTextChars: "Remove special characters such as < > { } [ ]",
+	urlInvalid: "Enter a valid link, starting with https://",
+	consentRequired: "Tick the box to agree",
+};
+
+const formShared = {
+	phoneNumber: "Phone Number",
+	phoneCodeAriaLabel: "Country calling code",
+	consentBefore: "I've read and agree to the ",
+	consentLink: "Privacy Policy",
+	consentAfter: ".",
+	sending: "Sending…",
+	closeAriaLabel: "Close",
+	validation,
+};
+
 export const en: Dictionary = {
 	nav: {
 		forCompanies: "For Companies",
@@ -160,6 +186,13 @@ export const en: Dictionary = {
 			headline: "Built for teams of every size.",
 			subtext: "Three approaches to workation. One platform that makes it work.",
 		},
+		bookingsChart: {
+			statCaption: "of bookings happen in just 4 months of the year.",
+			title: "Bookings by month (typical Airbnb host)",
+			monthInitials: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+			peakLegend: "Peak season (May–Aug)",
+			offSeasonLegend: "Off-season — empty calendar",
+		},
 	},
 	homePage: {
 		meta: {
@@ -267,7 +300,6 @@ export const en: Dictionary = {
 			afterText: "not out of ambition",
 			subtext: "Built for companies, hosts, and remote professionals",
 			ctaMaroon: "Start a workation",
-			ctaPeach: "Start hosting",
 		},
 		howItWorks: {
 			eyebrow: "How it works",
@@ -311,7 +343,6 @@ export const en: Dictionary = {
 			afterText: "to a growing community",
 			subtext:
 				"Host companies and remote professionals combining work and travel, creating new opportunities for your business.",
-			ctaPartner: "Partner with us",
 			ctaListing: "Start Listing — It's Free",
 		},
 		forHosts: {
@@ -373,6 +404,211 @@ export const en: Dictionary = {
 			emailAriaLabel: "Email address",
 			submitAriaLabel: "Submit",
 			successMessage: "Thanks — we'll be in touch when it's your turn.",
+		},
+	},
+	becomeAHostPage: {
+		meta: {
+			title: "Become a host",
+			description:
+				"Be one of the first hosts in Poland — apply to become a founding HelloWale host.",
+		},
+		headline: "Be one of the first hosts in Poland.",
+		intro:
+			"We're onboarding founding hosts personally, small group, big benefits. Share your details and we'll get back within a few days.",
+		benefitsHeading: "✳ FOUNDING HOST BENEFITS",
+		benefits: [
+			{ title: "0% rates", description: "Rates at 0% for the first free months." },
+			{
+				title: "Featured listing everyone sees",
+				description: "On our homepage, in our launch press.",
+			},
+			{ title: "Co-create the platform with us", description: "Your feedback shapes the product." },
+			{
+				title: "Lower lifetime fees for founding hosts",
+				description: "Locked in for as long as you host with us.",
+			},
+		],
+		footnote: "✳ Listing is free. We respond within 48 hours.",
+		formTitle: "Founding host application",
+		formSubtext: "Takes about 4 minutes. Fields with * are required.",
+		form: {
+			...formShared,
+			sections: {
+				aboutYou: "About you",
+				aboutSpace: "About your space",
+				workReady: "Is it work-ready?",
+				workReadySubtext: "Check all that apply — this helps us understand fit.",
+				availability: "When is it available?",
+				listedElsewhere: "Currently listed elsewhere?",
+				listedElsewhereSubtext: "Optional — helps us understand your setup.",
+				story: "What makes your space special?",
+				storySubtext: "Optional but it's your chance to tell your story.",
+			},
+			fields: {
+				fullName: { label: "Full name", placeholder: "e.g. Elena Novak" },
+				email: { label: "Email", placeholder: "you@company.com" },
+				propertyName: {
+					label: "Property name",
+					placeholder: "e.g. Casa Amelia, Mountain Cabin, Studio 42",
+				},
+				city: { label: "City", placeholder: "e.g. Zakopane" },
+				country: { label: "Country", placeholder: "e.g. Poland" },
+				propertyType: { label: "Property type", placeholder: "Choose type" },
+				guestCapacity: { label: "Fits how many guests?", placeholder: "Choose capacity" },
+				bedrooms: { label: "Bedrooms", placeholder: "Choose" },
+				workReadyOther: {
+					label: "Anything else? (optional)",
+					placeholder: "e.g. Standing desk, outdoor covered workspace, second monitor available",
+				},
+				airbnbUrl: "Airbnb URL",
+				bookingUrl: "Booking.com URL",
+				months: "Which months? Select all that apply.",
+				storyPlaceholder:
+					"Share what makes your property unique — the view, the community, the vibe, the history, why remote workers would love it here...",
+			},
+			propertyTypes: {
+				apartment: "Apartment",
+				house: "House / Villa",
+				cabin: "Cabin / Cottage",
+				studio: "Studio",
+				other: "Other",
+			},
+			bedroomStudio: "Studio",
+			workReadyOptions: {
+				wifi: "Fast Wi-Fi (100+ Mbps)",
+				desk: "Dedicated desk / workspace",
+				quiet: "Quiet during working hours",
+				kitchen: "Full kitchen",
+				nature: "Nature / outdoor access",
+				coffee: "Coffee, tea, water included",
+			},
+			availabilityOptions: {
+				yearRound: "Year-round",
+				offSeason: "Mostly off-season (Oct—Apr)",
+				specificMonths: "Specific months only",
+			},
+			monthNames: [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December",
+			],
+			required: {
+				fullName: "Enter your full name",
+				email: "Enter your email",
+				propertyName: "Enter your property's name",
+				city: "Enter the city",
+				country: "Enter the country",
+				propertyType: "Choose a property type",
+				guestCapacity: "Choose how many guests it fits",
+				bedrooms: "Choose the number of bedrooms",
+			},
+			error:
+				"Something went wrong sending your application. Please try again, or email us directly.",
+			submit: "Apply as founding host",
+			footnote: "Founding host applications are reviewed personally. Response within a few days.",
+			modal: {
+				title: "Your space is on our radar!",
+				body: "Thanks for applying as a founding host. We'll reply within 48 hours — a real person will walk you through the next steps. A confirmation is already in your inbox.",
+				closeLabel: "Done",
+				secondaryLabel: "See what makes a great workation stay →",
+			},
+		},
+	},
+	partnerWithUsPage: {
+		meta: {
+			title: "Partner with us",
+			description:
+				"Let's build your team's workation programme together — partner with HelloWale as a founding company.",
+		},
+		headline: "Let's build your team's workation programme together.",
+		intro:
+			"We're partnering with forward-thinking companies to shape what workation-as-a-benefit looks like. Get in early and get founding conditions for life.",
+		benefitsHeading: "FOUNDING HOST BENEFITS",
+		benefits: [
+			"Lowest subscription we'll ever offer locked in forever",
+			"Half-price booking rates for your employees",
+			"Co-create the platform with us",
+			"Featured as a launch partner",
+		],
+		formTitle: "Partnership enquiry",
+		formSubtext: "Fill in a few details — takes about 2 minutes.",
+		form: {
+			...formShared,
+			sections: {
+				aboutYou: "About you",
+				aboutCompany: "About your company",
+				intents: "What brings you here?",
+				intentsSubtext: "Choose one or more.",
+				message: "Anything else we should know?",
+				messageSubtext: "Optional but helpful for our first call.",
+			},
+			fields: {
+				fullName: { label: "Full name", placeholder: "e.g. Elena Novak" },
+				workEmail: { label: "Work email", placeholder: "you@company.com" },
+				jobTitle: { label: "Job title", placeholder: "e.g. Head of People, Founder, HR Manager" },
+				companyName: { label: "Company name", placeholder: "e.g. Green Studio" },
+				teamSize: { label: "Team size", placeholder: "Write number" },
+				country: { label: "Country", placeholder: "e.g. Poland" },
+				messagePlaceholder:
+					"Tell us what you're hoping HelloWale can do for your team, any specific stays you have in mind, or questions you'd like answered...",
+			},
+			intents: {
+				wellbeing: { title: "Wellbeing benefit", description: "For the whole team, year-round." },
+				retreats: { title: "Team retreats", description: "Offsites, planning weeks, resets." },
+				individual: { title: "Individual perk", description: "Workation as a personal benefit." },
+				curious: { title: "Just curious", description: "Exploring — not sure yet." },
+			},
+			required: {
+				fullName: "Enter your full name",
+				workEmail: "Enter your work email",
+				phone: "Enter your phone number",
+				companyName: "Enter your company name",
+				teamSize: "Enter your team size",
+				country: "Enter your company's country",
+				intents: "Choose at least one option",
+			},
+			error: "Something went wrong sending your enquiry. Please try again, or email us directly.",
+			submit: "Partner with us",
+			footnote: "We'll respond within 48 hours. No sales pressure promise.",
+			modal: {
+				title: "Application sent!",
+				body: "Thank you! A real person from our team will reply within 48 hours. We've also sent a confirmation to your inbox.",
+				closeLabel: "Thank you",
+				secondaryLabel: "Read our blog while you wait →",
+			},
+		},
+	},
+	contactPage: {
+		meta: {
+			title: "Contact",
+			description: "Get in touch.",
+		},
+		headline: "Contact us",
+		subtext: "Have a question? Send us a message below.",
+		form: {
+			name: "Name",
+			email: "Email",
+			message: "Message",
+			error: "Something went wrong sending your message. Please try again.",
+			sending: "Sending…",
+			submit: "Send message",
+			successTitle: "Thanks for reaching out!",
+			successBody: "We'll get back to you shortly.",
+			validation,
+			required: {
+				name: "Enter your name",
+				email: "Enter your email",
+				message: "Enter a message",
+			},
 		},
 	},
 };
