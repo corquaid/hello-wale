@@ -274,7 +274,7 @@ export const pl: Dictionary = {
 				},
 				{
 					company: "Firma technologiczna w fazie wzrostu",
-					badge: "25 pracowników",
+					badge: "100 pracowników",
 					description:
 						"Każdy członek zespołu otrzymuje 2 tygodnie workation rocznie w ramach pakietu wellbeingowego.",
 					outcome: "To benefit, o którym mówimy podczas każdej rozmowy kwalifikacyjnej.",
@@ -349,7 +349,7 @@ export const pl: Dictionary = {
 					description:
 						"Kwartalne wyjazdy workation dla całego zespołu, aby złapać nową energię i wspólnie wypracować pomysły na kolejne kampanie.",
 					outcome:
-						"Trzy kampanie. Jedna willa w Toskanii. Zamiast zmęczenia spotkaniami — świeże pomysły.",
+						"Trzy kampanie. Jedna willa. Zamiast zmęczenia spotkaniami — świeże pomysły.",
 					imageAlt:
 						"Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
 					reverse: false,

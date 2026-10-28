@@ -243,7 +243,7 @@ export const en: Dictionary = {
 				},
 				{
 					company: "Tech scale-up",
-					badge: "25 employees",
+					badge: "100 employees",
 					description:
 						"Each team member gets 2 workation weeks per year as part of their wellbeing package.",
 					outcome: "A retention story we tell at every job interview.",
@@ -316,7 +316,7 @@ export const en: Dictionary = {
 					company: "Marketing agency",
 					badge: "25 employees",
 					description: "Quarterly team workations to reset and brainstorm next campaigns.",
-					outcome: "Three campaigns. One villa in Tuscany. Zero meeting fatigue.",
+					outcome: "Three campaigns. One villa. Zero meeting fatigue.",
 					imageAlt: "Two colleagues from a marketing agency looking at a laptop together outdoors",
 					reverse: false,
 				},
