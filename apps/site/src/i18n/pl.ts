@@ -267,7 +267,7 @@ export const pl: Dictionary = {
 					description:
 						"Kwartalne wyjazdy workation dla całego zespołu, aby złapać nową energię i wspólnie wypracować pomysły na kolejne kampanie.",
 					outcome:
-						"Trzy kampanie. Jedna willa w Toskanii. Zamiast zmęczenia spotkaniami — świeże pomysły.",
+						"Trzy kampanie. Jedna willa. Zamiast zmęczenia spotkaniami — świeże pomysły.",
 					imageAlt:
 						"Dwoje współpracowników z agencji marketingowej patrzących razem na laptopa na zewnątrz",
 					reverse: false,

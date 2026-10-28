@@ -237,7 +237,7 @@ export const en: Dictionary = {
 					company: "Marketing agency",
 					badge: "25 employees",
 					description: "Quarterly team workations to reset and brainstorm next campaigns.",
-					outcome: "Three campaigns. One villa in Tuscany. Zero meeting fatigue.",
+					outcome: "Three campaigns. One villa. Zero meeting fatigue.",
 					imageAlt: "Two colleagues from a marketing agency looking at a laptop together outdoors",
 					reverse: false,
 				},
