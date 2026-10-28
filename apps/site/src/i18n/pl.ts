@@ -356,7 +356,7 @@ export const pl: Dictionary = {
 				},
 				{
 					company: "Firma technologiczna w fazie wzrostu",
-					badge: "100+ pracowników",
+					badge: "100 pracowników",
 					description:
 						"Każdy członek zespołu otrzymuje 2 tygodnie workation rocznie w ramach pakietu wellbeingowego.",
 					outcome: "To benefit, o którym mówimy podczas każdej rozmowy kwalifikacyjnej.",

@@ -322,7 +322,7 @@ export const en: Dictionary = {
 				},
 				{
 					company: "Tech scale-up",
-					badge: "100 + employees",
+					badge: "100 employees",
 					description:
 						"Each team member gets 2 workation weeks per year as part of their wellbeing package.",
 					outcome: "A retention story we tell at every job interview.",
