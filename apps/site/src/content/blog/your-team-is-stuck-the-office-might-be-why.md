@@ -55,4 +55,4 @@ Sometimes the best way to take the next step forward is simply to leave the offi
 
 ## How HelloWale can support you
 
-HelloWale lists locations built for exactly this: informal, close to nature, and vetted for the working conditions that make team workation actually work. Fast internet, proper setup, space for both collaboration and focus. The environment is taken care of — [what happens inside it is up to you and your team](/hello-wale/companies).
+HelloWale lists locations built for exactly this: informal, close to nature, and vetted for the working conditions that make team workation actually work. Fast internet, proper setup, space for both collaboration and focus. The environment is taken care of — [what happens inside it is up to you and your team](/companies).

@@ -52,7 +52,7 @@ This is the exact work that goes into building the HelloWale collection. Every l
 
 ## How HelloWale can help
 
-Finding a workation spot that genuinely works takes more research than most people have time to do. HelloWale does that research for you — every location in the collection has been visited in person and checked for connectivity, workspace quality, and the kind of setting that makes a workation worth the effort. [Browse locations built for remote workers.](/hello-wale/professionals)
+Finding a workation spot that genuinely works takes more research than most people have time to do. HelloWale does that research for you — every location in the collection has been visited in person and checked for connectivity, workspace quality, and the kind of setting that makes a workation worth the effort. [Browse locations built for remote workers.](/professionals)
 
 ## Sources
 

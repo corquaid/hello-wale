@@ -66,7 +66,7 @@ Taka „kontrolowana ucieczka" od codzienności w biurze i od dojazdów ma nie t
 
 ## W czym Cię wesprze HelloWale
 
-Na naszej stronie znajdziesz oferty miejsc idealnych na workation — blisko natury i z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/hello-wale/companies)
+Na naszej stronie znajdziesz oferty miejsc idealnych na workation — blisko natury i z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/companies)
 
 ## Źródła
 

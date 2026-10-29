@@ -52,7 +52,7 @@ The organisations taking this seriously aren't doing it out of altruism. They're
 
 ## How HelloWale can support you
 
-Finding the right workation location is half the work. HelloWale does it for you. Every location in the HelloWale collection has been personally visited and assessed for what a real working day requires: reliable connectivity, proper ergonomics, a dedicated workspace, and the kind of setting that makes better thinking possible. [Find the right location for your team.](/hello-wale/companies)
+Finding the right workation location is half the work. HelloWale does it for you. Every location in the HelloWale collection has been personally visited and assessed for what a real working day requires: reliable connectivity, proper ergonomics, a dedicated workspace, and the kind of setting that makes better thinking possible. [Find the right location for your team.](/companies)
 
 ## Sources
 

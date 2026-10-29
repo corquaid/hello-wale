@@ -57,7 +57,7 @@ Dlatego coraz częściej model remote-first jest uzupełniany dobrze zaprojektow
 
 ## W czym Cię wesprze HelloWale
 
-Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe workation. Blisko natury i z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/hello-wale/companies)
+Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe workation. Blisko natury i z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/companies)
 
 ## Źródła
 

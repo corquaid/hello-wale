@@ -46,7 +46,7 @@ Workation is one of the clearest answers to that question. It does not require a
 
 ## How HelloWale can support you
 
-Building a workation policy is the straightforward part. Finding the right locations to point employees toward is where most organisations get stuck. HelloWale takes that off the table — every location in the collection has been personally visited and assessed for connectivity, workspace quality, and the kind of setting that makes a workation worth the effort. [Find workation locations built for real working days.](/hello-wale/companies)
+Building a workation policy is the straightforward part. Finding the right locations to point employees toward is where most organisations get stuck. HelloWale takes that off the table — every location in the collection has been personally visited and assessed for connectivity, workspace quality, and the kind of setting that makes a workation worth the effort. [Find workation locations built for real working days.](/companies)
 
 ## Sources
 

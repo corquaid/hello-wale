@@ -70,7 +70,7 @@ Viewed correctly, workation isn't a cost. It's an investment in the people who d
 
 ## How HelloWale can support you
 
-Finding the right workation location is half the work. HelloWale does it for you. Curated locations close to nature, checked for connectivity, ergonomics, and everything in between. [Find the right location for your team.](/hello-wale/companies)
+Finding the right workation location is half the work. HelloWale does it for you. Curated locations close to nature, checked for connectivity, ergonomics, and everything in between. [Find the right location for your team.](/companies)
 
 ## Sources
 

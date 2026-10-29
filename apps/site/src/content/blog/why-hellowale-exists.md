@@ -58,4 +58,4 @@ HelloWale was built for the moment that becomes obvious, for every remote worker
 
 ## How HelloWale can help
 
-If the where has been holding your work back, HelloWale was built for exactly that moment. HelloWale provides a curated selection of workation stays, hand-picked for remote workers and teams who are ready to find out what the right somewhere does to their work. [Browse workation destinations built for you.](/hello-wale/professionals)
+If the where has been holding your work back, HelloWale was built for exactly that moment. HelloWale provides a curated selection of workation stays, hand-picked for remote workers and teams who are ready to find out what the right somewhere does to their work. [Browse workation destinations built for you.](/professionals)

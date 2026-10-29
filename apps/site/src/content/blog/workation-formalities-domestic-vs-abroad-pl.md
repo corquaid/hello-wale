@@ -57,7 +57,7 @@ _Ten tekst przedstawia ogólne zasady organizacji pracy w trakcie workation. W k
 
 ## W czym Cię wesprze HelloWale
 
-Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe i indywidualne workation — zarówno blisko natury, jak i w mieście. Zawsze z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/hello-wale/companies)
+Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe i indywidualne workation — zarówno blisko natury, jak i w mieście. Zawsze z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/companies)
 
 ## Źródła
 

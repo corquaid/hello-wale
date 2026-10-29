@@ -55,4 +55,4 @@ Czasem najlepszym sposobem na kolejny krok naprzód jest po prostu… wyjście z
 
 ## W czym Cię wesprze HelloWale
 
-Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe workation. Blisko natury i z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/hello-wale/companies)
+Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe workation. Blisko natury i z gwarancją dobrych warunków do pracy. [Znajdź odpowiednie miejsce dla swojego zespołu.](/companies)

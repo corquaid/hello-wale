@@ -52,4 +52,4 @@ Symboliczny poczęstunek złożony z lokalnych produktów – świeże pieczywo,
 
 ## W czym Cię wesprze HelloWale
 
-Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe i indywidualne workation — zarówno blisko natury, jak i w mieście. Zawsze z gwarancją dobrych warunków do pracy. [Sprawdź, jak trafić na naszą listę.](/hello-wale/professionals)
+Na naszej stronie znajdziesz oferty miejsc idealnych na zespołowe i indywidualne workation — zarówno blisko natury, jak i w mieście. Zawsze z gwarancją dobrych warunków do pracy. [Sprawdź, jak trafić na naszą listę.](/professionals)
